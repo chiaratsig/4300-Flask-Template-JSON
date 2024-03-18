@@ -21,8 +21,17 @@ with open(json_file_path, 'r') as file:
     episodes_df = pd.DataFrame(data['episodes'])
     reviews_df = pd.DataFrame(data['reviews'])
 
+ma_json_file_path = os.path.join(current_directory, 'ma_reviews.json')
+cols = ['review_id', 'business_id', 'stars', 'useful', 'funny', 'cool']
+with open(json_file_path, 'r') as file:
+    data = json.load(file)
+    df = pd.DataFrame(data=data, columns=cols)
+
 app = Flask(__name__)
 CORS(app)
+
+def businesss_search(review, star_rating, zip_code):
+   return df[:5] 
 
 # Sample search using json with pandas
 def json_search(query):
@@ -41,6 +50,13 @@ def home():
 def episodes_search():
     text = request.args.get("title")
     return json_search(text)
+
+@app.route("/restaurants")
+def restaurant_search():
+   review = request.args.get("review")
+   star_rating = request.args.get("star_rating")
+   zip_code = request.args.get("zip_code")
+   return businesss_search(review, star_rating, zip_code)
 
 if 'DB_NAME' not in os.environ:
     app.run(debug=True,host="0.0.0.0",port=5000)
