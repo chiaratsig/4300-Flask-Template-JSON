@@ -1,6 +1,7 @@
 from typing import List, Tuple, Dict
 from collections.abc import Callable
 import numpy as np
+import pandas as pd
 import re
 
 def tokenize(text: str) -> List[str]:
@@ -313,7 +314,7 @@ def create_weighted_word_freq_array(input_word_array: np.ndarray) -> np.ndarray:
 
 
 # different from the one in a4
-def build_inverted_index(df: List[dict]) -> dict:
+def build_br_inverted_index(df: List[dict]) -> dict:
     """Builds an inverted index from the reviews. 
 
     Arguments
@@ -340,6 +341,85 @@ def build_inverted_index(df: List[dict]) -> dict:
           inv_idx[df.iloc[i]['business_id']].append((i, df.iloc[i]['review_id']))
 
     return inv_idx
+
+# different from the one in a4/above
+def create_review_word_occurrence_matrix(
+    tokenize_method: Callable[[str], List[str]],
+    input_df: List[str],
+    input_good_types: List[str]) -> np.ndarray:
+    """Returns a numpy array of shape n_reviews by n_good_types such that the 
+    entry (ij) indicates if review i contains word j (binary).
+
+    Parameters
+    ----------
+    tokenize_method : Callable[[str], List[str]]
+        A method to tokenize a string into a list of strings representing words.
+    input_df: List[str]
+        df where each row pertains to a review
+    input_good_types: List[str]
+        A list of all good types, sorted alphabetically.
+
+    Returns
+    -------
+    np.ndarray
+        A numpy array of shape n_speakers by n_good_types such that the 
+        entry (ij) indicates how often speaker i says word j.
+    """
+    word_occurence_matrix = np.zeros((input_df.shape[0], len(input_good_types)))
+    good_types = np.array(input_good_types)
+
+    for i in range(input_df.shape[0]):
+       tokens = tokenize(input_df.iloc[i]['text'])
+       for token in tokens:
+          if token in input_good_types:
+             word_occurence_matrix[i][input_good_types.index(token)] = 1
+    return word_occurence_matrix
+
+
+# different from the one in a4
+def build_wr_inverted_index(
+    review_vectors: np.ndarray,
+    input_df: pd.DataFrame,
+    input_good_types: List[str]) -> dict:
+    """Builds an inverted index from the review vectors. 
+
+    Arguments
+    =========
+    review_vectors : array
+        Vectorized review, with shape (n_reviews, n_good_types)
+    input_df: DataFrame.
+        DataFrame that maps where each row has a unique review_id.
+    input_good_types: List[str]
+        list of good types
+
+    Returns
+    =======
+
+    inv_idx: dict
+        Key = good type (str), value = single-linked list of tuples
+        pertaining to the reviews that contain that type.
+        Tuple[0] is the index of the review row in the df,
+        tuple[1] is the review_id
+        tuple[2] is the frequency of the word in the review = review_vectors[i][j]
+
+    """
+    inv_idx = dict((word, []) for word in input_good_types)
+    print("empty dict", inv_idx)
+    for i in range(review_vectors.shape[0]):
+       review_index = i
+       review_id = input_df.iloc[i]["review_id"]
+       for j in range(len(input_good_types)):
+          word = input_good_types[j]
+          freq = review_vectors[i][j]
+          
+          if freq != 0:
+            inv_idx[word].append((review_index, review_id, freq))
+    return inv_idx
+
+
+          
+       
+       
 
 
        

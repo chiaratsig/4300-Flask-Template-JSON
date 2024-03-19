@@ -6,7 +6,7 @@ from helpers.MySQLDatabaseHandler import MySQLDatabaseHandler
 from helpers.analysis import (tokenize, num_dedup_tokens,
 distinct_words, get_good_words, build_word_count, build_word_episode_distribution,
 output_good_types, create_ranked_good_types, create_word_occurrence_matrix, create_weighted_word_freq_array,
-build_inverted_index)
+build_br_inverted_index, create_review_word_occurrence_matrix, build_wr_inverted_index)
 import pandas as pd
 
 ############ TEMPLATE BEGIN ############
@@ -64,7 +64,22 @@ distinct_words = distinct_words(tokenize, df)
 good_words = get_good_words(0.1, 0.9, df["text"], distinct_words)
 
 # build inverted business-review index
-inv_idx = build_inverted_index(df)
+br_inv_idx = build_br_inverted_index(df)
+
+# build vector array of shape (review, good_words) - values are binary to start
+# review index i is the same index it has in df
+review_vectors = create_review_word_occurrence_matrix(tokenize, df, good_words)
+
+# build word-review invertedd index. key = good type,
+#value = list of tuples pertaining to review that has that good type
+wr_inv_idx = build_wr_inverted_index(review_vectors, df, good_words)
+print("final dict", wr_inv_idx)
+
+
+
+
+
+
 
 
 
