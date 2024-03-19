@@ -297,11 +297,13 @@ def build_inverted_index(df: List[dict]) -> dict:
 
     """
     inv_idx = {}
-    for index, row in df.iterrows():
-        if row['business_id'] in inv_idx.keys():
-          inv_idx[row['business_id']].append((index, row['review_id']))
+    for i in range(df.shape[0]):
+        if df.iloc[i]['business_id'] not in inv_idx.keys():
+          inv_idx[df.iloc[i]['business_id']] = list((i, df.iloc[i]['review_id']))
         else:
-          inv_idx[row['business_id']] = list((index, row['review_id']))
+          inv_idx[df.iloc[i]['business_id']].append((i, df.iloc[i]['review_id']))
+
+    return inv_idx
 
 
        
