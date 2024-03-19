@@ -23,7 +23,7 @@ def tokenize(text: str) -> List[str]:
 
 def distinct_words(tokenize_method: Callable[[str], List[str]],
     input_reviews: List[Tuple[str, List[Dict[str, str]]]]) -> int:
-    """Returns the set of of distinct tokens used in an entire transcript
+    """Returns the set of distinct tokens used in an entire transcript
 
     Parameters
     ----------
@@ -45,6 +45,42 @@ def distinct_words(tokenize_method: Callable[[str], List[str]],
     for review_idx in input_reviews.index:
       tokens += tokenize(input_reviews["text"][review_idx])
     return set(tokens)
+
+def get_good_words(min_percentage, max_percentage, reviews, distinct_words):
+  """Returns the set of distinct tokens used in a percentage range of review
+
+  Parameters
+  ----------
+  min_percentage : int
+      The minimum percentage of reviews a word must be in to be a good word.
+  max_percentage: int
+      The minimum percentage of reviews a word must be in to be a good word.
+  reviews : DataFrame
+      A column of a DataFrame with the text of all reviews
+
+  Returns
+  -------
+  good_words
+    The set of distinct good words among all the reviews.
+  """
+  words = {}
+  for review in reviews:
+    tokens = tokenize(review)
+
+    for word in distinct_words:
+       if word in tokens:
+          if word not in words.keys():
+            words[word] = 0
+          words[word] += 1
+  good_words = []
+
+  print(len(reviews))
+  for key in words.keys():
+    word_percentage = words[key] / len(reviews)
+    if word_percentage >= min_percentage and word_percentage <= max_percentage:
+      good_words.append(key)
+  return sorted(good_words)
+
 
 def num_dedup_tokens(tokenize_method: Callable[[str], List[str]],
     tokenize_transcript_method: Callable[[Callable[[str], List[str]], Tuple[str, List[Dict[str, str]]]], List[str]],
