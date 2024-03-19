@@ -274,3 +274,40 @@ def create_weighted_word_freq_array(input_word_array: np.ndarray) -> np.ndarray:
     """
     # TODO-3.3
     return input_word_array / (input_word_array.sum(0) + 1)
+
+
+# different from the one in a4
+def build_inverted_index(df: List[dict]) -> dict:
+    """Builds an inverted index from the reviews. 
+
+    Arguments
+    =========
+
+    df: DataFrame.
+        Each review has a corresponding business_id.
+
+    Returns
+    =======
+
+    inverted_index: dict
+        Key = business_id, value = single-linked list of tuples
+        pertaining to the business.
+        Tuple[0] is the index of the review row in the df,
+        tuple[1] is the review_ids
+
+    """
+    inv_idx = {}
+    for index, row in df.iterrows():
+        if row['business_id'] in inv_idx.keys():
+          inv_idx[row['business_id']].append((index, row['review_id']))
+        else:
+          inv_idx[row['business_id']] = list((index, row['review_id']))
+
+
+       
+       
+       
+
+    
+
+

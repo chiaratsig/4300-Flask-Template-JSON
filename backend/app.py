@@ -5,7 +5,8 @@ from flask_cors import CORS
 from helpers.MySQLDatabaseHandler import MySQLDatabaseHandler
 from helpers.analysis import (tokenize, num_dedup_tokens,
 distinct_words, build_word_count, build_word_episode_distribution,
-output_good_types, create_ranked_good_types, create_word_occurrence_matrix, create_weighted_word_freq_array)
+output_good_types, create_ranked_good_types, create_word_occurrence_matrix, create_weighted_word_freq_array,
+build_inverted_index)
 import pandas as pd
 
 ############ TEMPLATE BEGIN ############
@@ -61,6 +62,12 @@ df = pd.DataFrame(data=data, columns=cols)
 
 distinct_words = distinct_words(tokenize, df) #uses a function in analysis.py to get a set of all distinct words among the reviews
 print(distinct_words)
+
+# build inverted business-review index
+inv_idx = build_inverted_index(df)
+
+
+
 
 def businesss_search(review, star_rating, zip_code):
    return df[:5] 

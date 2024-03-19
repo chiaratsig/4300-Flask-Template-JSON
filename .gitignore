@@ -3,6 +3,7 @@ env/
 Docker/__pycache__
 
 venv/
+yelpme4300/
 
 *.pyc
 __pycache__/
