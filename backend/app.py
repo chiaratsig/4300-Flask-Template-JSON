@@ -74,7 +74,7 @@ print("br_inv_idx")
 # build vector array of shape (review, good_words) - values are binary to start
 # review index i is the same index it has in df
 review_vectors = create_review_word_occurrence_matrix(tokenize, df, good_words)
-# print(review_vectors)
+print(review_vectors)
 
 # build word-review invertedd index. key = good type,
 #value = list of tuples pertaining to review that has that good type
