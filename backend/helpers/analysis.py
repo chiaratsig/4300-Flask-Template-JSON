@@ -67,15 +67,15 @@ def get_good_words(min_percentage, max_percentage, reviews, distinct_words):
   words = {}
   for review in reviews:
     tokens = tokenize(review)
-
-    for word in distinct_words:
-       if word in tokens:
-          if word not in words.keys():
-            words[word] = 0
-          words[word] += 1
+    review_words = {}
+    for token in tokens:
+       if token not in review_words:
+        review_words[token] = True
+        if token not in words.keys():
+            words[token] = 0
+        words[token] += 1
   good_words = []
 
-  print(len(reviews))
   for key in words.keys():
     word_percentage = words[key] / len(reviews)
     if word_percentage >= min_percentage and word_percentage <= max_percentage:

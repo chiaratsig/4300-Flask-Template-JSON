@@ -53,22 +53,28 @@ if 'DB_NAME' not in os.environ:
 
 ############ TEMPLATE END ############
 
-ma_json_file_path = os.path.join(current_directory, 'ma_reviews.json')
-cols = ['review_id', 'business_id', 'stars', 'useful', 'funny', 'cool', 'text']
+
+ma_json_file_path = os.path.join(current_directory, 'de.json')
+# cols = ['review_id', 'business_id', 'stars', 'useful', 'funny', 'cool', 'text']
+cols = ["review_id", "business_id", "stars_x", "text", "name", "address", "city", "state", "postal_code"]
 with open(ma_json_file_path, 'r') as file:
     data = json.load(file)
 
 df = pd.DataFrame(data=data, columns=cols)
-
+# print(df["text"])
 distinct_words = distinct_words(tokenize, df) 
+print("distinct_words")
 good_words = get_good_words(0.1, 0.9, df["text"], distinct_words)
+print(good_words)
 
 # build inverted business-review index
 br_inv_idx = build_br_inverted_index(df)
+print("br_inv_idx")
 
 # build vector array of shape (review, good_words) - values are binary to start
 # review index i is the same index it has in df
 review_vectors = create_review_word_occurrence_matrix(tokenize, df, good_words)
+# print(review_vectors)
 
 # build word-review invertedd index. key = good type,
 #value = list of tuples pertaining to review that has that good type
