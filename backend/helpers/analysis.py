@@ -160,7 +160,7 @@ def create_review_word_occurrence_matrix(
        tokens = tokenize_method(input_df.iloc[i]['text'])
        for token in tokens:
           if token in input_good_types:
-             word_occurence_matrix[i][input_good_types.index(token)] = 1
+             word_occurence_matrix[i][input_good_types.index(token)] += 1
     return word_occurence_matrix
 
 
