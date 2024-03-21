@@ -99,10 +99,11 @@ idf = compute_idf(wr_inv_idx, len(df))
 # print(idf)
 
 doc_norms = compute_review_norms(wr_inv_idx, idf, len(df))
-print(doc_norms)
-print(input_review_df.iloc[0]["text"])
-sorted_sim_reviews = index_search(input_review_df.iloc[0]["text"], wr_inv_idx, idf, doc_norms)
-print(sorted_sim_reviews)
+#print(doc_norms)
+#print(input_review_df.iloc[0]["text"])
+dummy_rating = 1
+returned_restaurants = index_search(input_review_df.iloc[0]["text"], wr_inv_idx, df, idf, doc_norms, dummy_rating)
+print(returned_restaurants)
 
 
 

@@ -309,8 +309,10 @@ def accumulate_dot_scores(query_word_counts: dict, index: dict, idf: dict) -> di
 def index_search(
     query: str,
     index: dict,
+    df: pd.DataFrame,
     idf,
     doc_norms,
+    star_rating,
     score_func=accumulate_dot_scores,
     tokenizer=tokenize,
 ) -> List[Tuple[int, int]]:
@@ -322,7 +324,9 @@ def index_search(
     query: string,
         The query we are looking for.
 
-    index: an inverted index as above
+    index: an inverted index as above, key = word, value = list of reviews
+
+    df: dataframe mapping review to business name
 
     idf: idf values precomputed as above
 
@@ -376,7 +380,17 @@ def index_search(
       results.append((cossim_numerator[doc] / cossim_denominator[doc], doc))
 
     results.sort(key=lambda x: x[0], reverse=True)
-    return results
+    #print(results)
+    
+    # based on star review, either grab first 5 or last 5 reviews
+    if star_rating >=3:
+       returned_5_reviews = results[:5]
+    else:
+       returned_5_reviews = results[-5:]
+    
+    returned_5_restaurants = [df.iloc[x[1]]['name'] for x in returned_5_reviews]
+
+    return returned_5_restaurants
 
 
 
