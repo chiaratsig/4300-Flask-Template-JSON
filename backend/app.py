@@ -5,7 +5,7 @@ from flask_cors import CORS
 from helpers.MySQLDatabaseHandler import MySQLDatabaseHandler
 from helpers.analysis import (tokenize, 
 build_br_inverted_index, distinct_words, get_good_words, create_review_word_occurrence_matrix, 
-compute_review_norms, build_wr_inverted_index, compute_idf)
+compute_review_norms, build_wr_inverted_index, compute_idf, index_search)
 import pandas as pd
 
 ############ TEMPLATE BEGIN ############
@@ -100,9 +100,9 @@ idf = compute_idf(wr_inv_idx, len(df))
 
 doc_norms = compute_review_norms(wr_inv_idx, idf, len(df))
 print(doc_norms)
-
-
-
+print(input_review_df.iloc[0]["text"])
+sorted_sim_reviews = index_search(input_review_df.iloc[0]["text"], br_inv_idx, idf, doc_norms)
+print(sorted_sim_reviews)
 
 
 

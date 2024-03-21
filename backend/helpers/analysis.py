@@ -232,8 +232,6 @@ def compute_idf(inv_idx, n_docs):
         For each term, the dict contains the idf value.
 
     """
-
-    # TODO-5.1
     idf = dict()
 
     for key in inv_idx.keys():
@@ -297,8 +295,9 @@ def accumulate_dot_scores(query_word_counts: dict, index: dict, idf: dict) -> di
     dot_scores = dict()
 
     for key in query_word_counts.keys():
+      print(key)
       q_i = query_word_counts[key]
-      sum = 0
+      print(q_i)
       if key in index.keys():
         for (review, review_id, tf) in index[key]:
           if review not in dot_scores.keys():
@@ -309,7 +308,77 @@ def accumulate_dot_scores(query_word_counts: dict, index: dict, idf: dict) -> di
     return dot_scores
        
        
+def index_search(
+    query: str,
+    index: dict,
+    idf,
+    doc_norms,
+    score_func=accumulate_dot_scores,
+    tokenizer=tokenize,
+) -> List[Tuple[int, int]]:
+    """Search the collection of documents for the given query
 
+    Arguments
+    =========
+
+    query: string,
+        The query we are looking for.
+
+    index: an inverted index as above
+
+    idf: idf values precomputed as above
+
+    doc_norms: document norms as computed above
+
+    score_func: function,
+        A function that computes the numerator term of cosine similarity (the dot product) for all documents.
+        Takes as input a dictionary of query word counts, the inverted index, and precomputed idf values.
+        (See Q7)
+
+    tokenizer: a TreebankWordTokenizer
+
+    Returns
+    =======
+
+    results, list of tuples (score, doc_id)
+        Sorted list of results such that the first element has
+        the highest score, and `doc_id` points to the document
+        with the highest score.
+
+    Note:
+
+    """
+
+    # TODO-8.1
+    results = []
+    print()
+    query = query.lower()
+    tokens = tokenizer(query)
+
+    tf = dict()
+    for token in tokens:
+      if token not in tf.keys():
+        tf[token] = 1
+      else:
+        tf[token] += 1
+
+    # compute query norm
+    query_norm = 0
+    for key in tf.keys():
+      if key in idf.keys():
+        query_norm += (tf[key] * idf[key]) ** 2
+    query_norm = np.sqrt(query_norm)
+    
+    cossim_numerator = score_func(tf, index, idf)
+    cossim_denominator = query_norm * doc_norms
+    print(cossim_numerator)
+    print(cossim_denominator)
+
+    for doc in cossim_numerator.keys():
+      results.append((cossim_numerator[doc] / cossim_denominator[doc], doc))
+
+    results.sort(key=lambda x: x[0], reverse=True)
+    return results
 
        
        
