@@ -78,7 +78,22 @@ review_vectors = create_review_word_occurrence_matrix(tokenize, df, good_words)
 # build word-review invertedd index. key = good type,
 #value = list of tuples pertaining to review that has that good type
 wr_inv_idx = build_wr_inverted_index(review_vectors, df, good_words)
-# print("final dict", wr_inv_idx)
+print("final dict", wr_inv_idx)
+
+#START cosine similarity computation
+dummy_review = "this place is yummy and has good service. it is a restaurant that I will return to. chiara emory varsha teresa"
+# replace dummy review with actuall user inputted review from frontend
+input_review_dict = {"text": dummy_review}
+input_review_df = pd.DataFrame([input_review_dict])
+print("review df", input_review_df)
+
+# vectorize review
+input_review_vector = create_review_word_occurrence_matrix(tokenize, input_review_df, good_words)
+
+print("review vectors shape", review_vectors.shape)
+print("review vector shape", input_review_vector.shape)
+print("review vector", input_review_vector)
+
 
 idf = compute_idf(wr_inv_idx, len(df))
 # print(idf)
