@@ -295,9 +295,7 @@ def accumulate_dot_scores(query_word_counts: dict, index: dict, idf: dict) -> di
     dot_scores = dict()
 
     for key in query_word_counts.keys():
-      print(key)
       q_i = query_word_counts[key]
-      print(q_i)
       if key in index.keys():
         for (review, review_id, tf) in index[key]:
           if review not in dot_scores.keys():
