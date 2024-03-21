@@ -380,6 +380,64 @@ def index_search(
     results.sort(key=lambda x: x[0], reverse=True)
     return results
 
+
+
+# ignore this
+def chiara_index_search(
+    query_vector: str,
+    wr_index: dict,
+    idf,
+    doc_norms,
+    score_func=accumulate_dot_scores,
+    tokenizer=tokenize,
+) -> List[Tuple[int, int]]:
+    """Search the collection of documents for the given query
+
+    Arguments
+    =========
+
+    query: np.array,
+        The query we are looking for (tfs).
+
+    index: an inverted index as above
+
+    idf: idf values precomputed as above
+
+    doc_norms: document norms as computed above
+
+    score_func: function,
+        A function that computes the numerator term of cosine similarity (the dot product) for all documents.
+        Takes as input a dictionary of query word counts, the inverted index, and precomputed idf values.
+        (See Q7)
+
+    tokenizer: a TreebankWordTokenizer
+
+    Returns
+    =======
+
+    results, list of tuples (score, doc_id)
+        Sorted list of results such that the first element has
+        the highest score, and `doc_id` points to the document
+        with the highest score.
+
+    Note:
+
+    """
+    # turn query vector from tf to tf-idf = q
+    # turn dataset review vectors from tf to tf-idf = d
+
+    # get numerator: q dot d
+
+    # get denominator: sum(q^2) * sum(d^2)
+
+    # build dictionary: key = (review id, business id), value = cossim
+
+    # sort items from most sim to least sim
+
+    # based on star review, return either first 5 or last 5 business reviews
+
+
+
        
        
        
