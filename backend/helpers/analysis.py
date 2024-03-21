@@ -44,7 +44,7 @@ def distinct_words(tokenize_method: Callable[[str], List[str]],
     """
     tokens = []
     for review_idx in input_reviews.index:
-      tokens += tokenize(input_reviews["text"][review_idx])
+      tokens += tokenize_method(input_reviews["text"][review_idx])
     return set(tokens)
 
 def get_good_words(min_percentage, max_percentage, reviews, distinct_words):
@@ -82,97 +82,6 @@ def get_good_words(min_percentage, max_percentage, reviews, distinct_words):
       good_words.append(key)
   return sorted(good_words)
 
-
-def num_dedup_tokens(tokenize_method: Callable[[str], List[str]],
-    tokenize_transcript_method: Callable[[Callable[[str], List[str]], Tuple[str, List[Dict[str, str]]]], List[str]],
-    input_transcripts: List[Tuple[str, List[Dict[str, str]]]]) -> int:
-    """Returns number of tokens used in an entire transcript
-
-    Parameters
-    ----------
-    tokenize_method : Callable[[str], List[str]]
-        A method to tokenize a string into a list of strings representing words.
-    tokenize_transcript_method: Callable[[Callable[[str], List[str]], Tuple[str, List[Dict[str, str]]]], List[str]]
-        A method that returns a list of tokens contained in an entire transcript, 
-        given a tokenization method and a transcript.
-    input_transcripts : List[Tuple[str, List[Dict[str, str]]]]
-        A list of tuples containing a transcript UID mapped to a list of utterances 
-        (specified as a dictionary with ``speaker``, ``text``, and ``timestamp`` as keys).
-
-    Returns
-    -------
-    int
-        The total number of tokens in all the transcripts.
-    """
-    # TODO-2.3
-    tokens = []
-    for transcript in input_transcripts:
-      tokens += tokenize_transcript_method(tokenize_method, transcript)
-    return len(tokens)
-
-def build_word_count(tokenize_method: Callable[[str], List[str]],
-    tokenize_transcript_method: Callable[[Callable[[str], List[str]], Tuple[str, List[Dict[str, str]]]], List[str]],
-    input_transcripts: List[Tuple[str, List[Dict[str, str]]]], 
-    input_titles: Dict[str, str]) -> Dict[str, int]:
-    """Returns a dictionary with the number of episodes each distinct word appears
-
-    Parameters
-    ----------
-    tokenize_method : Callable[[str], List[str]]
-        A method to tokenize a string into a list of strings representing words.
-    tokenize_transcript_method: Callable[[Callable[[str], List[str]], Tuple[str, List[Dict[str, str]]]], List[str]]
-        A method that returns a list of tokens contained in an entire transcript, 
-        given a tokenization method and a transcript.
-    input_transcripts : List[Tuple[str, List[Dict[str, str]]]]
-        A list of tuples containing a transcript UID mapped to a list of utterances 
-        (specified as a dictionary with ``speaker``, ``text``, and ``timestamp`` as keys).
-    input_titles: Dict[str, str]
-        A dictionary of transcript UIDs mapped to corresponding episode titles.
-
-    Returns
-    -------
-    Dict[str, int]
-        A dictionary of words mapped to the number of episodes they appear in.
-    """
-    title_tokens = {}
-    for transcript in input_transcripts:
-      title = input_titles[transcript[0]]
-      if title not in title_tokens.keys():
-        title_tokens[title] = set()
-      tokens = tokenize_transcript_method(tokenize_method, transcript)
-      for token in tokens:
-        title_tokens[title].add(token)
-    
-    word_episode_counts = {}
-    for title in title_tokens.keys():
-      for word in title_tokens[title]:
-        if word not in word_episode_counts.keys():
-          word_episode_counts[word] = 0
-        word_episode_counts[word] += 1
-    
-    return word_episode_counts
-
-def build_word_episode_distribution(input_word_counts: Dict[str, str]) -> Dict[int, int]:
-    """Returns a dictionary that counts how many words appear in exactly a given number of episodes
-
-    Parameters
-    ----------
-    input_word_counts : Dict[str, str]
-        A dictionary of word mappeds to the number of episodes they appear in.
-
-    Returns
-    -------
-    Dict[int, int]
-        A dictionary that maps a number of episodes to the number of words that appear in that many episodes.
-    """
-    dist = dict()
-    for key in input_word_counts.keys():
-      count = input_word_counts[key]
-      if count not in dist.keys():
-        dist[count] = 0
-      dist[count] += 1
-    return dist
-
 def output_good_types(input_word_counts: Dict[str, str]) -> List[str]:
     """Returns a list of good types in alphabetically sorted order
 
@@ -191,127 +100,6 @@ def output_good_types(input_word_counts: Dict[str, str]) -> List[str]:
       if input_word_counts[key] > 1:
         good_words.append(key)
     return sorted(good_words)
-
-def create_ranked_good_types(tokenize_method: Callable[[str], List[str]],
-    tokenize_transcript_method: Callable[[Callable[[str], List[str]], Tuple[str, List[Dict[str, str]]]], List[str]],
-    input_transcripts: List[Tuple[str, List[Dict[str, str]]]], 
-    input_good_types: List[str]) -> List[Tuple[str, float]]:
-    """Returns a list of good types in reverse sorted order in the form:
-        [(word_1,word_frequency_1),
-        ...
-        (word_10,word_frequency_10)]
-
-    Parameters
-    ----------
-    tokenize_method : Callable[[str], List[str]]
-        A method to tokenize a string into a list of strings representing words.
-    tokenize_transcript_method: Callable[[Callable[[str], List[str]], Tuple[str, List[Dict[str, str]]]], List[str]]
-        A method that returns a list of tokens contained in an entire transcript, 
-        given a tokenization method and a transcript.
-    input_transcripts : List[Tuple[str, List[Dict[str, str]]]]
-        A list of tuples containing a transcript UID mapped to a list of utterances 
-        (specified as a dictionary with ``speaker``, ``text``, and ``timestamp`` as keys).
-    input_good_types: List[str]
-        A list of all good types, sorted alphabetically.
-
-    Returns
-    -------
-    List[Tuple[str, float]]
-        A list of tuples containing a good type and its frequency, sorted in descending order.
-    """
-    def sort_tuple(tup):
-      """ Returns a list of tuples sorted in descending order by the second element in the tuple."""
-      for x in range(0, len(tup)):
-          for y in range(0, len(tup)-x-1):
-              if (tup[y][1] < tup[y + 1][1]):
-                  temp = tup[y]
-                  tup[y] = tup[y + 1]
-                  tup[y + 1] = temp
-      return tup
-    num_tokens = 0
-    word_frequency = dict()
-    for transcript in input_transcripts:
-      tokens = tokenize_transcript_method(tokenize_method, transcript)
-      num_tokens += len(tokens)
-      for token in tokens:
-        if token not in word_frequency.keys():
-          word_frequency[token] = 0
-        word_frequency[token] += 1
-
-    good_word_frequencies = []
-    for word in input_good_types:
-      freq = round(word_frequency[word]/num_tokens, 5)
-      good_word_frequencies.append((word, freq))
-    return sort_tuple(good_word_frequencies)
-    
-
-def create_word_occurrence_matrix(
-    tokenize_method: Callable[[str], List[str]],
-    input_transcripts: List[Tuple[str, List[Dict[str, str]]]],
-    input_speakers: List[str],
-    input_good_types: List[str]) -> np.ndarray:
-    """Returns a numpy array of shape n_speakers by n_good_types such that the 
-    entry (ij) indicates how often speaker i says word j.
-
-    Parameters
-    ----------
-    tokenize_method : Callable[[str], List[str]]
-        A method to tokenize a string into a list of strings representing words.
-    input_transcripts : List[Tuple[str, List[Dict[str, str]]]]
-        A list of tuples containing a transcript UID mapped to a list of utterances 
-        (specified as a dictionary with ``speaker``, ``text``, and ``timestamp`` as keys).
-    input_speakers: List[str]
-        A list of speaker names
-    input_good_types: List[str]
-        A list of all good types, sorted alphabetically.
-
-    Returns
-    -------
-    np.ndarray
-        A numpy array of shape n_speakers by n_good_types such that the 
-        entry (ij) indicates how often speaker i says word j.
-    """
-    word_occurence_matrix = np.zeros((len(input_speakers), len(input_good_types)))
-    speakers = np.array(input_speakers)
-    good_types = np.array(input_good_types)
-
-    for transcript in input_transcripts:
-      for utterance in transcript[1]:
-        speaker = utterance["speaker"]
-        text = utterance["text"]
-        speaker_idx = np.where(speakers == speaker)
-        assert len(speaker_idx[0]) == 0 or 1
-        if len(speaker_idx[0] == 1):
-          tokens = tokenize_method(text)
-          for token in tokens:
-            word_idx = np.where(good_types == token)
-            assert len(word_idx[0]) == 0 or 1
-            if len(word_idx[0]) == 1:
-              word_occurence_matrix[speaker_idx[0][0]][word_idx[0][0]] += 1
-      
-    return word_occurence_matrix
-
-def create_weighted_word_freq_array(input_word_array: np.ndarray) -> np.ndarray:
-    """Returns a numpy array of shape n_speakers by n_good_types such that the 
-    entry (ij) indicates how often speaker i says word j weighted by the above ratio.
-    
-    Note: You must add 1 to the sum of each column to avoid divison by 0 issues.
-
-    Parameters
-    ----------
-    input_word_array: np.ndarray
-        A numpy array of shape n_speakers by n_good_types such that the 
-        entry (ij) indicates how often speaker i says word j.
-
-    Returns
-    -------
-    np.ndarray
-        A numpy array of shape n_speakers by n_good_types such that the 
-        entry (ij) indicates how often speaker i says word j
-    """
-    # TODO-3.3
-    return input_word_array / (input_word_array.sum(0) + 1)
-
 
 # different from the one in a4
 def build_br_inverted_index(df: List[dict]) -> dict:
@@ -369,7 +157,7 @@ def create_review_word_occurrence_matrix(
     good_types = np.array(input_good_types)
 
     for i in range(input_df.shape[0]):
-       tokens = tokenize(input_df.iloc[i]['text'])
+       tokens = tokenize_method(input_df.iloc[i]['text'])
        for token in tokens:
           if token in input_good_types:
              word_occurence_matrix[i][input_good_types.index(token)] = 1
