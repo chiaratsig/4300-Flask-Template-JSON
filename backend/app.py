@@ -3,10 +3,8 @@ import os
 from flask import Flask, render_template, request
 from flask_cors import CORS
 from helpers.MySQLDatabaseHandler import MySQLDatabaseHandler
-from helpers.analysis import (tokenize, num_dedup_tokens,
-distinct_words, get_good_words, build_word_count, build_word_episode_distribution,
-output_good_types, create_ranked_good_types, create_word_occurrence_matrix, create_weighted_word_freq_array,
-build_br_inverted_index, create_review_word_occurrence_matrix, build_wr_inverted_index)
+from helpers.analysis import (tokenize, 
+build_br_inverted_index, distinct_words, get_good_words, create_review_word_occurrence_matrix, build_wr_inverted_index)
 import pandas as pd
 
 ############ TEMPLATE BEGIN ############
