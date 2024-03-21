@@ -204,8 +204,109 @@ def build_wr_inverted_index(
             inv_idx[word].append((review_index, review_id, freq))
     return inv_idx
 
+# def compute_idf(inv_idx, n_docs, min_df=10, max_df_ratio=0.95):
+def compute_idf(inv_idx, n_docs):
+    """Compute term IDF values from the inverted index.
+    Words that are too frequent or too infrequent get pruned.
 
-          
+    Hint: Make sure to use log base 2.
+
+    inv_idx: an inverted index as above
+
+    n_docs: int,
+        The number of documents.
+
+    min_df: int,
+        Minimum number of documents a term must occur in.
+        Less frequent words get ignored.
+        Documents that appear min_df number of times should be included.
+
+    max_df_ratio: float,
+        Maximum ratio of documents a term can occur in.
+        More frequent words get ignored.
+
+    Returns
+    =======
+
+    idf: dict
+        For each term, the dict contains the idf value.
+
+    """
+
+    # TODO-5.1
+    idf = dict()
+
+    for key in inv_idx.keys():
+        # docs = inv_idx[key]
+    #   if len(docs) >= min_df:         
+        idf_t = np.log2((n_docs)/(len(inv_idx[key]) + 1))
+        # df_ratio = len(inv_idx[key])/n_docs
+
+        # if df_ratio <= max_df_ratio:
+        idf[key] = idf_t
+   
+    return idf
+
+def compute_review_norms(index, idf, n_reviews):
+    """Precompute the euclidean norm of each document.
+    index: the inverted index as above
+
+    idf: dict,
+        Precomputed idf values for the terms.
+
+    n_docs: int,
+        The total number of documents.
+    norms: np.array, size: n_reviews
+        norms[i] = the norm of review i.
+    """
+
+    # TODO-6.1
+    norms = np.zeros((n_reviews))
+
+    for key in index.keys():
+      tf_revs = index[key]
+      for (review, review_id, tf) in tf_revs:
+        if key in idf.keys():
+          norms[review] += (tf * idf[key]) ** 2
+
+    return np.sqrt(norms)
+
+def accumulate_dot_scores(query_word_counts: dict, index: dict, idf: dict) -> dict:
+    """Perform a term-at-a-time iteration to efficiently compute the numerator term of cosine similarity across multiple documents.
+
+    Arguments
+    =========
+
+    query_word_counts: dict,
+        A dictionary containing all words that appear in the query;
+        Each word is mapped to a count of how many times it appears in the query.
+        In other words, query_word_counts[w] = the term frequency of w in the query.
+        You may safely assume all words in the dict have been already lowercased.
+
+    index: the inverted index as above,
+
+    idf: dict,
+        Precomputed idf values for the terms.
+    Returns
+    =======
+
+    doc_scores: dict
+        Dictionary mapping from doc ID to the final accumulated score for that doc
+    """
+    # TODO-7.1
+    dot_scores = dict()
+
+    for key in query_word_counts.keys():
+      q_i = query_word_counts[key]
+      sum = 0
+      if key in index.keys():
+        for (review, review_id, tf) in index[key]:
+          if review not in dot_scores.keys():
+            dot_scores[review] = q_i * tf * idf[key] * idf[key]
+          else:
+            dot_scores[review] += q_i * tf
+
+    return dot_scores
        
        
 

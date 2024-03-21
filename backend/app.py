@@ -4,7 +4,8 @@ from flask import Flask, render_template, request
 from flask_cors import CORS
 from helpers.MySQLDatabaseHandler import MySQLDatabaseHandler
 from helpers.analysis import (tokenize, 
-build_br_inverted_index, distinct_words, get_good_words, create_review_word_occurrence_matrix, build_wr_inverted_index)
+build_br_inverted_index, distinct_words, get_good_words, create_review_word_occurrence_matrix, 
+compute_review_norms, build_wr_inverted_index, compute_idf)
 import pandas as pd
 
 ############ TEMPLATE BEGIN ############
@@ -61,27 +62,29 @@ with open(ma_json_file_path, 'r') as file:
 df = pd.DataFrame(data=data, columns=cols)
 # print(df["text"])
 distinct_words = distinct_words(tokenize, df) 
-print("distinct_words")
+# print("distinct_words")
 good_words = get_good_words(0.1, 0.9, df["text"], distinct_words)
-print(good_words)
+# print(good_words)
 
 # build inverted business-review index
 br_inv_idx = build_br_inverted_index(df)
-print("br_inv_idx")
+# print("br_inv_idx")
 
 # build vector array of shape (review, good_words) - values are binary to start
 # review index i is the same index it has in df
 review_vectors = create_review_word_occurrence_matrix(tokenize, df, good_words)
-print(review_vectors)
+# print(review_vectors)
 
 # build word-review invertedd index. key = good type,
 #value = list of tuples pertaining to review that has that good type
 wr_inv_idx = build_wr_inverted_index(review_vectors, df, good_words)
-print("final dict", wr_inv_idx)
+# print("final dict", wr_inv_idx)
 
+idf = compute_idf(wr_inv_idx, len(df))
+# print(idf)
 
-
-
+doc_norms = compute_review_norms(wr_inv_idx, idf, len(df))
+print(doc_norms)
 
 
 
