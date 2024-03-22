@@ -109,7 +109,11 @@ print(returned_restaurants)
 
 
 def businesss_search(review, star_rating, zip_code):
-   return df[:5] 
+   input_review_dict = {"text": review}
+   input_review_df = pd.DataFrame([input_review_dict])
+#    input_review_vector = create_review_word_occurrence_matrix(tokenize, input_review_df, good_words)
+   returned_restaurants = index_search(input_review_df.iloc[0]["text"], wr_inv_idx, df, idf, doc_norms, star_rating)
+   return returned_restaurants
 
 @app.route("/restaurants")
 def restaurant_search():
