@@ -55,6 +55,11 @@
       console.log(document.getElementById("user-review-val").value);
       console.log(document.getElementById("user-rating-val").value);
       document.getElementById("answer-box").innerHTML = "";
+      let loadingDiv = document.createElement("div");
+      loadingDiv.innerHTML = `<div class='loadingMsg'>
+                <h3>Finding restaurants for you. Give me a few moments...</h3>
+            </div>`
+      document.getElementById("answer-box").appendChild(loadingDiv);
       fetch(
         "/restaurants?" +
           new URLSearchParams({
@@ -65,6 +70,7 @@
       ).then((response) => response.json())
         .then((data) =>{
         console.log(data);
+        loadingDiv.style.display = "none";
           data.forEach((restaurant) => {
             let tempDiv = document.createElement("div");
             tempDiv.innerHTML = answerBoxTemplate(
