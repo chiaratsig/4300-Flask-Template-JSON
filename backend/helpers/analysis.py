@@ -192,7 +192,7 @@ def build_wr_inverted_index(
 
     """
     inv_idx = dict((word, []) for word in input_good_types)
-    print("empty dict", inv_idx)
+
     for i in range(review_vectors.shape[0]):
        review_index = i
        review_id = input_df.iloc[i]["review_id"]
@@ -353,7 +353,7 @@ def index_search(
 
     # TODO-8.1
     results = []
-    print()
+
     query = query.lower()
     tokens = tokenizer(query)
 
@@ -373,14 +373,13 @@ def index_search(
     
     cossim_numerator = score_func(tf, index, idf)
     cossim_denominator = query_norm * doc_norms
-    print(cossim_numerator)
-    print(cossim_denominator)
+
 
     for doc in cossim_numerator.keys():
       results.append((cossim_numerator[doc] / cossim_denominator[doc], doc))
 
     results.sort(key=lambda x: x[0], reverse=True)
-    #print(results)
+
     
     # based on star review, either grab first 5 or last 5 reviews
     if star_rating >=3:
