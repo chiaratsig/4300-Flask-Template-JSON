@@ -121,3 +121,11 @@ def restaurant_search():
    star_rating = request.args.get("star_rating")
    zip_code = request.args.get("zip_code")
    return businesss_search(review, star_rating, zip_code)
+
+@app.route("/")
+def home():
+    return render_template('base.html',title="sample html")
+
+
+if 'DB_NAME' not in os.environ:
+    app.run(debug=True,host="0.0.0.0",port=5000)

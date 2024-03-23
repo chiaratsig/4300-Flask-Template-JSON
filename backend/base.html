@@ -1,0 +1,94 @@
+<!doctype html>
+<title>{% block title %}{% endblock %} - Flaskr</title>
+<link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Kanit&family=Montserrat&family=Open+Sans:wght@500&display=swap" rel="stylesheet">
+<body>
+    <div class="full-body-container">
+        <div class="top-text">
+            <div class="google-colors">
+                <h1 id="google-4">4</h1>
+                <h1 id="google-3">3</h1>
+                <h1 id="google-0-1">0</h1>
+                <h1 id="google-0-2">0</h1>
+            </div>
+            <div class="input-box" onclick="sendFocus()">
+                <img src="{{ url_for('static', filename='images/mag.png') }}" />
+                <input review="Type your review" id="review" onkeyup="filterText()">
+                <input star_rating="Type your star rating" id="star_rating" onkeyup="filterText()">
+                <input zip_code="Type the zipcode of the restaurant" id="zip_code" onkeyup="filterText()">
+
+            </div>
+        </div>
+        <div id1="answer-box-rev">
+        <div  id2="answer-box-star">
+        <div  id2="answer-box-zip">
+
+        </div>
+
+        </div>
+        </div>
+
+    </div>
+
+    <script>
+
+        function answerBoxTemplate(returned_restaurants){
+            return `<div class=''>
+                <h3 class='header'>${"Restaurants:"}</h3>
+                <p class='rest1'>${returned_restaurants[0]}</p>
+                <p class='rest2'>${returned_restaurants[1]}</p>
+                <p class='rest3'>${returned_restaurants[2]}</p>
+                <p class='rest4'>${returned_restaurants[3]}</p>
+                <p class='rest5'>${returned_restaurants[4]}</p>
+            </div>`
+        }
+
+        function sendFocus(){
+            document.getElementById('filter-text-val').focus()
+        }
+
+        function filterText(){
+            document.getElementById("answer-box-rev").innerHTML = ""
+            document.getElementById("answer-box-star").innerHTML = ""
+            document.getElementById("answer-box-zip").innerHTML = ""
+            console.log(document.getElementById("review").value)
+            console.log(document.getElementById("star_rating").value)
+            console.log(document.getElementById("zip_code").value)
+            fetch("/restaurants?" + new URLSearchParams({ review: document.getElementById("review").value }).toString())
+            .then((response) => response.json())
+            .then((data) => data.forEach(row => {
+                
+                let tempDiv = document.createElement("div")
+                tempDiv.innerHTML = answerBoxTemplate(row)
+                document.getElementById("answer-box-rev").appendChild(tempDiv)
+            }));
+
+            // document.getElementById("answer-box-star").innerHTML = ""
+            // console.log(document.getElementById("star_rating").value)
+            // fetch("/restaurants?" + new URLSearchParams({ star_rating: document.getElementById("star_rating").value }).toString))
+            // .then((response) => response.json())
+            // .then((data) => data.forEach(row => {
+                
+            //     let tempDiv = document.createElement("div")
+            //     tempDiv.innerHTML = answerBoxTemplate(row)
+            //     document.getElementById("answer-box-star").appendChild(tempDiv)
+            // }));
+
+            // document.getElementById("answer-box-zip").innerHTML = ""
+            // console.log(document.getElementById("zip_code").value)
+            // fetch("/restaurants?" + new URLSearchParams({ zip_code: document.getElementById("zip_code").value }).toString))
+            // .then((response) => response.json())
+            // .then((data) => data.forEach(row => {
+                
+            //     let tempDiv = document.createElement("div")
+            //     tempDiv.innerHTML = answerBoxTemplate(row)
+            //     document.getElementById("answer-box-zip").appendChild(tempDiv)
+            // }));
+        }
+
+
+            
+    </script>
+</body>
