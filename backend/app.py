@@ -95,23 +95,8 @@ def business_search(review, star_rating, zip_code):
 
 @app.route("/restaurants")
 def restaurant_search():
-<<<<<<< HEAD
-   review = request.args.get("review")
-   star_rating = request.args.get("star_rating")
-   zip_code = request.args.get("zip_code")
-   return businesss_search(review, star_rating, zip_code)
-
-@app.route("/")
-def home():
-    return render_template('base.html',title="sample html")
-
-
-if 'DB_NAME' not in os.environ:
-    app.run(debug=True,host="0.0.0.0",port=5000)
-=======
     review = request.args.get("review")
     star_rating = request.args.get("starRating")
     zip_code = request.args.get("zipCode")
     return business_search(review, star_rating, zip_code) 
    
->>>>>>> ede172d7a2600ee94c6384adc5282bffee4ea4c3
