@@ -71,6 +71,7 @@ def business_search(review, star_rating, zip_code):
     # build vector array of shape (review, good_words) - values are binary to start
     # review index i is the same index it has in df
     review_vectors = create_review_word_occurrence_matrix(tokenize, df, good_words)
+    
 
     # build word-review invertedd index. key = good type,
     #value = list of tuples pertaining to review that has that good type
@@ -92,6 +93,10 @@ def business_search(review, star_rating, zip_code):
     # dummy_rating = 1
     returned_restaurants = index_search(input_review_df.iloc[0]["text"], wr_inv_idx, df, idf, doc_norms, int(star_rating))
     return returned_restaurants
+
+def business_search2():
+    # Todo
+    return
 
 @app.route("/restaurants")
 def restaurant_search():
