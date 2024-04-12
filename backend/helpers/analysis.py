@@ -3,6 +3,7 @@ from collections.abc import Callable
 import numpy as np
 import pandas as pd
 import re
+from itertools import repeat
 
 def tokenize(text: str) -> List[str]:
     """Returns a list of words that make up the text.
@@ -150,7 +151,7 @@ def create_review_word_occurrence_matrix(
     Returns
     -------
     np.ndarray
-        A numpy array of shape n_speakers by n_good_types such that the 
+        A numpy array of shape n_reviews by n_good_types such that the 
         entry (ij) indicates how often speaker i says word j.
     """
     word_occurence_matrix = np.zeros((input_df.shape[0], len(input_good_types)))
@@ -392,65 +393,116 @@ def index_search(
     return returned_5_restaurants
 
 
-
-# ignore this
-def chiara_index_search(
-    query_vector: str,
-    wr_index: dict,
-    idf,
-    doc_norms,
-    score_func=accumulate_dot_scores,
-    tokenizer=tokenize,
-) -> List[Tuple[int, int]]:
-    """Search the collection of documents for the given query
+def build_cr_inverted_index(df: List[dict],
+                            top_categories: List[str]) -> dict:
+    """Builds an inverted index from the reviews. 
 
     Arguments
     =========
 
-    query: np.array,
-        The query we are looking for (tfs).
+    df: DataFrame.
+        Each review has a corresponding list of categories pertaining
+        to the restaurant.
 
-    index: an inverted index as above
-
-    idf: idf values precomputed as above
-
-    doc_norms: document norms as computed above
-
-    score_func: function,
-        A function that computes the numerator term of cosine similarity (the dot product) for all documents.
-        Takes as input a dictionary of query word counts, the inverted index, and precomputed idf values.
-        (See Q7)
-
-    tokenizer: a TreebankWordTokenizer
+    top_categories: List.
+        List of top 15 categories user can check-off
 
     Returns
     =======
 
-    results, list of tuples (score, doc_id)
-        Sorted list of results such that the first element has
-        the highest score, and `doc_id` points to the document
-        with the highest score.
-
-    Note:
+    inverted_index: dict
+        Key = review_id, value = single-linked list of review_ids
 
     """
-    # turn query vector from tf to tf-idf = q
-    # turn dataset review vectors from tf to tf-idf = d
+    values = [[], [], [], [], [], [], [], [], [], [], 
+              [], [], [], [], []]
+    inv_idx = dict(zip(top_categories, values))
+    for i in range(5):#range(df.shape[0]):
+        # list of a few cats pertaining to this restaurant
+        rest_categories = df.iloc[i]['categories']
 
-    # get numerator: q dot d
-
-    # get denominator: sum(q^2) * sum(d^2)
-
-    # build dictionary: key = (review id, business id), value = cossim
-
-    # sort items from most sim to least sim
-
-    # based on star review, return either first 5 or last 5 business reviews
-
-
+        for cat in rest_categories:
+            if cat in top_categories:
+               inv_idx[cat].append(i)
+              
+    return inv_idx
 
        
-       
+def create_top_category_vectors(
+    input_review_vectors: np.ndarray,
+    inverted_index: Dict,
+    top_categories: List[str],
+    n_good_types: int) -> np.ndarray:
+    """Returns a numpy array of shape n_top_categories by n_good_types such that the 
+    entry (ij) indicates the average value of good type j for review vectors that
+    pertain to restaurants with categories i
+
+    Parameters
+    ----------
+    input_review_vectors: np.ndarray
+        numpy array of shape n_reviews by n_good_types such that the 
+        entry (ij) indicates if review i contains word j (binary). 
+
+    inverted_index: Dict
+        key = categories, value = single-linked list of review_ids
+
+    top_categories: List[str]
+        list of top categories
+
+    n_good_types: int
+        number of good types represented by the vector
+
+    Returns
+    -------
+    categories_vectors: np.ndarray
+        A numpy array of shape n_top_categories by n_good_types
+    """    
+
+    #initialize empty array
+    category_vectors = np.zeros((len(top_categories), n_good_types))
+    for cat in inverted_index.keys():
+        i = top_categories.index(cat)
+        for review_id in inverted_index[cat]:
+          category_vectors[i] += input_review_vectors[review_id]
+        # divide by number of reviews with that cat to take the avg
+        # add one to avoid dividing by 0
+        category_vectors[i] /= (len(inverted_index[cat]) + 1)
+    return category_vectors
+
+def create_query_vector(top_categories: List[str],
+    input_category_vectors: np.ndarray,
+    input_selected_categories: List[str],
+    n_good_types: int) -> np.ndarray:
+    """Returns a numpy array vector of length n_good_types such that the 
+    ith entry indicates the weight of that type in the query
+
+    Parameters
+    ----------
+    top_categories: List[str]
+        list of top categories
+
+    input_category_vectors: np.ndarray
+        numpy array of shape n_categories by n_good_types such that the 
+        entry (ij) indicates the weight of word j in restaurant type i
+
+    input_selected_categories: List[str]
+       list of categories selected by the user
+
+    n_good_types: int
+        number of good types represented by the vector
+
+    Returns
+    -------
+    query_vector: np.ndarray
+        A numpy array of shape n_top_categories by n_good_types
+    """
+    # initialize empty array
+    query_vector = np.zeros(n_good_types)
+    # for each category selected by the user, add that category's vector to the query vector
+    #(all are weighted equally)
+    for cat in input_selected_categories:
+       query_vector += input_category_vectors[top_categories.index(cat)]
+    return query_vector
        
 
     
