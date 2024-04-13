@@ -6,7 +6,8 @@ from helpers.MySQLDatabaseHandler import MySQLDatabaseHandler
 from helpers.analysis import (tokenize, 
 build_br_inverted_index, distinct_words, get_good_words, create_review_word_occurrence_matrix, 
 compute_review_norms, build_wr_inverted_index, compute_idf, index_search, index_search2,
-build_cr_inverted_index, create_top_category_vectors, create_query_vector)
+build_cr_inverted_index, create_top_category_vectors, create_query_vector, create_restaurant_vectors,
+update_query_vector)
 import pandas as pd
 from itertools import repeat
 
@@ -158,11 +159,30 @@ def business_search2():
 
     doc_norms = compute_review_norms(wr_inv_idx, idf, len(df))
 
-    returned_restaurants = index_search2(good_words, initial_query, wr_inv_idx, df, idf, doc_norms)
-    print(returned_restaurants)
+    # Pass this initial query into an updated version of index_search in analysis.py 
+    #(this initial query is the new value of input_review_vector in app.py). 
+    #This will return returned_restaurants (n=5)
+    initial_returned_restaurants = index_search2(good_words, initial_query, wr_inv_idx, df, idf, doc_norms)
 
     # Assign each of the returned_restaurants a rating [0,1] (dummy for now)
     dummy_scores = [0, 0.25, 0.5, 0.75, 1]
+
+    # Build a vector to represent each of the 5 returned restaurants - average the review vector 
+    #of each review pertaining to that restaurant
+    restaurant_vectors = create_restaurant_vectors(review_vectors, initial_returned_restaurants, br_inv_idx, len(good_words))
+
+    # For each of the 5 restaurants, add the (relevant restaurant vectors to the initial query vector)/(# relevant restaurants), 
+    #subtract the (irrelevant restaurant vectors)/(#irrelevant restaurants)  from the initial query. 
+    #This is the updated query
+    updated_query = update_query_vector(initial_query, restaurant_vectors, dummy_scores)
+
+    # Run business_search on this updated query
+    updated_returned_restaurants = index_search2(good_words, updated_query, wr_inv_idx, df, idf, doc_norms)
+    print("initial res", initial_returned_restaurants)
+    print("updated res", updated_returned_restaurants)
+
+
+
 
 
 business_search2()

@@ -110,13 +110,13 @@ def build_br_inverted_index(df: List[dict]) -> dict:
     =========
 
     df: DataFrame.
-        Each review has a corresponding business_id.
+        Each review has a corresponding business name.
 
     Returns
     =======
 
     inverted_index: dict
-        Key = business_id, value = single-linked list of tuples
+        Key = business_name, value = single-linked list of tuples
         pertaining to the business.
         Tuple[0] is the index of the review row in the df,
         tuple[1] is the review_ids
@@ -124,10 +124,10 @@ def build_br_inverted_index(df: List[dict]) -> dict:
     """
     inv_idx = {}
     for i in range(df.shape[0]):
-        if df.iloc[i]['business_id'] not in inv_idx.keys():
-          inv_idx[df.iloc[i]['business_id']] = list((i, df.iloc[i]['review_id']))
+        if df.iloc[i]['name'] not in inv_idx.keys():
+          inv_idx[ df.iloc[i]['name']] = [(i, df.iloc[i]['review_id'])]
         else:
-          inv_idx[df.iloc[i]['business_id']].append((i, df.iloc[i]['review_id']))
+          inv_idx[df.iloc[i]['name']].append((i, df.iloc[i]['review_id']))
 
     return inv_idx
 
@@ -392,9 +392,7 @@ def index_search(
 
     return returned_5_restaurants
 
-# Pass this initial query into an updated version of index_search in analysis.py 
-#(this initial query is the new value of input_review_vector in app.py). 
-#This will return returned_restaurants (n=5)
+
 def index_search2(
     #query: str,
     input_good_types: List[str],
@@ -600,7 +598,7 @@ def create_query_vector(top_categories: List[str],
     Returns
     -------
     query_vector: np.ndarray
-        A numpy array of shape n_top_categories by n_good_types
+        A numpy array of length n_good_types
     """
     # initialize empty array
     query_vector = np.zeros(n_good_types)
@@ -609,6 +607,109 @@ def create_query_vector(top_categories: List[str],
     for cat in input_selected_categories:
        query_vector += input_category_vectors[top_categories.index(cat)]
     return query_vector
+
+
+def create_restaurant_vectors(
+    input_review_vectors : np.ndarray,
+    input_restaurant_names: List,
+    inverted_index: dict,
+    n_good_types: int) -> np.ndarray:
+    """Returns a numpy array of shape (n_restaurants, n_good_types) such that the 
+    ijth entry indicates average frequency of wordd j in all reviews
+    pertaining to business i 
+
+    Parameters
+    ----------
+    input_review_vectors: array of shape (n_reviews, n_good_types)
+
+    input_restaurant_names: List[str]
+        List of restaurant names returned to the user after their initial query
+
+    inverted_index: Dict
+       key = business name, value = single-linked list of review_ids pertaining to that business
+
+    n_good_types: int
+        number of good types represented by the vector
+
+    Returns
+    -------
+    restaurant_vector: np.ndarray
+        A numpy array of shape (n_restaurants, n_good_types) - each row is that restaurant's vector
+    """
+    # initialize empty array
+    restaurant_vectors = np.zeros((len(input_restaurant_names), n_good_types))
+    
+    # for each restaurant
+    for rest_i in range(len(input_restaurant_names)):
+        # for each review pertaining to that restaurant, add the review
+        #vector to the restaurant's vector
+        tup_count = 0
+        for tup in inverted_index[input_restaurant_names[rest_i]]:
+            tup_count += 1
+            restaurant_vectors[rest_i] += input_review_vectors[tup[0]]
+        # divide by num reviews to get the average
+        restaurant_vectors[rest_i] /= tup_count
+
+    return restaurant_vectors
+
+
+def update_query_vector(
+    input_initial_query: np.ndarray,
+    restaurant_vectors: np.ndarray,
+    input_restaurant_scores: List[float],
+    a=1,
+    b=1,
+    c=1) -> np.ndarray:
+    """Returns a numpy array vector of length n_good_types such that the 
+    ith entry indicates the weight of that type in the query, after being updated using
+    rocchio's update rule
+
+    Parameters
+    ----------
+    input_initial_query: np.ndarray
+        vector of length n_good_types that represent's users initial query 
+
+    restaraurant_vectors: np.ndarray
+        numpy array of shape n_initial_restaurants by n_good_types such that the 
+        entry (ij) indicates the weight of word j in restaurant i
+
+    input_restaurant_scores: List[float]
+       list of scores of length n_initial_restaurants as inputted by the user
+
+    a: float
+        weight given to initial query vector
+    
+    b: float
+        weight given to relevant restaurants
+    
+    c: float
+        weight given to irrelevant restaurants
+
+
+    Returns
+    -------
+    query_vector: np.ndarray
+        A numpy array of length n_good_types
+    """
+    # sum & weight the relevant restaurant vectors; sum & weight the irrelevant restaurant vectors
+    # restaurants scoring >= .5 are relevant; irrelevant otherwise
+    rel = np.zeros(restaurant_vectors.shape[1])
+    irrel = np.zeros(restaurant_vectors.shape[1])
+    n_rel = 0
+    n_irrel = 0
+    for rest_i in range(restaurant_vectors.shape[0]):
+        if input_restaurant_scores[rest_i] >= 0.5:
+          rel += restaurant_vectors[rest_i]
+          n_rel += 1
+        else:
+           irrel += restaurant_vectors[rest_i]
+           n_irrel += 1
+    
+    updated_query_vector = a*input_initial_query + (b/n_rel)*rel - (c/n_irrel)*rel
+    return updated_query_vector
+
+          
+
        
 
     
