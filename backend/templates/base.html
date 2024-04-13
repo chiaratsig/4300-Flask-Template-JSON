@@ -124,7 +124,7 @@
         </div>
 
 
-        <button id="submitRanges" type="submit" style="margin-left: 460px">
+        <button id="submitRanges" type="submit" style="margin-left: 30%">
           <h3><i class="fa-solid fa-check fa-3x"></i></h3>
         </button>
       </form>
@@ -200,9 +200,10 @@
     var locationsSubmit = document.getElementById("submitLocations");
     var newLocation = true;
     locationsSubmit.onclick = function () {
-      if (tags.includes(locationInput.value.toLowerCase())) {
+      state = locationInput.value.toLowerCase()
+      if (tags.includes(state)) {
         if (newLocation) {
-          console.log(locationInput.value);
+          console.log(state);
 
           var tagsContainer = document.getElementById("chooseTags");
           tagsContainer.scrollIntoView({ behavior: 'smooth', block: 'start' });
@@ -213,6 +214,7 @@
           document.getElementById("editLocation").style.pointerEvents = "none";
           document.getElementById("body").style.overflow = "visible";
 
+          fetch("/state?" + new URLSearchParams({ state: state }).toString())
 
           var locationChosenView = document.getElementById("locationChosen");
           locationChosenView.classList.remove("hidden");
@@ -280,8 +282,6 @@
         input.style.pointerEvents = "none";
       }
 
-      // console.log(values, tagsPosInput, tagsNegInput)
-
       fetch("/tags?" + new URLSearchParams({ tags: values, pos: posVals }).toString())
         .then((response) => response.json())
         .then((list) => {
@@ -303,7 +303,6 @@
 
     });
 
-    // // Part 4 -- returning restaursnts
     document.querySelector('form.review-restaurants-form').addEventListener('submit', function (e) {
       e.preventDefault();
 
@@ -329,38 +328,6 @@
         );
 
       document.getElementById("returnRestaurants").classList.remove("hidden");
-      // document.getElementById("chooseTags").style.marginBottom = 0;
-
-      // var values = []
-      // var posVals = []
-      // for (const input of tagsInput) {
-      //   if (input.checked) {
-      //     values.push(input.value)
-      //   }
-      //   input.style.pointerEvents = "none";
-      // }
-      // for (const input of tagsPosInput) {
-      //   posVals.push(input.innerText.toLowerCase())
-      //   input.style.pointerEvents = "none";
-      // }
-
-      // console.log(values, tagsPosInput, tagsNegInput)
-
-      // fetch("/output?" + new URLSearchParams({ tags: values, pos: posVals }).toString())
-      //   .then((response) => response.json())
-      //   .then((list) => {
-      //     count = 1;
-      //     document.getElementById("outputBox").innerHTML = '';
-      //     list.forEach((item) => {
-      //       let location = item[0]
-      //       let url = item[1]
-      //       let tempDiv = document.createElement("div");
-      //       tempDiv.innerHTML = outputBoxTemplate(location, count, url);
-      //       document.getElementById("outputBox").appendChild(tempDiv)
-      //       count += 1;
-      //     });
-      //   }
-      //   );
 
       var outputContainer = document.getElementById("returnRestaurants");
       outputContainer.scrollIntoView({ behavior: 'smooth', block: 'start' });

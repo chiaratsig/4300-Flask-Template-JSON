@@ -213,6 +213,14 @@ df = pd.DataFrame(data=data, columns=cols)
 def home():
     return render_template('base.html',title="sample html")
 
+# This route endpoint triggered when the user submits all tags that they like
+@app.route("/state")
+def get_state():
+    state = request.args.get("state")
+    print(state)
+    return state
+
+# This route endpoint triggered when the user submits all tags that they like
 @app.route("/tags")
 def get_tags():
     tags = request.args.get("tags")
@@ -223,6 +231,7 @@ def get_tags():
     print(pos)
     return pos
 
+# This endpoint gets triggered when the user submits their restaurant ratings
 @app.route("/restaurantRatings")
 def get_ratings():
     rating1 = request.args.get("rating1")
