@@ -101,10 +101,10 @@ if 'DB_NAME' not in os.environ:
 ## CHIARA START P04
 def business_search2():
     # Todo
-    ma_json_file_path = os.path.join(current_directory, 'de.json')
+    de_json_file_path = os.path.join(current_directory, 'de.json')
     # cols = ['review_id', 'business_id', 'stars', 'useful', 'funny', 'cool', 'text']
     cols = ["review_id", "business_id", "stars_x", "text", "name", "address", "city", "state", "postal_code"]
-    with open(ma_json_file_path, 'r') as file:
+    with open(de_json_file_path, 'r') as file:
         data = json.load(file)
 
     df = pd.DataFrame(data=data, columns=cols)
@@ -212,3 +212,13 @@ df = pd.DataFrame(data=data, columns=cols)
 @app.route("/")
 def home():
     return render_template('base.html',title="sample html")
+
+@app.route("/output")
+def generate_output():
+    tags = request.args.get("tags")
+    pos = request.args.get("pos")
+    tags = tags.strip().split(",")
+    pos = pos.strip().split(",")
+  
+    print(pos)
+    return pos

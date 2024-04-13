@@ -70,13 +70,35 @@
       </form>
     </div>
 
-    <div class="part-3 hidden" id="partThree">
-      <h2>Your Suggested Paths <i class="fa-solid fa-circle-info tooltip2">
-          <span class="tooltiptext2">We've generated a list of hidden destinations around the world based on
-            your preferences. Click on one to discover more!</span>
+    <div class="review-restaurants hidden" id="reviewRestaurants">
+      <h2>Please rate the following restaurants using the sliding scale.<i class="fa-solid fa-circle-info tooltip2">
         </i></h2>
 
-      <div id="outputBox"><i class="fa-solid fa-spinner fa-spin-pulse fa-4x" style="color: #E4AF71;"></i></div>
+      <form class="review-restaurants-form" id="reviewRestaurantsForm">
+        <div id="review-box-1">
+          <div class="slider" id="slider1">
+            <div class="slidecontainer">
+              <input type="range" min="-5" max="5" value="0" class="slider" id="myRange">
+            </div>
+          </div>
+        </div>
+
+        <div class="slider" id="slider2">
+          <div class="slidecontainer">
+            <input type="range" min="-5" max="5" value="0" class="slider" id="myRange">
+          </div>
+        </div>
+
+        <button id="submitRanges" type="submit">
+          <h3><i class="fa-solid fa-check fa-3x"></i></h3>
+        </button>
+      </form>
+    </div>
+
+    <div class="return-restaurants hidden" id="returnRestaurants">
+      <h2>You Might Like These Restaurants</h2>
+
+      <div id="outputBox"><i class="fa-solid fa-spinner fa-spin-pulse fa-4x" style="color: #915f54;"></i></div>
     </div>
   </main>
   <script>
@@ -199,15 +221,15 @@
     var tagsInput = document.getElementsByClassName("tags-input");
     var tagsPosInput = document.getElementsByClassName("tag-state-1");
 
+
     document.querySelector('form.tags-form').addEventListener('submit', function (e) {
       e.preventDefault();
 
-      document.getElementById("partThree").classList.remove("hidden");
+      document.getElementById("reviewRestaurants").classList.remove("hidden");
       document.getElementById("chooseTags").style.marginBottom = 0;
 
       var values = []
       var posVals = []
-      var negVals = []
       for (const input of tagsInput) {
         if (input.checked) {
           values.push(input.value)
@@ -215,19 +237,13 @@
         input.style.pointerEvents = "none";
       }
       for (const input of tagsPosInput) {
-        posVals.push(input.innerText)
-        input.style.pointerEvents = "none";
-      }
-      for (const input of tagsNegInput) {
-        negVals.push(input.innerText)
+        posVals.push(input.innerText.toLowerCase())
         input.style.pointerEvents = "none";
       }
 
       // console.log(values, tagsPosInput, tagsNegInput)
 
-      console.log(values, posVals, negVals)
-
-      fetch("/output?" + new URLSearchParams({ tags: values, pos: posVals, neg: negVals }).toString())
+      fetch("/output?" + new URLSearchParams({ tags: values, pos: posVals }).toString())
         .then((response) => response.json())
         .then((list) => {
           count = 1;
@@ -242,7 +258,49 @@
           });
         }
         );
-      var outputContainer = document.getElementById("partThree");
+      var outputContainer = document.getElementById("reviewRestaurants");
+      outputContainer.scrollIntoView({ behavior: 'smooth', block: 'center' });
+
+    });
+
+    // // Part 4 -- returning restaursnts
+    document.querySelector('form.review-restaurants-form').addEventListener('submit', function (e) {
+      e.preventDefault();
+
+      document.getElementById("returnRestaurants").classList.remove("hidden");
+      // document.getElementById("chooseTags").style.marginBottom = 0;
+
+      // var values = []
+      // var posVals = []
+      // for (const input of tagsInput) {
+      //   if (input.checked) {
+      //     values.push(input.value)
+      //   }
+      //   input.style.pointerEvents = "none";
+      // }
+      // for (const input of tagsPosInput) {
+      //   posVals.push(input.innerText.toLowerCase())
+      //   input.style.pointerEvents = "none";
+      // }
+
+      // console.log(values, tagsPosInput, tagsNegInput)
+
+      // fetch("/output?" + new URLSearchParams({ tags: values, pos: posVals }).toString())
+      //   .then((response) => response.json())
+      //   .then((list) => {
+      //     count = 1;
+      //     document.getElementById("outputBox").innerHTML = '';
+      //     list.forEach((item) => {
+      //       let location = item[0]
+      //       let url = item[1]
+      //       let tempDiv = document.createElement("div");
+      //       tempDiv.innerHTML = outputBoxTemplate(location, count, url);
+      //       document.getElementById("outputBox").appendChild(tempDiv)
+      //       count += 1;
+      //     });
+      //   }
+      //   );
+      var outputContainer = document.getElementById("returnRestaurants");
       outputContainer.scrollIntoView({ behavior: 'smooth', block: 'center' });
 
     });
