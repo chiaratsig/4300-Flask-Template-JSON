@@ -15,9 +15,10 @@
 
 <body id="body">
   <main>
-    <!-- <h1 onclick="loadHomePage()">Yelp Me Find a Restaurant</h1>
-    <button class="reset" onClick="window.location.reload();">Reset</button> -->
+    <!-- <h1 onclick="loadHomePage()">Yelp Me Find a Restaurant</h1> -->
+    <button class="reset" onClick="window.location.reload();">Reset</button>
 
+    <!-- First Window Start -->
     <div class="choose-location" id="chooseLocation">
       <h2> What state do you want to eat in?</h2>
       <h4 id="locationFeedback" class="feedback hidden">Please select a state from the dropdown.</h4>
@@ -31,26 +32,22 @@
         </button>
       </div>
 
-
       <div id="locationEditing" class="hidden">
         <form class="choose-form">
           <div class="location-box">
             <input list="datalist" id="location-input" type="text" onkeyup="add_locations_to_dropdown(this.value)" />
             <datalist id="datalist"></datalist>
           </div>
-
-          <!-- <button id="chooseLocation" class="location-icon" type="submit">
-            <h3 id="locationCheck"><i class="fa-solid fa-check fa-3x"></i></h3>
-          </button> -->
         </form>
       </div>
-
 
       <button id="submitLocations">
         <h3><i class="fa-solid fa-check fa-3x"></i></h3>
       </button>
     </div>
+    <!-- First Window End -->
 
+    <!-- Second Window Start -->
     <div class="choose-tags hidden" id="chooseTags">
       <h2>What do you like in a restaurant?<i class="fa-solid fa-circle-info tooltip">
           <span class="tooltiptext">Click a category once if it interests you.
@@ -69,40 +66,82 @@
         </button>
       </form>
     </div>
+    <!-- Second Window End -->
 
-    <div class="review-restaurants hidden" id="reviewRestaurants">
-      <h2>Please rate the following restaurants using the sliding scale.<i class="fa-solid fa-circle-info tooltip2">
+    <!-- Third Window Start -->
+    <div class="review-restaurants hidden" id="reviewRestaurants" style="margin-top:200px">
+      <h2>Please rate the following restaurants using the sliding scale.<i class="fa-solid fa-circle-info tooltip">
+          <span class="tooltiptext">Scroll through and rate each of the restaurants on the sliding scale.</span>
         </i></h2>
 
-      <form class="review-restaurants-form" id="reviewRestaurantsForm">
-        <div id="review-box-1">
-          <div class="slider" id="slider1">
-            <div class="slidecontainer">
-              <input type="range" min="-5" max="5" value="0" class="slider" id="myRange">
-            </div>
+      <form class="review-restaurants-form review-boxes" id="reviewRestaurantsForm">
+        <div class="review-box" id="review-box-1">
+          <div class="review-box-text" id="review-box-text-1">
+            Restaurant 1:<br>
+            Restaurant Name<br>
+            Restaurant Categories<br>
+            ETC
           </div>
-        </div>
-
-        <div class="slider" id="slider2">
           <div class="slidecontainer">
-            <input type="range" min="-5" max="5" value="0" class="slider" id="myRange">
+            <input type="range" min="-5" max="5" value="0" class="slider" id="slider1">
           </div>
         </div>
 
-        <button id="submitRanges" type="submit">
+        <div class="review-box" id="review-box-2">
+          <div class="review-box-text" id="review-box-text-2">
+            Restaurant 2:<br>
+            Restaurant Name<br>
+            Restaurant Categories<br>
+            ETC
+          </div>
+          <div class="slidecontainer">
+            <input type="range" min="-5" max="5" value="0" class="slider" id="slider2">
+          </div>
+        </div>
+
+        <div class="review-box" id="review-box-3">
+          <div class="review-box-text" id="review-box-text-3">
+            Restaurant 3:<br>
+            Restaurant Name<br>
+            Restaurant Categories<br>
+            ETC
+          </div>
+          <div class="slidecontainer">
+            <input type="range" min="-5" max="5" value="0" class="slider" id="slider3">
+          </div>
+        </div>
+
+        <div class="review-box" id="review-box-4">
+          <div class="review-box-text" id="review-box-text-4">
+            Restaurant 4:<br>
+            Restaurant Name<br>
+            Restaurant Categories<br>
+            ETC
+          </div>
+          <div class="slidecontainer">
+            <input type="range" min="-5" max="5" value="0" class="slider" id="slider4">
+          </div>
+        </div>
+
+
+        <button id="submitRanges" type="submit" style="margin-left: 460px">
           <h3><i class="fa-solid fa-check fa-3x"></i></h3>
         </button>
       </form>
     </div>
+    <!-- Third Window End -->
 
+    <!-- Fourth Window Start -->
     <div class="return-restaurants hidden" id="returnRestaurants">
       <h2>You Might Like These Restaurants</h2>
 
       <div id="outputBox"><i class="fa-solid fa-spinner fa-spin-pulse fa-4x" style="color: #915f54;"></i></div>
     </div>
+    <!-- Fourth Window End -->
   </main>
-  <script>
 
+  <script>
+    // First Window Start
     var editLocation = document.getElementById("editLocation");
     editLocation.onclick = function () {
       var locationEditView = document.getElementById("locationEditing");
@@ -166,7 +205,7 @@
           console.log(locationInput.value);
 
           var tagsContainer = document.getElementById("chooseTags");
-          tagsContainer.scrollIntoView({ behavior: 'smooth', block: 'center' });
+          tagsContainer.scrollIntoView({ behavior: 'smooth', block: 'start' });
 
           document.getElementById("chooseTags").classList.remove("hidden");
           document.getElementById("locationEditing").remove();
@@ -209,7 +248,7 @@
         }
         else {
           var tagsContainer = document.getElementById("chooseTags");
-          tagsContainer.scrollIntoView({ behavior: 'smooth', block: 'center' });
+          tagsContainer.scrollIntoView({ behavior: 'smooth', block: 'start' });
         }
       }
       else {
@@ -243,7 +282,7 @@
 
       // console.log(values, tagsPosInput, tagsNegInput)
 
-      fetch("/output?" + new URLSearchParams({ tags: values, pos: posVals }).toString())
+      fetch("/tags?" + new URLSearchParams({ tags: values, pos: posVals }).toString())
         .then((response) => response.json())
         .then((list) => {
           count = 1;
@@ -258,14 +297,36 @@
           });
         }
         );
+
       var outputContainer = document.getElementById("reviewRestaurants");
-      outputContainer.scrollIntoView({ behavior: 'smooth', block: 'center' });
+      outputContainer.scrollIntoView({ behavior: 'smooth', inline: 'nearest', block: 'start' });
 
     });
 
     // // Part 4 -- returning restaursnts
     document.querySelector('form.review-restaurants-form').addEventListener('submit', function (e) {
       e.preventDefault();
+
+      var rating1 = document.getElementById("slider1").value;
+      var rating2 = document.getElementById("slider2").value;
+      var rating3 = document.getElementById("slider3").value;
+      var rating4 = document.getElementById("slider4").value;
+
+      fetch("/restaurantRatings?" + new URLSearchParams({ rating1: rating1, rating2: rating2, rating3: rating3, rating4: rating4 }).toString())
+        .then((response) => response.json())
+        .then((list) => {
+          count = 1;
+          document.getElementById("outputBox").innerHTML = '';
+          list.forEach((item) => {
+            let location = item[0]
+            let url = item[1]
+            let tempDiv = document.createElement("div");
+            tempDiv.innerHTML = outputBoxTemplate(location, count, url);
+            document.getElementById("outputBox").appendChild(tempDiv)
+            count += 1;
+          });
+        }
+        );
 
       document.getElementById("returnRestaurants").classList.remove("hidden");
       // document.getElementById("chooseTags").style.marginBottom = 0;
@@ -300,8 +361,9 @@
       //     });
       //   }
       //   );
+
       var outputContainer = document.getElementById("returnRestaurants");
-      outputContainer.scrollIntoView({ behavior: 'smooth', block: 'center' });
+      outputContainer.scrollIntoView({ behavior: 'smooth', block: 'start' });
 
     });
 
@@ -317,110 +379,3 @@
 </body>
 
 </html>
-
-
-<!-- <!DOCTYPE html>
-<title>{% block title %}{% endblock %} - Flaskr</title>
-<link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}" />
-<link rel="preconnect" href="https://fonts.googleapis.com" />
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-<link
-  href="https://fonts.googleapis.com/css2?family=Kanit&family=Montserrat&family=Open+Sans:wght@500&display=swap"
-  rel="stylesheet"
-/>
-<body>
-  <div class="full-body-container">
-    <div class="top-text">
-      <div class="google-colors">
-        <h2 id="google-4">Yelp&nbsp;</h2>
-        <h2>Me Find a Restaurant!</h2>
-      </div>
-      <div class="input-box" onclick="sendFocusToReview()">
-        <input
-          placeholder="Input a review for a restaurant"
-          id="user-review-val"
-        />
-      </div>
-      <div class="input-box" onclick="sendFocusToRating()">
-        <input placeholder="Input a star rating (out of 5)" id="user-rating-val" />
-      </div>
-      <div class="input-box" onclick="sendFocusToZipCode()">
-        <input placeholder="Input a zip code" id="user-zip-code-val"/>
-      </div>
-      <div style="margin-top: 20px;"">
-        <button type="button" onclick="search()">
-          Find Similar Restaurants
-        </button>
-      </div>
-    </div>
-    <div id="answer-box"></div>
-  </div>
-
-  <script>
-    function answerBoxTemplate(restaurant) {
-      return `<div class=''>
-                <h3 class='episode-title'>${restaurant}</h3>
-            </div>`;
-    }
-
-    function sendFocusToReview() {
-      document.getElementById("user-review-val").focus();
-    }
-    function sendFocusToRating() {
-      document.getElementById("user-rating-val").focus();
-    }
-    function sendFocusToZipCode() {
-      document.getElementById("user-zip-code-val").focus();
-    }
-    function search() {
-      console.log(document.getElementById("user-review-val").value);
-      console.log(document.getElementById("user-rating-val").value);
-      document.getElementById("answer-box").innerHTML = "";
-      let loadingDiv = document.createElement("div");
-      loadingDiv.innerHTML = `<div class='loadingMsg'>
-                <h3>Finding restaurants for you. Give me a few moments...</h3>
-            </div>`
-      document.getElementById("answer-box").appendChild(loadingDiv);
-      fetch(
-        "/restaurants?" +
-          new URLSearchParams({
-            review: document.getElementById("user-review-val").value,
-            starRating: document.getElementById("user-rating-val").value,
-            zipCode: document.getElementById("user-zip-code-val").value
-          }).toString()
-      ).then((response) => response.json())
-        .then((data) =>{
-        console.log(data);
-        loadingDiv.style.display = "none";
-          data.forEach((restaurant) => {
-            let tempDiv = document.createElement("div");
-            tempDiv.innerHTML = answerBoxTemplate(
-              restaurant
-            );
-            document.getElementById("answer-box").appendChild(tempDiv);
-          })}
-        );
-    }
-
-    // function filterText() {
-    //   document.getElementById("answer-box").innerHTML = "";
-    //   console.log(document.getElementById("user-review-val").value);
-    //   fetch(
-    //     "/episodes?" +
-    //       new URLSearchParams({
-    //         title: document.getElementById("user-review-val").value,
-    //       }).toString()
-    //   )
-    //     .then((response) => response.json())
-    //     .then((data) =>
-    //       data.forEach((row) => {
-    //         let tempDiv = document.createElement("div");
-    //         tempDiv.innerHTML = answerBoxTemplate(
-    //           row.title,
-    //         );
-    //         document.getElementById("answer-box").appendChild(tempDiv);
-    //       })
-    //     );
-    // }
-  </script>
-</body> -->

@@ -213,8 +213,8 @@ df = pd.DataFrame(data=data, columns=cols)
 def home():
     return render_template('base.html',title="sample html")
 
-@app.route("/output")
-def generate_output():
+@app.route("/tags")
+def get_tags():
     tags = request.args.get("tags")
     pos = request.args.get("pos")
     tags = tags.strip().split(",")
@@ -222,3 +222,14 @@ def generate_output():
   
     print(pos)
     return pos
+
+@app.route("/restaurantRatings")
+def get_ratings():
+    rating1 = request.args.get("rating1")
+    rating2 = request.args.get("rating2")
+    rating3 = request.args.get("rating3")
+    rating4 = request.args.get("rating4")
+
+  
+    print(rating1, rating2, rating3, rating4)
+    return rating1

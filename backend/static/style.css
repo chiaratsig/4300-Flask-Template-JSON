@@ -62,8 +62,33 @@ h2 {
     text-align: center;
 
     color: #915f54;
-    /* text-shadow: -3px 3px 0px #48A369; */
 }
+
+/* .text h3 {
+    margin-top: 45px;
+    font-family: 'Oleo Script';
+    font-weight: 400;
+    font-size: 40px;
+
+    display: flex;
+    justify-content: center;
+    text-align: center;
+
+    color: #4e070c;
+}
+
+.text h4 {
+    margin-top: 45px;
+    font-family: 'Oleo Script';
+    font-weight: 400;
+    font-size: 34px;
+
+    display: flex;
+    justify-content: center;
+    text-align: center;
+
+    color: #4e070c;
+} */
 
 .fa-circle-info {
     font-size: 20px;
@@ -157,11 +182,22 @@ textarea {
 
 
 #submitLocations,
-#submitTags,
-#submitRanges {
+#submitTags {
     width: 259px;
     height: 101px;
     margin-top: 275px;
+    margin-bottom: 200px;
+
+    background-color: #48A369;
+    opacity: 0.8;
+    border: none;
+    border-radius: 20px;
+}
+
+#submitRanges {
+    width: 259px;
+    height: 101px;
+    margin-top: 75px;
 
     background-color: #48A369;
     opacity: 0.8;
@@ -201,6 +237,7 @@ textarea {
     justify-content: center;
     align-items: center;
     height: 100vh;
+    margin-bottom: 50 px;
 }
 
 .choose-tags {
@@ -221,6 +258,17 @@ textarea {
 
     padding: 42.6px 42.6px 39.6px 39.6px;
 
+}
+
+.review-boxes {
+    margin: 5px;
+    padding: 20px;
+    background-color: rgb(224, 217, 214);
+    width: 70%;
+    height: 70%;
+    overflow: auto;
+    text-align: justify;
+    border-radius: 30px;
 }
 
 #tags-checker {
@@ -308,6 +356,37 @@ input[type=checkbox]+label:hover {
     align-items: center;
     flex-wrap: wrap;
 }
+
+.review-box {
+    width: 500px;
+    height: 300px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-wrap: wrap;
+
+    background: #E5CAAA;
+    border-radius: 30px;
+
+    padding: 42.6px 42.6px 39.6px 39.6px;
+    margin: 0 auto;
+    margin-bottom: 50px;
+}
+
+.review-box-text {
+    margin-top: 20px;
+    font-family: 'Oleo Script';
+    font-weight: 400;
+    font-size: 40px;
+
+    display: flex;
+    justify-content: center;
+    text-align: center;
+
+    color: #915f54;
+}
+
+
 
 .output-loc {
     width: 380px;
@@ -454,7 +533,7 @@ input[type=checkbox]+label:hover {
     /* Full-width */
     height: 25px;
     /* Specified height */
-    background: #d3d3d3;
+    background: white;
     /* Grey background */
     outline: none;
     /* Remove outline */
