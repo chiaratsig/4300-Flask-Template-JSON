@@ -1,4 +1,267 @@
 <!DOCTYPE html>
+<html>
+
+<head>
+  <title>Yelp Me Find a Restaurant</title>
+
+  <script src="https://kit.fontawesome.com/6969334fef.js" crossorigin="anonymous"></script>
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@500&display=swap" rel="stylesheet">
+
+  <link rel="stylesheet" type="text/css" href="../static/style.css">
+</head>
+
+<body id="body">
+  <main>
+    <!-- <h1 onclick="loadHomePage()">Yelp Me Find a Restaurant</h1>
+    <button class="reset" onClick="window.location.reload();">Reset</button> -->
+
+    <div class="choose-location" id="chooseLocation">
+      <h2> What state do you want to eat in?</h2>
+      <h4 id="locationFeedback" class="feedback hidden">Please select a state from the dropdown.</h4>
+
+      <div id="locationChosen">
+        <div class="location-box">
+          <h3 class="location-box-text" id="chosenLocation">State</h3>
+        </div>
+        <button id="editLocation" class="location-icon">
+          <h3 id="locationPen"><i class="fa-solid fa-pen fa-2x"></i></h3>
+        </button>
+      </div>
+
+
+      <div id="locationEditing" class="hidden">
+        <form class="choose-form">
+          <div class="location-box">
+            <input list="datalist" id="location-input" type="text" onkeyup="add_locations_to_dropdown(this.value)" />
+            <datalist id="datalist"></datalist>
+          </div>
+
+          <!-- <button id="chooseLocation" class="location-icon" type="submit">
+            <h3 id="locationCheck"><i class="fa-solid fa-check fa-3x"></i></h3>
+          </button> -->
+        </form>
+      </div>
+
+
+      <button id="submitLocations">
+        <h3><i class="fa-solid fa-check fa-3x"></i></h3>
+      </button>
+    </div>
+
+    <div class="choose-tags hidden" id="chooseTags">
+      <h2>What do you like in a restaurant?<i class="fa-solid fa-circle-info tooltip">
+          <span class="tooltiptext">Click a category once if it interests you.
+            You can also leave them neutral! Scroll for more options.</span>
+        </i></h2>
+
+
+      <form class="tags-form" id="tagsForm">
+        <div class="tag-box" id="tagBox">
+          <div id=tags-checker>
+          </div>
+        </div>
+
+        <button id="submitTags" type="submit">
+          <h3><i class="fa-solid fa-check fa-3x"></i></h3>
+        </button>
+      </form>
+    </div>
+
+    <div class="part-3 hidden" id="partThree">
+      <h2>Your Suggested Paths <i class="fa-solid fa-circle-info tooltip2">
+          <span class="tooltiptext2">We've generated a list of hidden destinations around the world based on
+            your preferences. Click on one to discover more!</span>
+        </i></h2>
+
+      <div id="outputBox"><i class="fa-solid fa-spinner fa-spin-pulse fa-4x" style="color: #E4AF71;"></i></div>
+    </div>
+  </main>
+  <script>
+
+    var editLocation = document.getElementById("editLocation");
+    editLocation.onclick = function () {
+      var locationEditView = document.getElementById("locationEditing");
+      locationEditView.classList.remove("hidden");
+
+      var locationChosenView = document.getElementById("locationChosen");
+      locationChosenView.classList.add("hidden");
+
+      var textbox = document.getElementById("location-input");
+      textbox.select()
+    }
+
+    var locationInput = document.getElementById("location-input");
+    document.querySelector('form.choose-form').addEventListener('submit', function (e) {
+      e.preventDefault();
+
+      var locationEditView = document.getElementById("locationEditing");
+      locationEditView.classList.add("hidden");
+
+      var locationChosenView = document.getElementById("locationChosen");
+      locationChosenView.classList.remove("hidden");
+
+      var newLocation = document.getElementById("chosenLocation");
+      newLocation.innerHTML = locationInput.value;
+    });
+
+    var tags = ["alabama", "alaska", "arizona", "arkansas", "california", "colorado", "connecticut", "delaware", "florida", "georgia", "hawaii", "idaho", "illinois", "indiana", "iowa", "kansas", "kentucky", "louisiana", "maine", "maryland", "massachusetts", "michigan", "minnesota", "mississippi", "missouri", "montana", "nebraska", "nevada", "new hampshire", "new jersey", "new mexico", "new york", "north carolina", "north dakota", "ohio", "oklahoma", "oregon", "pennsylvania", "rhode island", "south carolina", "south dakota", "tennessee", "texas", "utah", "vermont", "virginia", "washington", "west virginia", "wisconsin", "wyoming"]
+    var tag_len = 50
+
+    function add_locations_to_dropdown(value) {
+      document.getElementById('datalist').innerHTML = '';
+
+      l = value.length;
+      for (var i = 0; i < tag_len; i++) {
+        if (((tags[i].toLowerCase()).indexOf(value.toLowerCase())) > -1) {
+
+          var node = document.createElement("option");
+          var val = document.createTextNode(tags[i].toUpperCase());
+          node.appendChild(val);
+
+          document.getElementById("datalist").appendChild(node);
+        }
+      }
+    }
+
+    function tagBoxTemplate(tag) {
+      return `<div class="tag tags-input tag-style tag-state-0 tag-${tag}" id="tag-${tag}">                
+                        <span >${tag}</span>
+                    </div>`
+    }
+
+    function outputBoxTemplate(loc, count, url) {
+      return `<a class='output-loc' target='_blank' href=${url}>${count}. <span class="underline"> ${loc}</span></a>`
+    }
+
+    var locationsSubmit = document.getElementById("submitLocations");
+    var newLocation = true;
+    locationsSubmit.onclick = function () {
+      if (tags.includes(locationInput.value.toLowerCase())) {
+        if (newLocation) {
+          console.log(locationInput.value);
+
+          var tagsContainer = document.getElementById("chooseTags");
+          tagsContainer.scrollIntoView({ behavior: 'smooth', block: 'center' });
+
+          document.getElementById("chooseTags").classList.remove("hidden");
+          document.getElementById("locationEditing").remove();
+          document.getElementById("editLocation").disabled = true;
+          document.getElementById("editLocation").style.pointerEvents = "none";
+          document.getElementById("body").style.overflow = "visible";
+
+
+          var locationChosenView = document.getElementById("locationChosen");
+          locationChosenView.classList.remove("hidden");
+
+          var locationText = document.getElementById("chosenLocation");
+          locationText.innerHTML = locationInput.value;
+
+          tags = ['American (Traditional)', 'Sandwiches', 'Breakfast & Brunch', 'Pizza', 'Fast Food', 'Mexican', 'Italian', 'Seafood', 'Coffee & Tea', 'Chinese', 'Japanese', 'Desserts', 'Mediterranean', 'Thai', 'Vegan', 'Vietnamese', 'Latin American', 'Indian', 'Middle Eastern', 'Korean']
+
+          tags.forEach(tag => {
+            let tempDiv = document.createElement("div")
+            tempDiv.innerHTML = tagBoxTemplate(tag)
+            document.getElementById("tags-checker").appendChild(tempDiv)
+
+            var tagGet = document.getElementById(String("tag-" + tag))
+            let click = 0;
+
+            tagGet.addEventListener("click", function () {
+              tagGet.classList.remove("tag-state-0")
+              tagGet.classList.remove("tag-state-1")
+
+              click += 1;
+              if (click % 2 == 0) {
+                tagGet.classList.add("tag-state-0");
+              }
+              else if (click % 2 == 1) {
+                tagGet.classList.add("tag-state-1");
+              }
+            });
+          })
+          newLocation = false;
+          document.getElementById("locationFeedback").classList.add("hidden");
+        }
+        else {
+          var tagsContainer = document.getElementById("chooseTags");
+          tagsContainer.scrollIntoView({ behavior: 'smooth', block: 'center' });
+        }
+      }
+      else {
+        console.log(locationInput.value);
+        document.getElementById("locationFeedback").classList.remove("hidden");
+      }
+    };
+
+    var tagsInput = document.getElementsByClassName("tags-input");
+    var tagsPosInput = document.getElementsByClassName("tag-state-1");
+
+    document.querySelector('form.tags-form').addEventListener('submit', function (e) {
+      e.preventDefault();
+
+      document.getElementById("partThree").classList.remove("hidden");
+      document.getElementById("chooseTags").style.marginBottom = 0;
+
+      var values = []
+      var posVals = []
+      var negVals = []
+      for (const input of tagsInput) {
+        if (input.checked) {
+          values.push(input.value)
+        }
+        input.style.pointerEvents = "none";
+      }
+      for (const input of tagsPosInput) {
+        posVals.push(input.innerText)
+        input.style.pointerEvents = "none";
+      }
+      for (const input of tagsNegInput) {
+        negVals.push(input.innerText)
+        input.style.pointerEvents = "none";
+      }
+
+      // console.log(values, tagsPosInput, tagsNegInput)
+
+      console.log(values, posVals, negVals)
+
+      fetch("/output?" + new URLSearchParams({ tags: values, pos: posVals, neg: negVals }).toString())
+        .then((response) => response.json())
+        .then((list) => {
+          count = 1;
+          document.getElementById("outputBox").innerHTML = '';
+          list.forEach((item) => {
+            let location = item[0]
+            let url = item[1]
+            let tempDiv = document.createElement("div");
+            tempDiv.innerHTML = outputBoxTemplate(location, count, url);
+            document.getElementById("outputBox").appendChild(tempDiv)
+            count += 1;
+          });
+        }
+        );
+      var outputContainer = document.getElementById("partThree");
+      outputContainer.scrollIntoView({ behavior: 'smooth', block: 'center' });
+
+    });
+
+    function loadHomePage() {
+      window.location.href = "/";
+    }
+
+    window.onbeforeunload = function () {
+      window.scrollTo(0, 0);
+    }
+
+  </script>
+</body>
+
+</html>
+
+
+<!-- <!DOCTYPE html>
 <title>{% block title %}{% endblock %} - Flaskr</title>
 <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}" />
 <link rel="preconnect" href="https://fonts.googleapis.com" />
@@ -102,4 +365,4 @@
     //     );
     // }
   </script>
-</body>
+</body> -->

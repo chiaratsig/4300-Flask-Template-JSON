@@ -21,82 +21,97 @@ current_directory = os.path.dirname(os.path.abspath(__file__))
 json_file_path = os.path.join(current_directory, 'init.json')
 
 # Assuming your JSON data is stored in a file named 'init.json'
-with open(json_file_path, 'r') as file:
-    data = json.load(file)
-    episodes_df = pd.DataFrame(data['episodes'])
-    reviews_df = pd.DataFrame(data['reviews'])
+# with open(json_file_path, 'r') as file:
+#     data = json.load(file)
+#     episodes_df = pd.DataFrame(data['episodes'])
+#     reviews_df = pd.DataFrame(data['reviews'])
 
 # Sample search using json with pandas
-def json_search(query):
-    matches = []
-    merged_df = pd.merge(episodes_df, reviews_df, left_on='id', right_on='id', how='inner')
-    matches = merged_df[merged_df['title'].str.lower().str.contains(query.lower())]
-    matches_filtered = matches[['title', 'descr', 'imdb_rating']]
-    matches_filtered_json = matches_filtered.to_json(orient='records')
-    return matches_filtered_json
+# def json_search(query):
+#     matches = []
+#     merged_df = pd.merge(episodes_df, reviews_df, left_on='id', right_on='id', how='inner')
+#     matches = merged_df[merged_df['title'].str.lower().str.contains(query.lower())]
+#     matches_filtered = matches[['title', 'descr', 'imdb_rating']]
+#     matches_filtered_json = matches_filtered.to_json(orient='records')
+#     return matches_filtered_json
 
 app = Flask(__name__)
 CORS(app)
 
-@app.route("/")
-def home():
-    return render_template('base.html',title="sample html")
+# @app.route("/")
+# def home():
+#     return render_template('base.html',title="sample html")
 
-@app.route("/episodes")
-def episodes_search():
-    text = request.args.get("title")
-    return json_search(text)
+# @app.route("/episodes")
+# def episodes_search():
+#     text = request.args.get("title")
+#     return json_search(text)
 
 if 'DB_NAME' not in os.environ:
     app.run(debug=True,host="0.0.0.0",port=5000)
 
 ############ TEMPLATE END ############
+    
+########### P03 START ###########
 
-def business_search(review, star_rating, zip_code):
-    ma_json_file_path = os.path.join(current_directory, 'de.json')
-    # cols = ['review_id', 'business_id', 'stars', 'useful', 'funny', 'cool', 'text']
-    cols = ["review_id", "business_id", "stars_x", "text", "name", "address", "city", "state", "postal_code"]
-    with open(ma_json_file_path, 'r') as file:
-        data = json.load(file)
+# def business_search(review, star_rating, zip_code):
+#     ma_json_file_path = os.path.join(current_directory, 'de.json')
+#     # cols = ['review_id', 'business_id', 'stars', 'useful', 'funny', 'cool', 'text']
+#     cols = ["review_id", "business_id", "stars_x", "text", "name", "address", "city", "state", "postal_code"]
+#     with open(ma_json_file_path, 'r') as file:
+#         data = json.load(file)
 
-    df = pd.DataFrame(data=data, columns=cols)
+#     df = pd.DataFrame(data=data, columns=cols)
 
-    distinct = distinct_words(tokenize, df) 
+#     distinct = distinct_words(tokenize, df) 
 
-    good_words = get_good_words(0.1, 0.9, df["text"], distinct)
+#     good_words = get_good_words(0.1, 0.9, df["text"], distinct)
 
-    # build inverted business-review index
-    br_inv_idx = build_br_inverted_index(df)
+#     # build inverted business-review index
+#     br_inv_idx = build_br_inverted_index(df)
 
-    # build vector array of shape (review, good_words) - values are binary to start
-    # review index i is the same index it has in df
-    review_vectors = create_review_word_occurrence_matrix(tokenize, df, good_words)
+#     # build vector array of shape (review, good_words) - values are binary to start
+#     # review index i is the same index it has in df
+#     review_vectors = create_review_word_occurrence_matrix(tokenize, df, good_words)
 
-    # build word-review invertedd index. key = good type,
-    #value = list of tuples pertaining to review that has that good type
-    wr_inv_idx = build_wr_inverted_index(review_vectors, df, good_words)
+#     # build word-review invertedd index. key = good type,
+#     #value = list of tuples pertaining to review that has that good type
+#     wr_inv_idx = build_wr_inverted_index(review_vectors, df, good_words)
 
-    #START cosine similarity computation
-    # dummy_review = "this place is yummy and has good service. it is a restaurant that I will return to. chiara emory varsha teresa"
-    # replace dummy review with actuall user inputted review from frontend
-    input_review_dict = {"text": review}
-    input_review_df = pd.DataFrame([input_review_dict])
+#     #START cosine similarity computation
+#     # dummy_review = "this place is yummy and has good service. it is a restaurant that I will return to. chiara emory varsha teresa"
+#     # replace dummy review with actuall user inputted review from frontend
+#     input_review_dict = {"text": review}
+#     input_review_df = pd.DataFrame([input_review_dict])
 
-    # vectorize review
-    input_review_vector = create_review_word_occurrence_matrix(tokenize, input_review_df, good_words)
+#     # vectorize review
+#     input_review_vector = create_review_word_occurrence_matrix(tokenize, input_review_df, good_words)
 
-    idf = compute_idf(wr_inv_idx, len(df))
+#     idf = compute_idf(wr_inv_idx, len(df))
 
-    doc_norms = compute_review_norms(wr_inv_idx, idf, len(df))
+#     doc_norms = compute_review_norms(wr_inv_idx, idf, len(df))
 
-    # dummy_rating = 1
-    returned_restaurants = index_search(input_review_df.iloc[0]["text"], wr_inv_idx, df, idf, doc_norms, int(star_rating))
-    return returned_restaurants
+#     # dummy_rating = 1
+#     returned_restaurants = index_search(input_review_df.iloc[0]["text"], wr_inv_idx, df, idf, doc_norms, int(star_rating))
+#     return returned_restaurants
 
-@app.route("/restaurants")
-def restaurant_search():
-    review = request.args.get("review")
-    star_rating = request.args.get("starRating")
-    zip_code = request.args.get("zipCode")
-    return business_search(review, star_rating, zip_code) 
+# @app.route("/restaurants")
+# def restaurant_search():
+#     review = request.args.get("review")
+#     star_rating = request.args.get("starRating")
+#     zip_code = request.args.get("zipCode")
+#     return business_search(review, star_rating, zip_code) 
    
+########### P03 END ###########
+    
+de_json_file_path = os.path.join(current_directory, 'de.json')
+cols = ["review_id", "business_id", "stars_x", "text", "name", "address", "city", "state", "postal_code"]
+
+with open(de_json_file_path, 'r') as file:
+    data = json.load(file)
+
+df = pd.DataFrame(data=data, columns=cols)
+
+@app.route("/")
+def home():
+    return render_template('base.html',title="sample html")
