@@ -392,6 +392,112 @@ def index_search(
 
     return returned_5_restaurants
 
+# Pass this initial query into an updated version of index_search in analysis.py 
+#(this initial query is the new value of input_review_vector in app.py). 
+#This will return returned_restaurants (n=5)
+def index_search2(
+    #query: str,
+    input_good_types: List[str],
+    query_vector: np.ndarray,
+    index: dict,
+    df: pd.DataFrame,
+    idf,
+    doc_norms,
+    #star_rating,
+    score_func=accumulate_dot_scores,
+    #tokenizer=tokenize,
+) -> List[Tuple[int, int]]:
+    """Search the collection of documents for the given query
+
+    Arguments
+    =========
+
+    input_good_types: list of good types
+
+    query_vector: vector of shape (n_good_types,), the ith value represents
+        the weight of the ith term in the query
+
+    index: an inverted index as above, key = word, value = list of reviews
+
+    df: dataframe mapping review to business name
+
+    idf: idf values precomputed as above
+
+    doc_norms: document norms as computed above
+
+    score_func: function,
+        A function that computes the numerator term of cosine similarity (the dot product) for all documents.
+        Takes as input a dictionary of query word counts, the inverted index, and precomputed idf values.
+        (See Q7)
+
+
+    Returns
+    =======
+
+    results, list of tuples (score, doc_id)
+        Sorted list of results such that the first element has
+        the highest score, and `doc_id` points to the document
+        with the highest score.
+
+    Note:
+
+    """
+
+    # TODO-8.1
+    results = []
+
+    #query = query.lower()
+    #tokens = tokenizer(query)
+
+    # tf = dict()
+    # for token in tokens:
+    #   if token not in tf.keys():
+    #     tf[token] = 1
+    #   else:
+    #     tf[token] += 1
+
+    # tf is a dictionary, key = word with non-zero value in query_vector,
+    #value = (int) the non-zero value
+    tf = dict()
+    for word_i in range(len(input_good_types)):
+       if query_vector[word_i] != 0:
+          tf[input_good_types[word_i]] = query_vector[word_i]
+          
+          
+
+    
+    # query_norm = 0
+    # for key in tf.keys():
+    #   if key in idf.keys():
+    #     query_norm += (tf[key] * idf[key]) ** 2
+    # query_norm = np.sqrt(query_norm)
+
+    # TODO: 
+    # compute query norm - right now this is just squaring, summing,
+    #and sqrting the query vector
+    query_norm = np.sqrt(np.sum((query_vector ** 2)))
+    
+    cossim_numerator = score_func(tf, index, idf)
+    cossim_denominator = query_norm * doc_norms
+
+
+    for doc in cossim_numerator.keys():
+      results.append((cossim_numerator[doc] / cossim_denominator[doc], doc))
+
+    results.sort(key=lambda x: x[0], reverse=True)
+
+    
+    # based on star review, either grab first 5 or last 5 reviews
+    #if star_rating >=3:
+    returned_5_reviews = results[:5]
+    #else:
+       #returned_5_reviews = results[-5:]
+    
+    returned_5_restaurants = [df.iloc[x[1]]['name'] for x in returned_5_reviews]
+
+    return returned_5_restaurants
+
+
 
 def build_cr_inverted_index(df: List[dict],
                             top_categories: List[str]) -> dict:
