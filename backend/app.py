@@ -227,9 +227,11 @@ def get_tags():
     pos = request.args.get("pos")
     tags = tags.strip().split(",")
     pos = pos.strip().split(",")
+
+    restaurants_to_review = [("Restaurant 1 Name", "Restaurant 1 Address", "Restaurant 1 Tags"), ("Restaurant 2 Name", "Restaurant 2 Address", "Restaurant 2 Tags"), ("Restaurant 3 Name", "Restaurant 3 Address", "Restaurant 3 Tags"), ("Restaurant 4 Name", "Restaurant 4 Address", "Restaurant 4 Tags")]
   
-    print(pos)
-    return pos
+    print(restaurants_to_review)
+    return restaurants_to_review
 
 # This endpoint gets triggered when the user submits their restaurant ratings
 @app.route("/restaurantRatings")
@@ -238,7 +240,7 @@ def get_ratings():
     rating2 = request.args.get("rating2")
     rating3 = request.args.get("rating3")
     rating4 = request.args.get("rating4")
-
   
     print(rating1, rating2, rating3, rating4)
-    return rating1
+    restaurants_reccomended = [("Restaurant 1 Name", "Restaurant 1 Address", "Restaurant 1 Tags"), ("Restaurant 2 Name", "Restaurant 2 Address", "Restaurant 2 Tags"), ("Restaurant 3 Name", "Restaurant 3 Address", "Restaurant 3 Tags"), ("Restaurant 4 Name", "Restaurant 4 Address", "Restaurant 4 Tags")]
+    return restaurants_reccomended

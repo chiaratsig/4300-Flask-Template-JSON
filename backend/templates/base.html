@@ -76,48 +76,28 @@
 
       <form class="review-restaurants-form review-boxes" id="reviewRestaurantsForm">
         <div class="review-box" id="review-box-1">
-          <div class="review-box-text" id="review-box-text-1">
-            Restaurant 1:<br>
-            Restaurant Name<br>
-            Restaurant Categories<br>
-            ETC
-          </div>
+          <div class="review-box-text" id="review-box-text-1"></div>
           <div class="slidecontainer">
             <input type="range" min="-5" max="5" value="0" class="slider" id="slider1">
           </div>
         </div>
 
         <div class="review-box" id="review-box-2">
-          <div class="review-box-text" id="review-box-text-2">
-            Restaurant 2:<br>
-            Restaurant Name<br>
-            Restaurant Categories<br>
-            ETC
-          </div>
+          <div class="review-box-text" id="review-box-text-2"> </div>
           <div class="slidecontainer">
             <input type="range" min="-5" max="5" value="0" class="slider" id="slider2">
           </div>
         </div>
 
         <div class="review-box" id="review-box-3">
-          <div class="review-box-text" id="review-box-text-3">
-            Restaurant 3:<br>
-            Restaurant Name<br>
-            Restaurant Categories<br>
-            ETC
-          </div>
+          <div class="review-box-text" id="review-box-text-3"></div>
           <div class="slidecontainer">
             <input type="range" min="-5" max="5" value="0" class="slider" id="slider3">
           </div>
         </div>
 
         <div class="review-box" id="review-box-4">
-          <div class="review-box-text" id="review-box-text-4">
-            Restaurant 4:<br>
-            Restaurant Name<br>
-            Restaurant Categories<br>
-            ETC
-          </div>
+          <div class="review-box-text" id="review-box-text-4"></div>
           <div class="slidecontainer">
             <input type="range" min="-5" max="5" value="0" class="slider" id="slider4">
           </div>
@@ -263,6 +243,10 @@
     var tagsPosInput = document.getElementsByClassName("tag-state-1");
 
 
+    function reviewBoxTemplate(number, name, address, categories) {
+      return `Restaurant ${number}:<br>${name}<br>${address}<br>${categories}<br>`
+    }
+
     document.querySelector('form.tags-form').addEventListener('submit', function (e) {
       e.preventDefault();
 
@@ -285,16 +269,21 @@
       fetch("/tags?" + new URLSearchParams({ tags: values, pos: posVals }).toString())
         .then((response) => response.json())
         .then((list) => {
-          count = 1;
-          document.getElementById("outputBox").innerHTML = '';
-          list.forEach((item) => {
-            let location = item[0]
-            let url = item[1]
-            let tempDiv = document.createElement("div");
-            tempDiv.innerHTML = outputBoxTemplate(location, count, url);
-            document.getElementById("outputBox").appendChild(tempDiv)
-            count += 1;
-          });
+          box1 = document.getElementById("review-box-text-1");
+          let r1 = list[0]
+          box1.innerHTML = reviewBoxTemplate(1, r1[0], r1[1], r1[2])
+
+          box2 = document.getElementById("review-box-text-2");
+          r2 = list[0]
+          box2.innerHTML = reviewBoxTemplate(2, r2[0], r2[1], r2[2])
+
+          box3 = document.getElementById("review-box-text-3");
+          r3 = list[0]
+          box3.innerHTML = reviewBoxTemplate(3, r3[0], r3[1], r3[2])
+
+          box4 = document.getElementById("review-box-text-4");
+          r4 = list[0]
+          box4.innerHTML = reviewBoxTemplate(4, r4[0], r4[1], r4[2])
         }
         );
 
@@ -302,6 +291,7 @@
       outputContainer.scrollIntoView({ behavior: 'smooth', inline: 'nearest', block: 'start' });
 
     });
+
 
     document.querySelector('form.review-restaurants-form').addEventListener('submit', function (e) {
       e.preventDefault();
