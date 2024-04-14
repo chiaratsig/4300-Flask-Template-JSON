@@ -388,9 +388,9 @@ input[type=checkbox]+label:hover {
 
 
 
-.output-loc {
+.output-restaurant {
     width: 380px;
-    height: 70px;
+    height: 200px;
     padding-left: 10px;
     padding-right: 10px;
     margin: 5px;

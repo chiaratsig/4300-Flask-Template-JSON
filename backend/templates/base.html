@@ -173,10 +173,6 @@
                     </div>`
     }
 
-    function outputBoxTemplate(loc, count, url) {
-      return `<a class='output-loc' target='_blank' href=${url}>${count}. <span class="underline"> ${loc}</span></a>`
-    }
-
     var locationsSubmit = document.getElementById("submitLocations");
     var newLocation = true;
     locationsSubmit.onclick = function () {
@@ -269,6 +265,22 @@
       fetch("/tags?" + new URLSearchParams({ tags: values, pos: posVals }).toString())
         .then((response) => response.json())
         .then((list) => {
+          // count = 1;
+          // list.forEach((item) => {
+          //   // print(item)
+          //   div_name = "review-box-text-" + toString(count);
+          //   print(div_name)
+          //   let name = item[0]
+          //   let address = item[1]
+          //   let tags = item[2]
+          //   box = document.getElementById(div_name);
+          //   // print(div_name)
+          //   // print(box)
+          //   // print(reviewBoxTemplate(count, name, address, tags))
+          //   box.innerHTML = reviewBoxTemplate(count, name, address, tags)
+          //   count += 1;
+          // });
+
           box1 = document.getElementById("review-box-text-1");
           let r1 = list[0]
           box1.innerHTML = reviewBoxTemplate(1, r1[0], r1[1], r1[2])
@@ -292,6 +304,9 @@
 
     });
 
+    function outputBoxTemplate(name, address, tags) {
+      return `<a class='output-restaurant'>${name}<br>${address}<br>${tags}</div>`
+    }
 
     document.querySelector('form.review-restaurants-form').addEventListener('submit', function (e) {
       e.preventDefault();
@@ -307,10 +322,11 @@
           count = 1;
           document.getElementById("outputBox").innerHTML = '';
           list.forEach((item) => {
-            let location = item[0]
-            let url = item[1]
+            let name = item[0]
+            let address = item[1]
+            let tags = item[2]
             let tempDiv = document.createElement("div");
-            tempDiv.innerHTML = outputBoxTemplate(location, count, url);
+            tempDiv.innerHTML = outputBoxTemplate(name, address, tags);
             document.getElementById("outputBox").appendChild(tempDiv)
             count += 1;
           });
