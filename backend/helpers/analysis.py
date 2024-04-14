@@ -602,11 +602,13 @@ def create_query_vector(top_categories: List[str],
     """
     # initialize empty array
     query_vector = np.zeros(n_good_types)
-    # for each category selected by the user, add that category's vector to the query vector
+    # for each category selected by the user, averageg that category's vector to create the query vector
     #(all are weighted equally)
+    n_cat = 0
     for cat in input_selected_categories:
+       n_cat += 1
        query_vector += input_category_vectors[top_categories.index(cat)]
-    return query_vector
+    return query_vector / n_cat
 
 
 def create_restaurant_vectors(
