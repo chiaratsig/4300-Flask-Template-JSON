@@ -103,6 +103,13 @@
           </div>
         </div>
 
+        <div class="review-box" id="review-box-5">
+          <div class="review-box-text" id="review-box-text-5"></div>
+          <div class="slidecontainer">
+            <input type="range" min="-5" max="5" value="0" class="slider" id="slider5">
+          </div>
+        </div>
+
 
         <button id="submitRanges" type="submit" style="margin-left: 30%">
           <h3><i class="fa-solid fa-check fa-3x"></i></h3>
@@ -265,37 +272,25 @@
       fetch("/tags?" + new URLSearchParams({ tags: values, pos: posVals }).toString())
         .then((response) => response.json())
         .then((list) => {
-          // count = 1;
-          // list.forEach((item) => {
-          //   // print(item)
-          //   div_name = "review-box-text-" + toString(count);
-          //   print(div_name)
-          //   let name = item[0]
-          //   let address = item[1]
-          //   let tags = item[2]
-          //   box = document.getElementById(div_name);
-          //   // print(div_name)
-          //   // print(box)
-          //   // print(reviewBoxTemplate(count, name, address, tags))
-          //   box.innerHTML = reviewBoxTemplate(count, name, address, tags)
-          //   count += 1;
-          // });
-
           box1 = document.getElementById("review-box-text-1");
           let r1 = list[0]
           box1.innerHTML = reviewBoxTemplate(1, r1[0], r1[1], r1[2])
 
           box2 = document.getElementById("review-box-text-2");
-          r2 = list[0]
+          r2 = list[1]
           box2.innerHTML = reviewBoxTemplate(2, r2[0], r2[1], r2[2])
 
           box3 = document.getElementById("review-box-text-3");
-          r3 = list[0]
+          r3 = list[2]
           box3.innerHTML = reviewBoxTemplate(3, r3[0], r3[1], r3[2])
 
           box4 = document.getElementById("review-box-text-4");
-          r4 = list[0]
+          r4 = list[3]
           box4.innerHTML = reviewBoxTemplate(4, r4[0], r4[1], r4[2])
+
+          box5 = document.getElementById("review-box-text-5");
+          r5 = list[4]
+          box5.innerHTML = reviewBoxTemplate(5, r5[0], r5[1], r5[2])
         }
         );
 
@@ -315,8 +310,9 @@
       var rating2 = document.getElementById("slider2").value;
       var rating3 = document.getElementById("slider3").value;
       var rating4 = document.getElementById("slider4").value;
+      var rating5 = document.getElementById("slider5").value;
 
-      fetch("/restaurantRatings?" + new URLSearchParams({ rating1: rating1, rating2: rating2, rating3: rating3, rating4: rating4 }).toString())
+      fetch("/restaurantRatings?" + new URLSearchParams({ rating1: rating1, rating2: rating2, rating3: rating3, rating4: rating4, rating5: rating5 }).toString())
         .then((response) => response.json())
         .then((list) => {
           count = 1;

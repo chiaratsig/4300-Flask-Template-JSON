@@ -706,7 +706,7 @@ def update_query_vector(
         else:
            irrel += restaurant_vectors[rest_i]
            n_irrel += 1
-    
+
     updated_query_vector = a*input_initial_query + (b/n_rel)*rel - (c/n_irrel)*rel
     return updated_query_vector
 
