@@ -488,8 +488,8 @@ def index_search2(
       results.append((cossim_numerator[doc] / cossim_denominator[doc], doc))
 
     results.sort(key=lambda x: x[0], reverse=True)
-    print("results")
-    print(results)
+    # print("results")
+    # print(results)
     
     # based on star review, either grab first 5 or last 5 reviews
     #if star_rating >=3:
@@ -573,7 +573,7 @@ def create_top_category_vectors(
 
     #initialize empty array
     category_vectors = np.zeros((len(top_categories), n_good_types))
-    print(top_categories)
+    # print(top_categories)
     for cat in inverted_index.keys():
         # print(cat)
         i = top_categories.index(cat)
@@ -675,8 +675,8 @@ def update_query_vector(
     restaurant_vectors: np.ndarray,
     input_restaurant_scores: List[float],
     a=1,
-    b=1,
-    c=1) -> np.ndarray:
+    b=3,
+    c=3) -> np.ndarray:
     """Returns a numpy array vector of length n_good_types such that the 
     ith entry indicates the weight of that type in the query, after being updated using
     rocchio's update rule

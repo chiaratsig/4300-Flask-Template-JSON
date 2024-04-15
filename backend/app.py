@@ -3,11 +3,9 @@ import os
 import string
 from flask import Flask, render_template, request, jsonify
 from flask_cors import CORS
+import state_processing
 from helpers.MySQLDatabaseHandler import MySQLDatabaseHandler
-from helpers.analysis import (tokenize, 
-build_br_inverted_index, distinct_words, get_good_words, create_review_word_occurrence_matrix, 
-compute_review_norms, build_wr_inverted_index, compute_idf, index_search, index_search2,
-build_cr_inverted_index, create_top_category_vectors, create_query_vector, create_restaurant_vectors,
+from helpers.analysis import (index_search2, create_query_vector, create_restaurant_vectors,
 update_query_vector)
 import pandas as pd
 from itertools import repeat
@@ -20,9 +18,11 @@ os.environ['ROOT_PATH'] = os.path.abspath(os.path.join("..",os.curdir))
 
 # Get the directory of the current script
 current_directory = os.path.dirname(os.path.abspath(__file__))
+print(current_directory)
 
 # Specify the path to the JSON file relative to the current script
-json_file_path = os.path.join(current_directory, 'init.json')
+# json_file_path = os.path.join(current_directory, '/state_data')
+# print(json_file_path)
 
 # Assuming your JSON data is stored in a file named 'init.json'
 # with open(json_file_path, 'r') as file:
@@ -41,72 +41,20 @@ json_file_path = os.path.join(current_directory, 'init.json')
 
 app = Flask(__name__)
 CORS(app)
-    
-de_json_file_path = os.path.join(current_directory, 'de.json')
-cols = ["review_id", "business_id", "stars_x", "text", "name", "address", "city", "state", "postal_code", "categories"]
 
-with open(de_json_file_path, 'r') as file:
-    data = json.load(file)
+# variables that are created in an endpoint and needed in others
+class Globals:
+    # Global to keep track of the restaurants the user reviews
+    reviewer_restaurants = []
+    #Global to keep track of initial query
+    initial_query = ""
+    #Global to keep track of state
+    state = ""
 
-df = pd.DataFrame(data=data, columns=cols)
-df["categories"] = df["categories"].astype("object")
-
-name_row_dict = {}
-for index, row in df.iterrows():
-    name_row_dict[row["name"].lower()] = index
-    tempList = row["categories"].split(",")
-    tempList = list(map(lambda x:x.lower(), tempList))
-    df.at[index, "categories"] = tempList
-
-# print(df["categories"])
-
-distinct = distinct_words(tokenize, df) 
-
-good_words = get_good_words(0.1, 0.9, df["text"], distinct)
-
-# build inverted business-review index
-br_inv_idx = build_br_inverted_index(df)
-
-# build vector array of shape (review, good_words) - values are binary to start
-# review index i is the same index it has in df
-review_vectors = create_review_word_occurrence_matrix(tokenize, df, good_words)        
-
-# build word-review inverted index. key = good type,
-#value = list of tuples pertaining to review that has that good type
-wr_inv_idx = build_wr_inverted_index(review_vectors, df, good_words)
-
-# dummy_categories = ['American', 'Gastropub', 'Chinese', 'Italian', 'Japanese', 'Czech', 'African',
-#                         'New', 'Old', 'Quick', 'Cheap', 'French', 'Old School', 'Local', 'Woman-Owned']
-
+state_to_df, state_to_idf, state_to_good_words, state_to_wr_inv_idx, state_to_br_inv_idx, state_to_name_row_dict, state_to_doc_norms, state_to_review_vectors, state_to_category_vectors = state_processing.data_processing(current_directory)
+print(state_to_category_vectors.keys())
 categories = ['American (Traditional)', 'Sandwiches', 'Breakfast & Brunch', 'Pizza', 'Fast Food', 'Mexican', 'Italian', 'Seafood', 'Coffee & Tea', 'Chinese', 'Japanese', 'Desserts', 'Mediterranean', 'Thai', 'Vegan', 'Vietnamese', 'Latin American', 'Indian', 'Middle Eastern', 'Korean']
 categories = list(map(lambda x:x.lower(), categories))
-
-# (GLOBAL) build an ar inverted index, where key = one of the top15 categories and the 
-#value is a single-linked list of review_ids pertaining to  reviews whos restaurants 
-#have that category
-#TODO: change build_cr_inverted_index to fit datastructure
-#TODO: swap out dummy_att_df for df
-# df = df.copy()
-# df['categories'] = [["American"]] * df.shape[0]
-
-cr_inv_idx = build_cr_inverted_index(df, categories)
-# print(cr_inv_idx)
-# print("cr_inv_idx")
-
-# cr_inv_idx = build_cr_inverted_index(df, dummy_categories)
-
-# (GLOBAL) For each of the categories in the global categories list (n=15), create a combined 
-#review vector of all restaurants that have that category - AVERAGE each of the review vectors
-# initialize empty vectors
-category_vectors = create_top_category_vectors(review_vectors, cr_inv_idx,
-                                                        categories, len(good_words))
-# category_vectors = create_top_category_vectors(review_vectors, cr_inv_idx,
-#                                                          dummy_categories, len(good_words))
-
-#START cosine similarity computation
-idf = compute_idf(wr_inv_idx, len(df))
-
-doc_norms = compute_review_norms(wr_inv_idx, idf, len(df))
 
 @app.route("/")
 def home():
@@ -115,16 +63,9 @@ def home():
 # This route endpoint triggered when the user submits all tags that they like
 @app.route("/state")
 def get_state():
-    state = request.args.get("state")
-    print(state)
-    return state
-
-# variables that are created in an endpoint and needed in others
-class Globals:
-    # Global to keep track of the restaurants the user reviews
-    reviewer_restaurants = []
-    #Global to keep track of initial query
-    initial_query = ""
+    Globals.state = request.args.get("state")
+    print(Globals.state)
+    return Globals.state
 
 # This route endpoint triggered when the user submits all tags that they like
 @app.route("/tags")
@@ -136,7 +77,7 @@ def get_tags():
     selected_categories = selected_categories.strip().split(",")
 
     print("selected categories")
-    print(selected_categories)
+    # print(selected_categories)
 
     # Will take out when datasets have categories
     # dummy_selected_categories = ['American', 'Gastropub', 'Cheap']
@@ -147,16 +88,26 @@ def get_tags():
     #1 of the  desired selected attributes, for example
     # Globals.initial_query = create_query_vector(dummy_categories, category_vectors,
     #                                     dummy_selected_categories, len(good_words))
+    print("here")
+    print(state_to_category_vectors.keys())
+    category_vectors = state_to_category_vectors[Globals.state]
+    good_words = state_to_good_words[Globals.state]
+    name_row_dict = state_to_name_row_dict[Globals.state]
+    wr_inv_idx = state_to_wr_inv_idx[Globals.state]
+    df = state_to_df[Globals.state]
+    idf = state_to_idf[Globals.state]
+    doc_norms = state_to_doc_norms[Globals.state]
+
     Globals.initial_query = create_query_vector(categories, category_vectors,
                                         selected_categories, len(good_words))
 
-    print("initial query")
-    print(Globals.initial_query)
+    # print("initial query")
+    # print(Globals.initial_query)
     # Pass this initial query into an updated version of index_search in analysis.py 
     #(this initial query is the new value of input_review_vector in app.py). 
     #This will return returned_restaurants (n=5)
     Globals.reviewer_restaurants = index_search2(good_words, Globals.initial_query, wr_inv_idx, df, idf, doc_norms)
-    print(Globals.reviewer_restaurants)
+    # print(Globals.reviewer_restaurants)
     review_restaurants_info = []
     for restaurant in Globals.reviewer_restaurants:
         tup = []
@@ -185,6 +136,14 @@ def get_ratings():
 
     ratings = [rating1, rating2, rating3, rating4, rating5]
     # print(ratings)
+    review_vectors = state_to_review_vectors[Globals.state]
+    good_words = state_to_good_words[Globals.state]
+    wr_inv_idx = state_to_wr_inv_idx[Globals.state]
+    df = state_to_df[Globals.state]
+    idf = state_to_idf[Globals.state]
+    br_inv_idx = state_to_br_inv_idx[Globals.state]
+    doc_norms = state_to_doc_norms[Globals.state]
+    name_row_dict = state_to_name_row_dict[Globals.state]
 
     # Build a vector to represent each of the 5 returned restaurants - average the review vector 
     #of each review pertaining to that restaurant
@@ -197,8 +156,8 @@ def get_ratings():
 
     # Run business_search on this updated query
     updated_returned_restaurants = index_search2(good_words, updated_query, wr_inv_idx, df, idf, doc_norms)
-    print("initial res", Globals.reviewer_restaurants)
-    print("updated res", updated_returned_restaurants)
+    # print("initial res", Globals.reviewer_restaurants)
+    # print("updated res", updated_returned_restaurants)
 
     output_restaurants_info = []
     ### TODO: NEED A WAY TO GET THIS INFO OUT EASILY
