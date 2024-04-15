@@ -1,5 +1,6 @@
 import json
 import os
+import string
 from flask import Flask, render_template, request, jsonify
 from flask_cors import CORS
 from helpers.MySQLDatabaseHandler import MySQLDatabaseHandler
@@ -52,7 +53,7 @@ df["categories"] = df["categories"].astype("object")
 
 name_row_dict = {}
 for index, row in df.iterrows():
-    name_row_dict[row["name"]] = index
+    name_row_dict[row["name"].lower()] = index
     tempList = row["categories"].split(",")
     df.at[index, "categories"] = tempList
 
@@ -123,10 +124,14 @@ class Globals:
 # This route endpoint triggered when the user submits all tags that they like
 @app.route("/tags")
 def get_tags():
-    selected_categories = request.args.get("tags")
-    pos = request.args.get("pos")
+    # categories = request.args.get("tags")
+    # categories = categories.strip().split(",")
+
+    selected_categories = request.args.get("pos")
     selected_categories = selected_categories.strip().split(",")
-    pos = pos.strip().split(",")
+
+    print("selected categories")
+    print(selected_categories)
 
     # Will take out when datasets have categories
     # dummy_selected_categories = ['American', 'Gastropub', 'Cheap']
@@ -145,13 +150,13 @@ def get_tags():
     #(this initial query is the new value of input_review_vector in app.py). 
     #This will return returned_restaurants (n=5)
     Globals.reviewer_restaurants = index_search2(good_words, Globals.initial_query, wr_inv_idx, df, idf, doc_norms)
-    
+    print(Globals.reviewer_restaurants)
     review_restaurants_info = []
-    ### TODO: NEED A WAY TO GET THIS INFO OUT EASILY
     for restaurant in Globals.reviewer_restaurants:
         tup = []
+        restaurant = restaurant.lower()
         restaurant_row = name_row_dict[restaurant]
-        tup.append(restaurant)
+        tup.append(string.capwords(restaurant))
         tup.append(df["address"][restaurant_row])
         tup.append(df["city"][restaurant_row] + ", " + df["postal_code"][restaurant_row])
         tup.append("restaurant tags")
@@ -159,7 +164,7 @@ def get_tags():
         # tup.append("restaurant tags")
         review_restaurants_info.append(tuple(tup))
 
-    print(review_restaurants_info)
+    # print(review_restaurants_info)
     return review_restaurants_info
     # return {"review_restaurants_info": review_restaurants_info, "initial_query": initial_query, "reviewer_restaurants": reviewer_restaurants}
 
@@ -193,8 +198,9 @@ def get_ratings():
     ### TODO: NEED A WAY TO GET THIS INFO OUT EASILY
     for restaurant in updated_returned_restaurants:
         tup = []
+        restaurant = restaurant.lower()
         restaurant_row = name_row_dict[restaurant]
-        tup.append(restaurant)
+        tup.append(string.capwords(restaurant))
         tup.append(df["address"][restaurant_row])
         tup.append(df["city"][restaurant_row] + ", " + df["postal_code"][restaurant_row])
         tup.append("restaurant tags")

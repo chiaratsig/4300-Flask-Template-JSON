@@ -477,13 +477,14 @@ def index_search2(
     
     cossim_numerator = score_func(tf, index, idf)
     cossim_denominator = query_norm * doc_norms
-
-
+    print("cossim_numerator, cossim_denominator, query_norm, doc_norms")
+    print(cossim_numerator, cossim_denominator, query_norm, doc_norms)
     for doc in cossim_numerator.keys():
       results.append((cossim_numerator[doc] / cossim_denominator[doc], doc))
 
     results.sort(key=lambda x: x[0], reverse=True)
-
+    print("results")
+    print(results)
     
     # based on star review, either grab first 5 or last 5 reviews
     #if star_rating >=3:
@@ -520,9 +521,7 @@ def build_cr_inverted_index(df: List[dict],
     """
     values = [[], [], [], [], [], [], [], [], [], [], 
               [], [], [], [], [], [], [], [], [], []]
-    print(top_categories)
     inv_idx = dict(zip(top_categories, values))
-    print(inv_idx)
     for i in range(5):#range(df.shape[0]):
         # list of a few cats pertaining to this restaurant
         rest_categories = df.iloc[i]['categories']
@@ -604,10 +603,13 @@ def create_query_vector(top_categories: List[str],
     """
     # initialize empty array
     query_vector = np.zeros(n_good_types)
+    top_categories = list(map(lambda x:x.lower(), top_categories))
     # for each category selected by the user, averageg that category's vector to create the query vector
     #(all are weighted equally)
     n_cat = 0
+    print(input_selected_categories)
     for cat in input_selected_categories:
+    #    console.log(cat)
        n_cat += 1
        query_vector += input_category_vectors[top_categories.index(cat)]
     return query_vector / n_cat

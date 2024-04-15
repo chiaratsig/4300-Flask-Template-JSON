@@ -186,7 +186,7 @@
       state = locationInput.value.toLowerCase()
       if (tags.includes(state)) {
         if (newLocation) {
-          console.log(state);
+          // console.log(state);
 
           var tagsContainer = document.getElementById("chooseTags");
           tagsContainer.scrollIntoView({ behavior: 'smooth', block: 'start' });
@@ -237,7 +237,7 @@
         }
       }
       else {
-        console.log(locationInput.value);
+        // console.log(locationInput.value);
         document.getElementById("locationFeedback").classList.remove("hidden");
       }
     };
@@ -259,17 +259,20 @@
       var values = []
       var posVals = []
       for (const input of tagsInput) {
-        if (input.checked) {
-          values.push(input.value)
-        }
+        // console.log(tagsInput)
+        values.push(input.innerText.toLowerCase())
         input.style.pointerEvents = "none";
       }
       for (const input of tagsPosInput) {
         posVals.push(input.innerText.toLowerCase())
         input.style.pointerEvents = "none";
       }
+      console.log("posVals")
+      console.log(posVals)
+      console.log("values")
+      console.log(values)
 
-      fetch("/tags?" + new URLSearchParams({ tags: values, pos: posVals }).toString())
+      fetch("/tags?" + new URLSearchParams({ pos: posVals }).toString())
         .then((response) => response.json())
         .then((list) => {
           box1 = document.getElementById("review-box-text-1");
