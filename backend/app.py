@@ -58,7 +58,7 @@ for index, row in df.iterrows():
     tempList = list(map(lambda x:x.lower(), tempList))
     df.at[index, "categories"] = tempList
 
-print(df["categories"])
+# print(df["categories"])
 
 distinct = distinct_words(tokenize, df) 
 
@@ -90,8 +90,8 @@ categories = list(map(lambda x:x.lower(), categories))
 # df['categories'] = [["American"]] * df.shape[0]
 
 cr_inv_idx = build_cr_inverted_index(df, categories)
-print(cr_inv_idx)
-print("cr_inv_idx")
+# print(cr_inv_idx)
+# print("cr_inv_idx")
 
 # cr_inv_idx = build_cr_inverted_index(df, dummy_categories)
 
