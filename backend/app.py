@@ -48,12 +48,13 @@ with open(de_json_file_path, 'r') as file:
     data = json.load(file)
 
 df = pd.DataFrame(data=data, columns=cols)
+df["categories"] = df["categories"].astype("object")
 
 name_row_dict = {}
 for index, row in df.iterrows():
     name_row_dict[row["name"]] = index
     tempList = row["categories"].split(",")
-    df.at[row, "categories"] = tempList
+    df.at[index, "categories"] = tempList
 
 
 
@@ -82,11 +83,11 @@ dummy_categories = ['American', 'Gastropub', 'Chinese', 'Italian', 'Japanese', '
 #have that category
 #TODO: change build_cr_inverted_index to fit datastructure
 #TODO: swap out dummy_att_df for df
-dummy_cat_df = df.copy()
-dummy_cat_df['categories'] = [["American"]] * df.shape[0]
+df = df.copy()
+df['categories'] = [["American"]] * df.shape[0]
 
-# cr_inv_idx = build_cr_inverted_index(dummy_cat_df, categories)
-cr_inv_idx = build_cr_inverted_index(dummy_cat_df, dummy_categories)
+# cr_inv_idx = build_cr_inverted_index(df, categories)
+cr_inv_idx = build_cr_inverted_index(df, dummy_categories)
 
 # (GLOBAL) For each of the categories in the global categories list (n=15), create a combined 
 #review vector of all restaurants that have that category - AVERAGE each of the review vectors
@@ -201,5 +202,3 @@ def get_ratings():
 
     # restaurants_reccomended = [("Restaurant 1 Name", "Restaurant 1 Address", "Restaurant 1 Tags"), ("Restaurant 2 Name", "Restaurant 2 Address", "Restaurant 2 Tags"), ("Restaurant 3 Name", "Restaurant 3 Address", "Restaurant 3 Tags"), ("Restaurant 4 Name", "Restaurant 4 Address", "Restaurant 4 Tags"), ("Restaurant 5 Name", "Restaurant 5 Address", "Restaurant 5 Tags")]
     return output_restaurants_info
-
-def parse_restaurants()
