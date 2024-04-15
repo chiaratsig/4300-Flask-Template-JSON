@@ -247,7 +247,7 @@
 
 
     function reviewBoxTemplate(number, name, address, categories) {
-      return `Restaurant ${number}:<br>${name}<br>${address}<br>${categories}<br>`
+      return `${name}<br>${address}<br>${categories}<br>`
     }
 
     document.querySelector('form.tags-form').addEventListener('submit', function (e) {

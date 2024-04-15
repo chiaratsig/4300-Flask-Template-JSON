@@ -707,7 +707,17 @@ def update_query_vector(
            irrel += restaurant_vectors[rest_i]
            n_irrel += 1
 
-    updated_query_vector = a*input_initial_query + (b/n_rel)*rel - (c/n_irrel)*rel
+    if n_rel == 0:
+        b_rel_avg = 0
+    else: 
+        b_rel_avg = b / n_rel
+    
+    if n_irrel == 0:
+        c_irrel_avg = 0
+    else: 
+        c_irrel_avg = c / n_irrel
+
+    updated_query_vector = a*input_initial_query + (b_rel_avg)*rel - (c_irrel_avg)*rel
     return updated_query_vector
 
           
