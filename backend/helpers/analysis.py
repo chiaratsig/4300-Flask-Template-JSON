@@ -473,6 +473,11 @@ def index_search2(
     # TODO: 
     # compute query norm - right now this is just squaring, summing,
     #and sqrting the query vector
+    print("query vector")
+    print(query_vector)
+    print("tf")
+    print(tf)
+
     query_norm = np.sqrt(np.sum((query_vector ** 2)))
     
     cossim_numerator = score_func(tf, index, idf)
@@ -522,14 +527,18 @@ def build_cr_inverted_index(df: List[dict],
     values = [[], [], [], [], [], [], [], [], [], [], 
               [], [], [], [], [], [], [], [], [], []]
     inv_idx = dict(zip(top_categories, values))
-    for i in range(5):#range(df.shape[0]):
+    # for i in range(5):#range(df.shape[0]):
+
+    ## I THINK THIS NEEDS TO BE HERE
+    for i in range(df.shape[0]):
         # list of a few cats pertaining to this restaurant
         rest_categories = df.iloc[i]['categories']
-
+        print(rest_categories)
         for cat in rest_categories:
             if cat in top_categories:
                inv_idx[cat].append(i)
               
+    print(inv_idx)
     return inv_idx
 
        
@@ -565,13 +574,19 @@ def create_top_category_vectors(
 
     #initialize empty array
     category_vectors = np.zeros((len(top_categories), n_good_types))
+    print(top_categories)
     for cat in inverted_index.keys():
+        print(cat)
         i = top_categories.index(cat)
+        print(inverted_index)
+        print(inverted_index[cat])
         for review_id in inverted_index[cat]:
+          print(review_id)
           category_vectors[i] += input_review_vectors[review_id]
         # divide by number of reviews with that cat to take the avg
         # add one to avoid dividing by 0
         category_vectors[i] /= (len(inverted_index[cat]) + 1)
+    print(category_vectors)
     return category_vectors
 
 def create_query_vector(top_categories: List[str],
@@ -603,11 +618,14 @@ def create_query_vector(top_categories: List[str],
     """
     # initialize empty array
     query_vector = np.zeros(n_good_types)
-    top_categories = list(map(lambda x:x.lower(), top_categories))
     # for each category selected by the user, averageg that category's vector to create the query vector
     #(all are weighted equally)
+    print("create initial query vector")
+    print(top_categories)
     n_cat = 0
     print(input_selected_categories)
+    print("category vectors")
+    print(input_category_vectors)
     for cat in input_selected_categories:
     #    console.log(cat)
        n_cat += 1

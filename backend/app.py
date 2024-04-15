@@ -55,9 +55,10 @@ name_row_dict = {}
 for index, row in df.iterrows():
     name_row_dict[row["name"].lower()] = index
     tempList = row["categories"].split(",")
+    tempList = list(map(lambda x:x.lower(), tempList))
     df.at[index, "categories"] = tempList
 
-
+print(df["categories"])
 
 distinct = distinct_words(tokenize, df) 
 
@@ -78,6 +79,7 @@ wr_inv_idx = build_wr_inverted_index(review_vectors, df, good_words)
 #                         'New', 'Old', 'Quick', 'Cheap', 'French', 'Old School', 'Local', 'Woman-Owned']
 
 categories = ['American (Traditional)', 'Sandwiches', 'Breakfast & Brunch', 'Pizza', 'Fast Food', 'Mexican', 'Italian', 'Seafood', 'Coffee & Tea', 'Chinese', 'Japanese', 'Desserts', 'Mediterranean', 'Thai', 'Vegan', 'Vietnamese', 'Latin American', 'Indian', 'Middle Eastern', 'Korean']
+categories = list(map(lambda x:x.lower(), categories))
 
 # (GLOBAL) build an ar inverted index, where key = one of the top15 categories and the 
 #value is a single-linked list of review_ids pertaining to  reviews whos restaurants 
@@ -88,6 +90,9 @@ categories = ['American (Traditional)', 'Sandwiches', 'Breakfast & Brunch', 'Piz
 # df['categories'] = [["American"]] * df.shape[0]
 
 cr_inv_idx = build_cr_inverted_index(df, categories)
+print(cr_inv_idx)
+print("cr_inv_idx")
+
 # cr_inv_idx = build_cr_inverted_index(df, dummy_categories)
 
 # (GLOBAL) For each of the categories in the global categories list (n=15), create a combined 
@@ -145,7 +150,8 @@ def get_tags():
     Globals.initial_query = create_query_vector(categories, category_vectors,
                                         selected_categories, len(good_words))
 
-
+    print("initial query")
+    print(Globals.initial_query)
     # Pass this initial query into an updated version of index_search in analysis.py 
     #(this initial query is the new value of input_review_vector in app.py). 
     #This will return returned_restaurants (n=5)
