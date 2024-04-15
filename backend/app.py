@@ -73,29 +73,29 @@ review_vectors = create_review_word_occurrence_matrix(tokenize, df, good_words)
 #value = list of tuples pertaining to review that has that good type
 wr_inv_idx = build_wr_inverted_index(review_vectors, df, good_words)
 
-dummy_categories = ['American', 'Gastropub', 'Chinese', 'Italian', 'Japanese', 'Czech', 'African',
-                        'New', 'Old', 'Quick', 'Cheap', 'French', 'Old School', 'Local', 'Woman-Owned']
+# dummy_categories = ['American', 'Gastropub', 'Chinese', 'Italian', 'Japanese', 'Czech', 'African',
+#                         'New', 'Old', 'Quick', 'Cheap', 'French', 'Old School', 'Local', 'Woman-Owned']
 
-# categories = ['American (Traditional)', 'Sandwiches', 'Breakfast & Brunch', 'Pizza', 'Fast Food', 'Mexican', 'Italian', 'Seafood', 'Coffee & Tea', 'Chinese', 'Japanese', 'Desserts', 'Mediterranean', 'Thai', 'Vegan', 'Vietnamese', 'Latin American', 'Indian', 'Middle Eastern', 'Korean']
+categories = ['American (Traditional)', 'Sandwiches', 'Breakfast & Brunch', 'Pizza', 'Fast Food', 'Mexican', 'Italian', 'Seafood', 'Coffee & Tea', 'Chinese', 'Japanese', 'Desserts', 'Mediterranean', 'Thai', 'Vegan', 'Vietnamese', 'Latin American', 'Indian', 'Middle Eastern', 'Korean']
 
 # (GLOBAL) build an ar inverted index, where key = one of the top15 categories and the 
 #value is a single-linked list of review_ids pertaining to  reviews whos restaurants 
 #have that category
 #TODO: change build_cr_inverted_index to fit datastructure
 #TODO: swap out dummy_att_df for df
-df = df.copy()
-df['categories'] = [["American"]] * df.shape[0]
+# df = df.copy()
+# df['categories'] = [["American"]] * df.shape[0]
 
-# cr_inv_idx = build_cr_inverted_index(df, categories)
-cr_inv_idx = build_cr_inverted_index(df, dummy_categories)
+cr_inv_idx = build_cr_inverted_index(df, categories)
+# cr_inv_idx = build_cr_inverted_index(df, dummy_categories)
 
 # (GLOBAL) For each of the categories in the global categories list (n=15), create a combined 
 #review vector of all restaurants that have that category - AVERAGE each of the review vectors
 # initialize empty vectors
-# category_vectors = create_top_category_vectors(review_vectors, cr_inv_idx,
-#                                                         categories, len(good_words))
 category_vectors = create_top_category_vectors(review_vectors, cr_inv_idx,
-                                                         dummy_categories, len(good_words))
+                                                        categories, len(good_words))
+# category_vectors = create_top_category_vectors(review_vectors, cr_inv_idx,
+#                                                          dummy_categories, len(good_words))
 
 #START cosine similarity computation
 idf = compute_idf(wr_inv_idx, len(df))
@@ -129,16 +129,16 @@ def get_tags():
     pos = pos.strip().split(",")
 
     # Will take out when datasets have categories
-    dummy_selected_categories = ['American', 'Gastropub', 'Cheap']
+    # dummy_selected_categories = ['American', 'Gastropub', 'Cheap']
 
     # (search-specific) For each of the attributes in the user-selected-checkboxes, 
     #ADD their vectors. This is the initial query (adding allows a restaurant with 3 of 
     #the desired selected attributes to likely be ranked higher than a restaurant with 
     #1 of the  desired selected attributes, for example
-    Globals.initial_query = create_query_vector(dummy_categories, category_vectors,
-                                        dummy_selected_categories, len(good_words))
-    # initial_query = create_query_vector(categories, category_vectors,
-    #                                     selected_categories, len(good_words))
+    # Globals.initial_query = create_query_vector(dummy_categories, category_vectors,
+    #                                     dummy_selected_categories, len(good_words))
+    initial_query = create_query_vector(categories, category_vectors,
+                                        selected_categories, len(good_words))
 
 
     # Pass this initial query into an updated version of index_search in analysis.py 

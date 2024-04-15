@@ -519,8 +519,10 @@ def build_cr_inverted_index(df: List[dict],
 
     """
     values = [[], [], [], [], [], [], [], [], [], [], 
-              [], [], [], [], []]
+              [], [], [], [], [], [], [], [], [], []]
+    print(top_categories)
     inv_idx = dict(zip(top_categories, values))
+    print(inv_idx)
     for i in range(5):#range(df.shape[0]):
         # list of a few cats pertaining to this restaurant
         rest_categories = df.iloc[i]['categories']
