@@ -42,7 +42,7 @@ app = Flask(__name__)
 CORS(app)
     
 de_json_file_path = os.path.join(current_directory, 'de.json')
-cols = ["review_id", "business_id", "stars_x", "text", "name", "address", "city", "state", "postal_code"]
+cols = ["review_id", "business_id", "stars_x", "text", "name", "address", "city", "state", "postal_code", "categories"]
 
 with open(de_json_file_path, 'r') as file:
     data = json.load(file)
@@ -52,6 +52,10 @@ df = pd.DataFrame(data=data, columns=cols)
 name_row_dict = {}
 for index, row in df.iterrows():
     name_row_dict[row["name"]] = index
+    tempList = row["categories"].split(",")
+    df.at[row, "categories"] = tempList
+
+
 
 distinct = distinct_words(tokenize, df) 
 
@@ -197,3 +201,5 @@ def get_ratings():
 
     # restaurants_reccomended = [("Restaurant 1 Name", "Restaurant 1 Address", "Restaurant 1 Tags"), ("Restaurant 2 Name", "Restaurant 2 Address", "Restaurant 2 Tags"), ("Restaurant 3 Name", "Restaurant 3 Address", "Restaurant 3 Tags"), ("Restaurant 4 Name", "Restaurant 4 Address", "Restaurant 4 Tags"), ("Restaurant 5 Name", "Restaurant 5 Address", "Restaurant 5 Tags")]
     return output_restaurants_info
+
+def parse_restaurants()
