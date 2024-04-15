@@ -137,7 +137,7 @@ def get_tags():
     #1 of the  desired selected attributes, for example
     # Globals.initial_query = create_query_vector(dummy_categories, category_vectors,
     #                                     dummy_selected_categories, len(good_words))
-    initial_query = create_query_vector(categories, category_vectors,
+    Globals.initial_query = create_query_vector(categories, category_vectors,
                                         selected_categories, len(good_words))
 
 
