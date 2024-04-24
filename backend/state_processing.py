@@ -10,7 +10,7 @@ def data_processing(current_directory):
       "alabama" : "ab.json",
       "arizona" : "az.json",
       "california" : "ca.json",
-      "deleware" : "de.json", 
+      "delaware" : "de.json", 
       "florida" : "fl.json",
       "idaho" : "id.json",
       "illinois" : "il.json",

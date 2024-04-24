@@ -111,24 +111,20 @@ def get_tags():
     # print(Globals.reviewer_restaurants)
     review_restaurants_info = []
     for restaurant in Globals.reviewer_restaurants:
-        print()
-        print()
-        print(restaurant)
-        print("HERE")
-        print()
         tup = []
         restaurant = restaurant.lower()
         restaurant_rows = name_row_dict[restaurant]
+        print(restaurant)
+        print(restaurant_rows)
         tup.append(string.capwords(restaurant))
-        tup.append(df["address"][restaurant_rows[0]] + df["city"][restaurant_rows[0]] + ", " + df["postal_code"][restaurant_rows[0]])
+        tup.append(df["address"][restaurant_rows[0]] + ", " + df["city"][restaurant_rows[0]] + ", " + df["postal_code"][restaurant_rows[0]])
         tup.append("restaurant tags")
 
         reviews = []
         i = 0
         while i < 5 and i < len(restaurant_rows):
-            reviews.append(df["text"][i])
+            reviews.append(df["text"][restaurant_rows[i]])
             i +=1 
-        print(reviews)
         tup.append(reviews)
         review_restaurants_info.append(tuple(tup))
 

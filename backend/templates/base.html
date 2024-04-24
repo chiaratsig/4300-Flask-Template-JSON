@@ -338,13 +338,13 @@
         fetch("/tags?" + new URLSearchParams({ pos: posVals }).toString())
           .then((response) => response.json())
           .then((list) => {
-            box1 = document.getElementById("review-box-text-1");
 
             // @VARSHA -- the reviews are stored as a list in the third slot of each part of the 2d array 
             // r1 --> first restaurant, r2 --> second, etc
             // r1[0] = name, r1[1] = address, r1[2] = categories but not actually
             // r1[3] = list of 5 reviews 
-
+            box1 = document.getElementById("review-box-text-1");
+            r1 = list[0];
             box1.innerHTML = reviewBoxTemplate(1, r1[0], r1[1], r1[2], r1[3][0]);
 
             box2 = document.getElementById("review-box-text-2");
