@@ -1,492 +1,431 @@
 <!DOCTYPE html>
 <html>
-  <head>
-    <title>Yelp Me Find a Restaurant</title>
 
-    <script
-      src="https://kit.fontawesome.com/6969334fef.js"
-      crossorigin="anonymous"
-    ></script>
+<head>
+  <title>Yelp Me Find a Restaurant</title>
 
-    <link rel="preconnect" href="https://fonts.googleapis.com" />
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-    <link
-      href="https://fonts.googleapis.com/css2?family=Roboto:wght@500&display=swap"
-      rel="stylesheet"
-    />
+  <script src="https://kit.fontawesome.com/6969334fef.js" crossorigin="anonymous"></script>
 
-    <link rel="stylesheet" type="text/css" href="../static/style.css" />
-  </head>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@500&display=swap" rel="stylesheet" />
 
-  <body id="body">
-    <main>
-      <!-- <h1 onclick="loadHomePage()">Yelp Me Find a Restaurant</h1> -->
-      <h1 class="title">Yelp Me Find a Restaurant!</h1>
-      <!-- First Window Start -->
-      <div class="choose-location" id="chooseLocation">
-        <div class="instruction">
-          <h2>1</h2>
-          <h2>Choose a state to dine in</h2>
+  <link rel="stylesheet" type="text/css" href="../static/style.css" />
+</head>
+
+<body id="body">
+  <main>
+    <!-- <h1 onclick="loadHomePage()">Yelp Me Find a Restaurant</h1> -->
+    <h1 class="title">Yelp Me Find a Restaurant!</h1>
+    <!-- First Window Start -->
+    <div class="choose-location" id="chooseLocation">
+      <div class="instruction">
+        <h2>1</h2>
+        <h2>Choose a state to dine in</h2>
+      </div>
+
+      <div id="locationChosen">
+        <div class="location-box">
+          <h3 class="location-box-text" id="chosenLocation">State</h3>
         </div>
-
-        <div id="locationChosen">
-          <div class="location-box">
-            <h3 class="location-box-text" id="chosenLocation">State</h3>
-          </div>
-          <!-- <button id="editLocation" class="location-icon">
+        <!-- <button id="editLocation" class="location-icon">
             <h3 id="locationPen"><i class="fa-solid fa-pen fa-2x"></i></h3>
           </button> -->
-        </div>
-
-        <div id="locationEditing" class="hidden">
-          <form class="choose-form">
-            <div class="location-box">
-              <input
-                list="datalist"
-                id="location-input"
-                type="text"
-                onkeyup="add_locations_to_dropdown(this.value)"
-              />
-              <datalist id="datalist"></datalist>
-            </div>
-          </form>
-        </div>
-        <div class="buttons">
-          <button class="reset" onClick="window.location.reload();">
-            Reset
-          </button>
-          <button id="submitLocations">Next</button>
-        </div>
-        <h4 id="locationFeedback" class="feedback hidden">
-          Please select a state from the dropdown.
-        </h4>
-        <img class="details" src="./static/images/details.png" />
-        <img class="graphics" src="./static/images/graphics.png" />
       </div>
-      <!-- First Window End -->
 
-      <!-- Second Window Start -->
-      <div class="choose-tags hidden" id="chooseTags">
-        <h2>
-          What do you like in a restaurant?<i
-            class="fa-solid fa-circle-info tooltip"
-          >
-            <span class="tooltiptext"
-              >Click a category once if it interests you. You can also leave
-              them neutral! Scroll for more options.</span
-            >
-          </i>
-        </h2>
-
-        <form class="tags-form" id="tagsForm">
-          <div class="tag-box" id="tagBox">
-            <div id="tags-checker"></div>
+      <div id="locationEditing" class="hidden">
+        <form class="choose-form">
+          <div class="location-box">
+            <input list="datalist" id="location-input" type="text" onkeyup="add_locations_to_dropdown(this.value)" />
+            <datalist id="datalist"></datalist>
           </div>
-
-          <button id="submitTags" type="submit">
-            <h3><i class="fa-solid fa-check fa-3x"></i></h3>
-          </button>
         </form>
       </div>
-      <!-- Second Window End -->
-
-      <!-- Third Window Start -->
-      <div
-        class="review-restaurants hidden"
-        id="reviewRestaurants"
-        style="margin-top: 200px"
-      >
-        <h2>
-          Please rate the following restaurants using the sliding scale.<i
-            class="fa-solid fa-circle-info tooltip"
-          >
-            <span class="tooltiptext"
-              >Scroll through and rate each of the restaurants on the sliding
-              scale.</span
-            >
-          </i>
-        </h2>
-
-        <form
-          class="review-restaurants-form review-boxes"
-          id="reviewRestaurantsForm"
-        >
-          <div class="review-box" id="review-box-1">
-            <div class="review-box-text" id="review-box-text-1"></div>
-            <div class="slidecontainer">
-              <input
-                type="range"
-                min="-5"
-                max="5"
-                value="0"
-                class="slider"
-                id="slider1"
-              />
-            </div>
-          </div>
-
-          <div class="review-box" id="review-box-2">
-            <div class="review-box-text" id="review-box-text-2"></div>
-            <div class="slidecontainer">
-              <input
-                type="range"
-                min="-5"
-                max="5"
-                value="0"
-                class="slider"
-                id="slider2"
-              />
-            </div>
-          </div>
-
-          <div class="review-box" id="review-box-3">
-            <div class="review-box-text" id="review-box-text-3"></div>
-            <div class="slidecontainer">
-              <input
-                type="range"
-                min="-5"
-                max="5"
-                value="0"
-                class="slider"
-                id="slider3"
-              />
-            </div>
-          </div>
-
-          <div class="review-box" id="review-box-4">
-            <div class="review-box-text" id="review-box-text-4"></div>
-            <div class="slidecontainer">
-              <input
-                type="range"
-                min="-5"
-                max="5"
-                value="0"
-                class="slider"
-                id="slider4"
-              />
-            </div>
-          </div>
-
-          <div class="review-box" id="review-box-5">
-            <div class="review-box-text" id="review-box-text-5"></div>
-            <div class="slidecontainer">
-              <input
-                type="range"
-                min="-5"
-                max="5"
-                value="0"
-                class="slider"
-                id="slider5"
-              />
-            </div>
-          </div>
-
-          <button id="submitRanges" type="submit" style="margin-left: 30%">
-            <h3><i class="fa-solid fa-check fa-3x"></i></h3>
-          </button>
-        </form>
+      <div class="buttons">
+        <button class="reset" onClick="window.location.reload();">
+          Reset
+        </button>
+        <button id="submitLocations">Next</button>
       </div>
-      <!-- Third Window End -->
+      <h4 id="locationFeedback" class="feedback hidden">
+        Please select a state from the dropdown.
+      </h4>
+      <img class="details" src="./static/images/details.png" />
+      <img class="graphics" src="./static/images/graphics.png" />
+    </div>
+    <!-- First Window End -->
 
-      <!-- Fourth Window Start -->
-      <div class="return-restaurants hidden" id="returnRestaurants">
-        <h2>You Might Like These Restaurants</h2>
+    <!-- Second Window Start -->
+    <div class="choose-tags hidden" id="chooseTags">
+      <h2>
+        What do you like in a restaurant?<i class="fa-solid fa-circle-info tooltip">
+          <span class="tooltiptext">Click a category once if it interests you. You can also leave
+            them neutral! Scroll for more options.</span>
+        </i>
+      </h2>
 
-        <div id="outputBox">
-          <i
-            class="fa-solid fa-spinner fa-spin-pulse fa-4x"
-            style="color: #915f54"
-          ></i>
+      <form class="tags-form" id="tagsForm">
+        <div class="tag-box" id="tagBox">
+          <div id="tags-checker"></div>
         </div>
-      </div>
-      <!-- Fourth Window End -->
-    </main>
 
-    <script>
-      // First Window Start
-      var editLocation = document.getElementById("locationChosen");
-      editLocation.onclick = function () {
+        <button id="submitTags" type="submit">
+          <h3><i class="fa-solid fa-check fa-3x"></i></h3>
+        </button>
+      </form>
+    </div>
+    <!-- Second Window End -->
+
+    <!-- Third Window Start -->
+    <div class="review-restaurants hidden" id="reviewRestaurants" style="margin-top: 200px">
+      <h2>
+        Please rate the following restaurants using the sliding scale.<i class="fa-solid fa-circle-info tooltip">
+          <span class="tooltiptext">Scroll through and rate each of the restaurants on the sliding
+            scale.</span>
+        </i>
+      </h2>
+
+      <form class="review-restaurants-form review-boxes" id="reviewRestaurantsForm">
+        <div class="review-box" id="review-box-1">
+          <div class="review-box-text" id="review-box-text-1"></div>
+          <div class="slidecontainer">
+            <input type="range" min="-5" max="5" value="0" class="slider" id="slider1" />
+          </div>
+        </div>
+
+        <div class="review-box" id="review-box-2">
+          <div class="review-box-text" id="review-box-text-2"></div>
+          <div class="review-box-reviews" id="review-box-reviews-1"></div>
+          <div class="slidecontainer">
+            <input type="range" min="-5" max="5" value="0" class="slider" id="slider2" />
+          </div>
+        </div>
+
+        <div class="review-box" id="review-box-3">
+          <div class="review-box-text" id="review-box-text-3"></div>
+          <div class="slidecontainer">
+            <input type="range" min="-5" max="5" value="0" class="slider" id="slider3" />
+          </div>
+        </div>
+
+        <div class="review-box" id="review-box-4">
+          <div class="review-box-text" id="review-box-text-4"></div>
+          <div class="slidecontainer">
+            <input type="range" min="-5" max="5" value="0" class="slider" id="slider4" />
+          </div>
+        </div>
+
+        <div class="review-box" id="review-box-5">
+          <div class="review-box-text" id="review-box-text-5"></div>
+          <div class="slidecontainer">
+            <input type="range" min="-5" max="5" value="0" class="slider" id="slider5" />
+          </div>
+        </div>
+
+        <button id="submitRanges" type="submit" style="margin-left: 30%">
+          <h3><i class="fa-solid fa-check fa-3x"></i></h3>
+        </button>
+      </form>
+    </div>
+    <!-- Third Window End -->
+
+    <!-- Fourth Window Start -->
+    <div class="return-restaurants hidden" id="returnRestaurants">
+      <h2>You Might Like These Restaurants</h2>
+
+      <div id="outputBox">
+        <i class="fa-solid fa-spinner fa-spin-pulse fa-4x" style="color: #915f54"></i>
+      </div>
+    </div>
+    <!-- Fourth Window End -->
+  </main>
+
+  <script>
+    // First Window Start
+    var editLocation = document.getElementById("locationChosen");
+    editLocation.onclick = function () {
+      var locationEditView = document.getElementById("locationEditing");
+      locationEditView.classList.remove("hidden");
+
+      var locationChosenView = document.getElementById("locationChosen");
+      locationChosenView.classList.add("hidden");
+
+      var textbox = document.getElementById("location-input");
+      textbox.select();
+
+      add_locations_to_dropdown("");
+    };
+
+    var locationInput = document.getElementById("location-input");
+    document
+      .querySelector("form.choose-form")
+      .addEventListener("submit", function (e) {
+        e.preventDefault();
+
         var locationEditView = document.getElementById("locationEditing");
-        locationEditView.classList.remove("hidden");
+        locationEditView.classList.add("hidden");
 
         var locationChosenView = document.getElementById("locationChosen");
-        locationChosenView.classList.add("hidden");
+        locationChosenView.classList.remove("hidden");
 
-        var textbox = document.getElementById("location-input");
-        textbox.select();
+        var newLocation = document.getElementById("chosenLocation");
+        newLocation.innerHTML = locationInput.value;
+      });
 
-        add_locations_to_dropdown("");
-      };
+    var tags = [
+      "alabama",
+      "arizona",
+      "california",
+      "delaware",
+      "florida",
+      "idaho",
+      "illinois",
+      "indiana",
+      "louisiana",
+      "missouri",
+      "nevada",
+      "new jersey",
+      "pennsylvania",
+      "tennessee",
+    ];
+    var tag_len = 14;
 
-      var locationInput = document.getElementById("location-input");
-      document
-        .querySelector("form.choose-form")
-        .addEventListener("submit", function (e) {
-          e.preventDefault();
+    function add_locations_to_dropdown(value) {
+      document.getElementById("datalist").innerHTML = "";
 
-          var locationEditView = document.getElementById("locationEditing");
-          locationEditView.classList.add("hidden");
+      l = value.length;
+      for (var i = 0; i < tag_len; i++) {
+        if (tags[i].toLowerCase().indexOf(value.toLowerCase()) > -1) {
+          var node = document.createElement("option");
+          var capitalizedTag =
+            tags[i].charAt(0).toUpperCase() + tags[i].slice(1).toLowerCase();
+          var val = document.createTextNode(capitalizedTag);
+          node.appendChild(val);
+
+          document.getElementById("datalist").appendChild(node);
+        }
+      }
+    }
+
+    function tagBoxTemplate(tag) {
+      return `<div class="tag tags-input tag-style tag-state-0 tag-${tag}" id="tag-${tag}">                
+                        <span >${tag}</span>
+                    </div>`;
+    }
+
+    var locationsSubmit = document.getElementById("submitLocations");
+    var newLocation = true;
+    locationsSubmit.onclick = function () {
+      state = locationInput.value.toLowerCase();
+      if (tags.includes(state)) {
+        if (newLocation) {
+          // console.log(state);
+
+          var tagsContainer = document.getElementById("chooseTags");
+          tagsContainer.scrollIntoView({
+            behavior: "smooth",
+            block: "start",
+          });
+
+          document.getElementById("chooseTags").classList.remove("hidden");
+          document.getElementById("locationEditing").remove();
+          // document.getElementById("editLocation").disabled = true;
+          // document.getElementById("editLocation").style.pointerEvents =
+          //   "none";
+          document.getElementById("body").style.overflow = "visible";
+
+          fetch("/state?" + new URLSearchParams({ state: state }).toString());
 
           var locationChosenView = document.getElementById("locationChosen");
           locationChosenView.classList.remove("hidden");
 
-          var newLocation = document.getElementById("chosenLocation");
-          newLocation.innerHTML = locationInput.value;
-        });
+          var locationText = document.getElementById("chosenLocation");
+          locationText.innerHTML = locationInput.value;
 
-      var tags = [
-        "alabama",
-        "arizona",
-        "california",
-        "delaware",
-        "florida",
-        "idaho",
-        "illinois",
-        "indiana",
-        "louisiana",
-        "missouri",
-        "nevada",
-        "new jersey",
-        "pennsylvania",
-        "tennessee",
-      ];
-      var tag_len = 14;
+          tags = [
+            "American (Traditional)",
+            "Sandwiches",
+            "Breakfast & Brunch",
+            "Pizza",
+            "Fast Food",
+            "Mexican",
+            "Italian",
+            "Seafood",
+            "Coffee & Tea",
+            "Chinese",
+            "Japanese",
+            "Desserts",
+            "Mediterranean",
+            "Thai",
+            "Vegan",
+            "Vietnamese",
+            "Latin American",
+            "Indian",
+            "Middle Eastern",
+            "Korean",
+          ];
 
-      function add_locations_to_dropdown(value) {
-        document.getElementById("datalist").innerHTML = "";
+          tags.forEach((tag) => {
+            let tempDiv = document.createElement("div");
+            tempDiv.innerHTML = tagBoxTemplate(tag);
+            document.getElementById("tags-checker").appendChild(tempDiv);
 
-        l = value.length;
-        for (var i = 0; i < tag_len; i++) {
-          if (tags[i].toLowerCase().indexOf(value.toLowerCase()) > -1) {
-            var node = document.createElement("option");
-            var capitalizedTag =
-              tags[i].charAt(0).toUpperCase() + tags[i].slice(1).toLowerCase();
-            var val = document.createTextNode(capitalizedTag);
-            node.appendChild(val);
+            var tagGet = document.getElementById(String("tag-" + tag));
+            let click = 0;
 
-            document.getElementById("datalist").appendChild(node);
-          }
-        }
-      }
+            tagGet.addEventListener("click", function () {
+              tagGet.classList.remove("tag-state-0");
+              tagGet.classList.remove("tag-state-1");
 
-      function tagBoxTemplate(tag) {
-        return `<div class="tag tags-input tag-style tag-state-0 tag-${tag}" id="tag-${tag}">                
-                        <span >${tag}</span>
-                    </div>`;
-      }
-
-      var locationsSubmit = document.getElementById("submitLocations");
-      var newLocation = true;
-      locationsSubmit.onclick = function () {
-        state = locationInput.value.toLowerCase();
-        if (tags.includes(state)) {
-          if (newLocation) {
-            // console.log(state);
-
-            var tagsContainer = document.getElementById("chooseTags");
-            tagsContainer.scrollIntoView({
-              behavior: "smooth",
-              block: "start",
+              click += 1;
+              if (click % 2 == 0) {
+                tagGet.classList.add("tag-state-0");
+              } else if (click % 2 == 1) {
+                tagGet.classList.add("tag-state-1");
+              }
             });
-
-            document.getElementById("chooseTags").classList.remove("hidden");
-            document.getElementById("locationEditing").remove();
-            // document.getElementById("editLocation").disabled = true;
-            // document.getElementById("editLocation").style.pointerEvents =
-            //   "none";
-            document.getElementById("body").style.overflow = "visible";
-
-            fetch("/state?" + new URLSearchParams({ state: state }).toString());
-
-            var locationChosenView = document.getElementById("locationChosen");
-            locationChosenView.classList.remove("hidden");
-
-            var locationText = document.getElementById("chosenLocation");
-            locationText.innerHTML = locationInput.value;
-
-            tags = [
-              "American (Traditional)",
-              "Sandwiches",
-              "Breakfast & Brunch",
-              "Pizza",
-              "Fast Food",
-              "Mexican",
-              "Italian",
-              "Seafood",
-              "Coffee & Tea",
-              "Chinese",
-              "Japanese",
-              "Desserts",
-              "Mediterranean",
-              "Thai",
-              "Vegan",
-              "Vietnamese",
-              "Latin American",
-              "Indian",
-              "Middle Eastern",
-              "Korean",
-            ];
-
-            tags.forEach((tag) => {
-              let tempDiv = document.createElement("div");
-              tempDiv.innerHTML = tagBoxTemplate(tag);
-              document.getElementById("tags-checker").appendChild(tempDiv);
-
-              var tagGet = document.getElementById(String("tag-" + tag));
-              let click = 0;
-
-              tagGet.addEventListener("click", function () {
-                tagGet.classList.remove("tag-state-0");
-                tagGet.classList.remove("tag-state-1");
-
-                click += 1;
-                if (click % 2 == 0) {
-                  tagGet.classList.add("tag-state-0");
-                } else if (click % 2 == 1) {
-                  tagGet.classList.add("tag-state-1");
-                }
-              });
-            });
-            newLocation = false;
-            document.getElementById("locationFeedback").classList.add("hidden");
-          } else {
-            var tagsContainer = document.getElementById("chooseTags");
-            tagsContainer.scrollIntoView({
-              behavior: "smooth",
-              block: "start",
-            });
-          }
+          });
+          newLocation = false;
+          document.getElementById("locationFeedback").classList.add("hidden");
         } else {
-          // console.log(locationInput.value);
-          document
-            .getElementById("locationFeedback")
-            .classList.remove("hidden");
+          var tagsContainer = document.getElementById("chooseTags");
+          tagsContainer.scrollIntoView({
+            behavior: "smooth",
+            block: "start",
+          });
         }
-      };
-
-      var tagsInput = document.getElementsByClassName("tags-input");
-      var tagsPosInput = document.getElementsByClassName("tag-state-1");
-
-      function reviewBoxTemplate(number, name, address, categories) {
-        return `${name}<br>${address}<br>${categories}<br>`;
+      } else {
+        // console.log(locationInput.value);
+        document
+          .getElementById("locationFeedback")
+          .classList.remove("hidden");
       }
+    };
 
-      document
-        .querySelector("form.tags-form")
-        .addEventListener("submit", function (e) {
-          e.preventDefault();
+    var tagsInput = document.getElementsByClassName("tags-input");
+    var tagsPosInput = document.getElementsByClassName("tag-state-1");
 
-          document
-            .getElementById("reviewRestaurants")
-            .classList.remove("hidden");
-          document.getElementById("chooseTags").style.marginBottom = 0;
+    function reviewBoxTemplate(number, name, address, categories, reviews) {
+      return `${name}<br>${address}<br>${categories}<br><br>Sample Reviews:${reviews}`;
+    }
 
-          var values = [];
-          var posVals = [];
-          for (const input of tagsInput) {
-            // console.log(tagsInput)
-            values.push(input.innerText.toLowerCase());
-            input.style.pointerEvents = "none";
-          }
-          for (const input of tagsPosInput) {
-            posVals.push(input.innerText.toLowerCase());
-            input.style.pointerEvents = "none";
-          }
-          console.log("posVals");
-          console.log(posVals);
-          console.log("values");
-          console.log(values);
+    document
+      .querySelector("form.tags-form")
+      .addEventListener("submit", function (e) {
+        e.preventDefault();
 
-          fetch("/tags?" + new URLSearchParams({ pos: posVals }).toString())
-            .then((response) => response.json())
-            .then((list) => {
-              box1 = document.getElementById("review-box-text-1");
-              let r1 = list[0];
-              box1.innerHTML = reviewBoxTemplate(1, r1[0], r1[1], r1[2]);
+        document
+          .getElementById("reviewRestaurants")
+          .classList.remove("hidden");
+        document.getElementById("chooseTags").style.marginBottom = 0;
 
-              box2 = document.getElementById("review-box-text-2");
-              r2 = list[1];
-              box2.innerHTML = reviewBoxTemplate(2, r2[0], r2[1], r2[2]);
+        var values = [];
+        var posVals = [];
+        for (const input of tagsInput) {
+          // console.log(tagsInput)
+          values.push(input.innerText.toLowerCase());
+          input.style.pointerEvents = "none";
+        }
+        for (const input of tagsPosInput) {
+          posVals.push(input.innerText.toLowerCase());
+          input.style.pointerEvents = "none";
+        }
+        console.log("posVals");
+        console.log(posVals);
+        console.log("values");
+        console.log(values);
 
-              box3 = document.getElementById("review-box-text-3");
-              r3 = list[2];
-              box3.innerHTML = reviewBoxTemplate(3, r3[0], r3[1], r3[2]);
+        fetch("/tags?" + new URLSearchParams({ pos: posVals }).toString())
+          .then((response) => response.json())
+          .then((list) => {
+            box1 = document.getElementById("review-box-text-1");
+            let r1 = list[0];
+            box1.innerHTML = reviewBoxTemplate(1, r1[0], r1[1], r1[2], r1[3]);
 
-              box4 = document.getElementById("review-box-text-4");
-              r4 = list[3];
-              box4.innerHTML = reviewBoxTemplate(4, r4[0], r4[1], r4[2]);
+            box2 = document.getElementById("review-box-text-2");
+            r2 = list[1];
+            box2.innerHTML = reviewBoxTemplate(2, r2[0], r2[1], r2[2], r2[3]);
 
-              box5 = document.getElementById("review-box-text-5");
-              r5 = list[4];
-              box5.innerHTML = reviewBoxTemplate(5, r5[0], r5[1], r5[2]);
-            });
+            box3 = document.getElementById("review-box-text-3");
+            r3 = list[2];
+            box3.innerHTML = reviewBoxTemplate(3, r3[0], r3[1], r3[2], r3[3]);
 
-          var outputContainer = document.getElementById("reviewRestaurants");
-          outputContainer.scrollIntoView({
-            behavior: "smooth",
-            inline: "nearest",
-            block: "start",
+            box4 = document.getElementById("review-box-text-4");
+            r4 = list[3];
+            box4.innerHTML = reviewBoxTemplate(4, r4[0], r4[1], r4[2], r4[3]);
+
+            box5 = document.getElementById("review-box-text-5");
+            r5 = list[4];
+            box5.innerHTML = reviewBoxTemplate(5, r5[0], r5[1], r5[2], r5[3]);
           });
+
+        var outputContainer = document.getElementById("reviewRestaurants");
+        outputContainer.scrollIntoView({
+          behavior: "smooth",
+          inline: "nearest",
+          block: "start",
         });
+      });
 
-      function outputBoxTemplate(name, address, tags) {
-        return `<a class='output-restaurant'>${name}<br>${address}<br>${tags}</div>`;
-      }
+    function outputBoxTemplate(name, address, tags) {
+      return `<a class='output-restaurant'>${name}<br>${address}<br>${tags}</div>`;
+    }
 
-      document
-        .querySelector("form.review-restaurants-form")
-        .addEventListener("submit", function (e) {
-          e.preventDefault();
+    document
+      .querySelector("form.review-restaurants-form")
+      .addEventListener("submit", function (e) {
+        e.preventDefault();
 
-          var rating1 = document.getElementById("slider1").value;
-          var rating2 = document.getElementById("slider2").value;
-          var rating3 = document.getElementById("slider3").value;
-          var rating4 = document.getElementById("slider4").value;
-          var rating5 = document.getElementById("slider5").value;
+        var rating1 = document.getElementById("slider1").value;
+        var rating2 = document.getElementById("slider2").value;
+        var rating3 = document.getElementById("slider3").value;
+        var rating4 = document.getElementById("slider4").value;
+        var rating5 = document.getElementById("slider5").value;
 
-          fetch(
-            "/restaurantRatings?" +
-              new URLSearchParams({
-                rating1: rating1,
-                rating2: rating2,
-                rating3: rating3,
-                rating4: rating4,
-                rating5: rating5,
-              }).toString()
-          )
-            .then((response) => response.json())
-            .then((list) => {
-              count = 1;
-              document.getElementById("outputBox").innerHTML = "";
-              list.forEach((item) => {
-                let name = item[0];
-                let address = item[1];
-                let tags = item[2];
-                let tempDiv = document.createElement("div");
-                tempDiv.innerHTML = outputBoxTemplate(name, address, tags);
-                document.getElementById("outputBox").appendChild(tempDiv);
-                count += 1;
-              });
+        fetch(
+          "/restaurantRatings?" +
+          new URLSearchParams({
+            rating1: rating1,
+            rating2: rating2,
+            rating3: rating3,
+            rating4: rating4,
+            rating5: rating5,
+          }).toString()
+        )
+          .then((response) => response.json())
+          .then((list) => {
+            count = 1;
+            document.getElementById("outputBox").innerHTML = "";
+            list.forEach((item) => {
+              let name = item[0];
+              let address = item[1];
+              let tags = item[2];
+              let tempDiv = document.createElement("div");
+              tempDiv.innerHTML = outputBoxTemplate(name, address, tags);
+              document.getElementById("outputBox").appendChild(tempDiv);
+              count += 1;
             });
-
-          document
-            .getElementById("returnRestaurants")
-            .classList.remove("hidden");
-
-          var outputContainer = document.getElementById("returnRestaurants");
-          outputContainer.scrollIntoView({
-            behavior: "smooth",
-            block: "start",
           });
+
+        document
+          .getElementById("returnRestaurants")
+          .classList.remove("hidden");
+
+        var outputContainer = document.getElementById("returnRestaurants");
+        outputContainer.scrollIntoView({
+          behavior: "smooth",
+          block: "start",
         });
+      });
 
-      function loadHomePage() {
-        window.location.href = "/";
-      }
+    function loadHomePage() {
+      window.location.href = "/";
+    }
 
-      window.onbeforeunload = function () {
-        window.scrollTo(0, 0);
-      };
-    </script>
-  </body>
+    window.onbeforeunload = function () {
+      window.scrollTo(0, 0);
+    };
+  </script>
+</body>
+
 </html>

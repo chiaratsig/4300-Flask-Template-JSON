@@ -65,6 +65,7 @@ def home():
 def get_state():
     Globals.state = request.args.get("state")
     print(Globals.state)
+    # print(state_to_df[Globals.state]["text"])
     return Globals.state
 
 # This route endpoint triggered when the user submits all tags that they like
@@ -87,9 +88,7 @@ def get_tags():
     #the desired selected attributes to likely be ranked higher than a restaurant with 
     #1 of the  desired selected attributes, for example
     # Globals.initial_query = create_query_vector(dummy_categories, category_vectors,
-    #                                     dummy_selected_categories, len(good_words))
-    print("here")
-    print(state_to_category_vectors.keys())
+    #                                     dummy_selected_categories, len(good_words))   
     category_vectors = state_to_category_vectors[Globals.state]
     good_words = state_to_good_words[Globals.state]
     name_row_dict = state_to_name_row_dict[Globals.state]
@@ -114,9 +113,15 @@ def get_tags():
         restaurant = restaurant.lower()
         restaurant_row = name_row_dict[restaurant]
         tup.append(string.capwords(restaurant))
-        tup.append(df["address"][restaurant_row])
-        tup.append(df["city"][restaurant_row] + ", " + df["postal_code"][restaurant_row])
+        tup.append(df["address"][restaurant_row] + df["city"][restaurant_row] + ", " + df["postal_code"][restaurant_row])
         tup.append("restaurant tags")
+
+        ### CURRENTLY CUTTING REVIEWS TO MAX CERTAIN CHARACTER LENGTH
+        reviews = df["text"][restaurant_row]
+        if len(reviews) > 500:
+            reviews = reviews[:500] + "..."
+        print(reviews)
+        tup.append(reviews)
         # tup.append("restaurant tags")
         # tup.append("restaurant tags")
         review_restaurants_info.append(tuple(tup))
@@ -160,7 +165,6 @@ def get_ratings():
     # print("updated res", updated_returned_restaurants)
 
     output_restaurants_info = []
-    ### TODO: NEED A WAY TO GET THIS INFO OUT EASILY
     for restaurant in updated_returned_restaurants:
         tup = []
         restaurant = restaurant.lower()
