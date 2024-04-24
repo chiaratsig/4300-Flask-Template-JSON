@@ -433,10 +433,12 @@ input[type="checkbox"] + label:hover {
 }
 
 .feedback {
-  margin-top: -10px;
+  margin-top: 155px;
   color: #d1593d;
   font-size: 20px;
   font-family: "Roboto";
+  z-index: -1;
+  position: absolute;
 }
 
 .tooltip {
