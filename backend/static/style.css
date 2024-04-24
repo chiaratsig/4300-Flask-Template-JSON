@@ -10,11 +10,16 @@ body {
   margin-left: 36px;
 }
 
-.graphics {
-  z-index: -1;
-  margin-top: 480px;
-  position: fixed;
-  width: 1450px;
+.choose-location,
+.choose-tags,
+.review-restaurants,
+.return-restaurants {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+  margin-bottom: 50 px;
 }
 
 .instruction {
@@ -24,28 +29,53 @@ body {
   justify-content: space-between;
 }
 
-.details {
-  z-index: -1;
-  position: absolute;
-  margin-bottom: 200px;
-  width: 425px;
-  margin-right: 10px;
+.locationChosen,
+.locationEditing {
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  margin-top: 64px;
 }
 
-h1 {
-  position: fixed;
-  margin-top: 51px;
-  margin-left: 60px;
+.location-box {
+  width: 717px;
+  height: 88px;
+  margin-right: 20px;
+  float: left;
 
+  justify-content: center;
+
+  border: 2px solid #5a7c7d;
+  border-radius: 12px;
+  display: flex;
+}
+
+.location-box-text {
   font-family: "Roboto";
-  font-weight: 600;
-  font-size: 36px;
-  line-height: 36px;
+  font-weight: 700;
+  font-size: 40px;
+  line-height: 40px;
+  justify-content: center;
 
   display: flex;
+
+  text-align: center;
   align-items: center;
 
-  color: #915f54;
+  color: #fd9000;
+}
+
+#location-input {
+  justify-content: center;
+  height: 50px;
+  width: 95%;
+  font-size: 40px;
+  margin-top: 15px;
+  text-align: center;
+  border-radius: 10px;
+  border: none;
+  outline: none;
+  background-color: #fdd2a3;
 }
 
 .buttons {
@@ -83,13 +113,186 @@ h1 {
   color: #ffffff;
 }
 
-button:hover {
+#submitLocations h3,
+#submitTags h3,
+#submitRanges h3 {
+  color: white;
+}
+
+#submitLocations:hover {
   cursor: pointer;
+}
+
+.details {
+  z-index: -1;
+  position: absolute;
+  margin-bottom: 200px;
+  width: 425px;
+  margin-right: 10px;
+}
+
+.graphics {
+  z-index: -1;
+  margin-top: 400px;
+  position: fixed;
+  width: 1435px;
+}
+/* end of first window */
+
+.instruction2 {
+  display: flex;
+  flex-direction: row;
+  width: 445px;
+  justify-content: space-between;
+}
+
+.tags-form {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.choose-tags {
+  margin-bottom: -1000px;
+}
+
+.tag-box {
+  width: 1144px;
+  background-color: #FDD2A3;
+  border: 2px solid #5A7C7D;
+  border-radius: 12px;
+  padding: 16px 16px;
+}
+
+#tags-checker {
+  width: 1144px;
+  height: 268px;
+  white-space: nowrap;
+  overflow: auto;
 }
 
 .tag:hover {
   cursor: pointer;
 }
+
+.tag-style {
+  margin: 16px;
+  padding: 10px 40px;
+  border: 1px solid #FD9000;
+  border-radius: 50px;
+  float: left;
+  justify-content: center;
+}
+
+.tag-state-0 {
+  background-color: #FDD2A3;
+}
+
+.tag-state-1 {
+  background-color: #FD9000;
+  color: white;
+}
+
+.tag label {
+  font-family: "Roboto";
+
+  font-weight: 700;
+  font-size: 24px;
+
+  display: flex;
+  align-items: center;
+  text-align: center;
+
+  color: #FD9000;
+}
+
+.tag {
+  font-family: "Roboto";
+
+  font-weight: 700;
+  font-size: 21px;
+
+  display: flex;
+  align-items: center;
+  text-align: center;
+
+  color: #ffffff;
+}
+
+.tooltip {
+  position: relative;
+  display: inline-block;
+  align-self: center;
+}
+
+.tooltip .tooltiptext {
+  visibility: hidden;
+  width: 120px;
+  background-color: #FD9000;
+  color: #fff;
+  padding: 10px;
+  border-radius: 6px;
+
+  margin-top: -35px;
+  margin-left: 15px;
+  position: absolute;
+  z-index: 1;
+
+  font-size: 12px;
+  font-family: "Roboto";
+  line-height: normal;
+}
+
+.tooltip:hover .tooltiptext {
+  visibility: visible;
+}
+
+.tooltip .tooltiptext::after {
+  content: " ";
+  position: absolute;
+  top: 50%;
+  right: 100%;
+
+  margin-top: -5px;
+  border-width: 5px;
+  border-style: solid;
+  border-color: transparent #d3924d transparent transparent;
+}
+
+#submitTags:hover {
+  cursor: pointer;
+}
+
+.details2 {
+  z-index: -1;
+  position: absolute;
+  margin-bottom: 405px;
+  width: 425px;
+  margin-right: 50px;
+}
+
+/* end of second window */
+
+h1 {
+  position: fixed;
+  margin-top: 51px;
+  margin-left: 60px;
+
+  font-family: "Roboto";
+  font-weight: 600;
+  font-size: 36px;
+  line-height: 36px;
+
+  display: flex;
+  align-items: center;
+
+  color: #915f54;
+}
+
+button:hover {
+  cursor: pointer;
+}
+
 
 h1:hover {
   cursor: pointer;
@@ -108,32 +311,6 @@ h2 {
   color: #5a7c7d;
 }
 
-/* .text h3 {
-    margin-top: 45px;
-    font-family: 'Oleo Script';
-    font-weight: 400;
-    font-size: 40px;
-
-    display: flex;
-    justify-content: center;
-    text-align: center;
-
-    color: #4e070c;
-}
-
-.text h4 {
-    margin-top: 45px;
-    font-family: 'Oleo Script';
-    font-weight: 400;
-    font-size: 34px;
-
-    display: flex;
-    justify-content: center;
-    text-align: center;
-
-    color: #4e070c;
-} */
-
 .fa-circle-info {
   font-size: 20px;
   text-shadow: none;
@@ -142,44 +319,8 @@ h2 {
   color: #65664e;
 }
 
-.locationChosen,
-.locationEditing {
-  display: flex;
-  flex-direction: row;
-  justify-content: center;
-  margin-top: 64px;
-}
-
 #editLocation:hover {
   cursor: pointer;
-}
-
-.location-box {
-  width: 717px;
-  height: 88px;
-  margin-right: 20px;
-  float: left;
-
-  justify-content: center;
-
-  border: 2px solid #5a7c7d;
-  border-radius: 12px;
-  display: flex;
-}
-
-.location-box-text {
-  font-family: "Roboto";
-  font-weight: 700;
-  font-size: 40px;
-  line-height: 40px;
-  justify-content: center;
-
-  display: flex;
-
-  text-align: center;
-  align-items: center;
-
-  color: #fd9000;
 }
 
 .location-icon {
@@ -198,19 +339,6 @@ h2 {
 
   text-align: center;
   color: #f3f3f3;
-}
-
-#location-input {
-  justify-content: center;
-  height: 50px;
-  width: 95%;
-  font-size: 40px;
-  margin-top: 15px;
-  text-align: center;
-  border-radius: 10px;
-  border: none;
-  outline: none;
-  background-color: #fdd2a3;
 }
 
 input[type="text"],
@@ -233,55 +361,6 @@ textarea {
   border-radius: 20px;
 }
 
-#submitTags {
-  margin-top: 30px;
-}
-
-#submitTags:hover {
-  cursor: pointer;
-}
-
-#submitLocations h3,
-#submitTags h3,
-#submitRanges h3 {
-  color: white;
-}
-
-#submitLocations:hover {
-  cursor: pointer;
-}
-
-.choose-location,
-.choose-tags,
-.review-restaurants,
-.return-restaurants {
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-items: center;
-  height: 100vh;
-  margin-bottom: 50 px;
-}
-
-.choose-tags {
-  margin-bottom: -1000px;
-}
-
-.tags-form {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-}
-
-.tag-box {
-  width: 777px;
-
-  background: #e5caaa;
-  border-radius: 30px;
-
-  padding: 42.6px 42.6px 39.6px 39.6px;
-}
-
 .review-boxes {
   margin: 5px;
   padding: 20px;
@@ -293,64 +372,13 @@ textarea {
   border-radius: 30px;
 }
 
-#tags-checker {
-  width: 775px;
-  height: 280px;
-  white-space: nowrap;
-  overflow: auto;
-}
-
 .hidden {
   position: absolute;
   visibility: hidden;
   opacity: 0;
 }
 
-.tag-style {
-  margin: 6px;
-  height: 60px;
-  padding-left: 30px;
-  padding-right: 30px;
-  border-radius: 20px;
-  float: left;
-  justify-content: center;
-}
-
-.tag-state-0 {
-  background-color: #999797;
-}
-
-.tag-state-1 {
-  background-color: #67ab76;
-}
-
-.tag label {
-  font-family: "Roboto";
-
-  font-weight: 700;
-  font-size: 21px;
-
-  display: flex;
-  align-items: center;
-  text-align: center;
-
-  color: #ffffff;
-}
-
-.tag {
-  font-family: "Roboto";
-
-  font-weight: 700;
-  font-size: 21px;
-
-  display: flex;
-  align-items: center;
-  text-align: center;
-
-  color: #ffffff;
-}
-
-input[type="checkbox"]+label:hover {
+input[type="checkbox"] + label:hover {
   cursor: pointer;
 }
 
@@ -440,46 +468,6 @@ input[type="checkbox"]+label:hover {
   font-family: "Roboto";
   z-index: -1;
   position: absolute;
-}
-
-.tooltip {
-  position: relative;
-  display: inline-block;
-  align-self: center;
-}
-
-.tooltip .tooltiptext {
-  visibility: hidden;
-  width: 120px;
-  background-color: #d3924d;
-  color: #fff;
-  padding: 10px;
-  border-radius: 6px;
-
-  margin-top: -35px;
-  margin-left: 15px;
-  position: absolute;
-  z-index: 1;
-
-  font-size: 12px;
-  font-family: "Roboto";
-  line-height: normal;
-}
-
-.tooltip:hover .tooltiptext {
-  visibility: visible;
-}
-
-.tooltip .tooltiptext::after {
-  content: " ";
-  position: absolute;
-  top: 50%;
-  right: 100%;
-
-  margin-top: -5px;
-  border-width: 5px;
-  border-style: solid;
-  border-color: transparent #d3924d transparent transparent;
 }
 
 .tooltip2 {

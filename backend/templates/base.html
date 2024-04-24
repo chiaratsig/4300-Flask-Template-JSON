@@ -57,22 +57,30 @@
 
     <!-- Second Window Start -->
     <div class="choose-tags hidden" id="chooseTags">
-      <h2>
-        What do you like in a restaurant?<i class="fa-solid fa-circle-info tooltip">
-          <span class="tooltiptext">Click a category once if it interests you. You can also leave
-            them neutral! Scroll for more options.</span>
-        </i>
-      </h2>
+      <div class="instruction2">
+        <h2>2</h2>
+        <h2>
+          Choose cuisine(s) you like<i class="fa-solid fa-circle-info tooltip">
+            <span class="tooltiptext">Click a cuisine once if it interests you! Scroll for more options.</span>
+          </i>
+        </h2>
+      </div>
 
       <form class="tags-form" id="tagsForm">
         <div class="tag-box" id="tagBox">
           <div id="tags-checker"></div>
         </div>
 
-        <button id="submitTags" type="submit">
-          <h3><i class="fa-solid fa-check fa-3x"></i></h3>
-        </button>
+        <div class="buttons">
+          <button class="reset" onClick="window.location.reload();">
+            Reset
+          </button>
+          <button id="submitTags" type="submit">
+            Next
+          </button>
+        </div>
       </form>
+      <img class="details2" src="./static/images/details.png" />
     </div>
     <!-- Second Window End -->
 
