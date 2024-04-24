@@ -1,67 +1,110 @@
 body {
-    background-color: #f6e9e4;
-    overflow: hidden;
+  background-color: #fdd2a3;
+  overflow: hidden;
+}
+
+.title {
+  font-size: 24px;
+  color: #fd9000;
+  margin-top: 36px;
+  margin-left: 36px;
+}
+
+.graphics {
+  z-index: -1;
+  margin-top: 480px;
+  position: fixed;
+  width: 1450px;
+}
+
+.instruction {
+  display: flex;
+  flex-direction: row;
+  width: 406px;
+  justify-content: space-between;
+}
+
+.details {
+  z-index: -1;
+  position: absolute;
+  margin-bottom: 200px;
+  width: 425px;
+  margin-right: 10px;
 }
 
 h1 {
-    position: fixed;
-    width: 50px;
-    margin-top: 51px;
-    margin-left: 60px;
+  position: fixed;
+  margin-top: 51px;
+  margin-left: 60px;
 
-    font-family: 'Roboto';
-    font-weight: 600;
-    font-size: 36px;
-    line-height: 36px;
+  font-family: "Roboto";
+  font-weight: 600;
+  font-size: 36px;
+  line-height: 36px;
 
-    display: flex;
-    align-items: center;
+  display: flex;
+  align-items: center;
 
-    color: #915f54
+  color: #915f54;
+}
+.buttons {
+  display: flex;
+  flex-direction: row;
+  margin-top: 64px;
+  width: 432px;
+  justify-content: space-between;
 }
 
 .reset {
-    position: fixed;
-    margin-top: 51px;
-    right: 60px;
+  /* position: fixed; */
 
-    height: 50.5px;
-    width: 129.5px;
+  background: #fd5f31;
+  border-radius: 50px;
+  border: none;
+  padding: 12px 40px;
 
-    background: #915f54;
-    border-radius: 12px;
-    border: none;
+  font-family: "Roboto";
+  font-weight: 700;
+  font-size: 32px;
+  color: #ffffff;
+}
 
-    font-family: 'Roboto';
-    font-weight: 700;
-    font-size: 20px;
-    color: #FFFFFF;
-    text-transform: uppercase;
+#submitLocations,
+#submitTags {
+  background-color: #5a7c7d;
+  border-radius: 50px;
+  border: none;
+  padding: 12px 40px;
+
+  font-family: "Roboto";
+  font-weight: 700;
+  font-size: 32px;
+  color: #ffffff;
 }
 
 button:hover {
-    cursor: pointer;
+  cursor: pointer;
 }
 
 .tag:hover {
-    cursor: pointer;
+  cursor: pointer;
 }
 
 h1:hover {
-    cursor: pointer;
+  cursor: pointer;
 }
 
 h2 {
-    margin-top: 45px;
-    font-family: 'Oleo Script';
-    font-weight: 400;
-    font-size: 54px;
+  margin-top: 45px;
+  font-family: "Roboto";
+  font-weight: 400;
+  font-size: 32px;
 
-    display: flex;
-    justify-content: center;
-    text-align: center;
+  display: flex;
+  justify-content: center;
+  text-align: center;
 
-    color: #915f54;
+  color: #5a7c7d;
 }
 
 /* .text h3 {
@@ -91,489 +134,449 @@ h2 {
 } */
 
 .fa-circle-info {
-    font-size: 20px;
-    text-shadow: none;
-    margin-left: 10px;
-    margin-top: 10px;
-    color: #65664e;
+  font-size: 20px;
+  text-shadow: none;
+  margin-left: 10px;
+  margin-top: 10px;
+  color: #65664e;
 }
 
 .locationChosen,
 .locationEditing {
-    display: flex;
-    flex-direction: row;
-    justify-content: center;
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  margin-top: 64px;
 }
 
 #editLocation:hover {
-    cursor: pointer;
+  cursor: pointer;
 }
 
 .location-box {
-    width: 717px;
-    height: 88px;
-    margin-right: 20px;
-    float: left;
+  width: 717px;
+  height: 88px;
+  margin-right: 20px;
+  float: left;
 
-    justify-content: center;
+  justify-content: center;
 
-    background: #E4AF71;
-    border-radius: 20px;
-    display: flex;
-
+  border: 2px solid #5a7c7d;
+  border-radius: 12px;
+  display: flex;
 }
 
 .location-box-text {
-    font-family: 'Roboto';
-    font-weight: 700;
-    font-size: 30px;
-    line-height: 40px;
-    justify-content: center;
+  font-family: "Roboto";
+  font-weight: 700;
+  font-size: 40px;
+  line-height: 40px;
+  justify-content: center;
 
-    display: flex;
+  display: flex;
 
-    text-align: center;
-    align-items: center;
-    text-transform: uppercase;
+  text-align: center;
+  align-items: center;
 
-    color: #FFFFFF;
+  color: #fd9000;
 }
 
 .location-icon {
-    height: 88px;
-    width: 88px;
+  height: 88px;
+  width: 88px;
 
-    background: rgba(231, 181, 64, 0.6);
-    border-radius: 20px;
-    border: none;
+  background: rgba(231, 181, 64, 0.6);
+  border-radius: 20px;
+  border: none;
 }
 
 .location-icon h3 {
-    display: flex;
-    justify-content: center;
-    align-items: center;
+  display: flex;
+  justify-content: center;
+  align-items: center;
 
-    text-align: center;
-    color: #F3F3F3;
+  text-align: center;
+  color: #f3f3f3;
 }
 
 #location-input {
-    justify-content: center;
-    height: 50px;
-    width: 95%;
-    font-size: 30px;
-    margin-top: 15px;
-    text-align: center;
-    border-radius: 10px;
-    border: none;
-    outline: none;
-    background: #E4AF71
+  justify-content: center;
+  height: 50px;
+  width: 95%;
+  font-size: 40px;
+  margin-top: 15px;
+  text-align: center;
+  border-radius: 10px;
+  border: none;
+  outline: none;
+  background-color: #fdd2a3;
 }
 
 input[type="text"],
 textarea {
-    caret-color: white;
-    color: white;
-    text-transform: uppercase;
-    font-family: 'Roboto';
-    font-weight: 600;
-    justify-content: center;
-}
-
-
-#submitLocations,
-#submitTags {
-    width: 259px;
-    height: 101px;
-    margin-top: 275px;
-    margin-bottom: 200px;
-
-    background-color: #48A369;
-    opacity: 0.8;
-    border: none;
-    border-radius: 20px;
+  caret-color: #fd9000;
+  color: #fd9000;
+  font-family: "Roboto";
+  font-weight: 600;
+  justify-content: center;
 }
 
 #submitRanges {
-    width: 259px;
-    height: 101px;
-    margin-top: 75px;
+  width: 259px;
+  height: 101px;
+  margin-top: 75px;
 
-    background-color: #48A369;
-    opacity: 0.8;
-    border: none;
-    border-radius: 20px;
-}
-
-#submitLocations {
-    margin-top: 205px !important;
+  background-color: #48a369;
+  opacity: 0.8;
+  border: none;
+  border-radius: 20px;
 }
 
 #submitTags {
-    margin-top: 30px;
+  margin-top: 30px;
 }
 
 #submitTags:hover {
-    cursor: pointer;
+  cursor: pointer;
 }
-
 
 #submitLocations h3,
 #submitTags h3,
 #submitRanges h3 {
-    color: white;
+  color: white;
 }
 
 #submitLocations:hover {
-    cursor: pointer;
+  cursor: pointer;
 }
 
 .choose-location,
 .choose-tags,
 .review-restaurants,
 .return-restaurants {
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
-    height: 100vh;
-    margin-bottom: 50 px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+  margin-bottom: 50 px;
 }
 
 .choose-tags {
-    margin-bottom: -1000px;
+  margin-bottom: -1000px;
 }
 
 .tags-form {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
 }
 
 .tag-box {
-    width: 777px;
+  width: 777px;
 
-    background: #E5CAAA;
-    border-radius: 30px;
+  background: #e5caaa;
+  border-radius: 30px;
 
-    padding: 42.6px 42.6px 39.6px 39.6px;
-
+  padding: 42.6px 42.6px 39.6px 39.6px;
 }
 
 .review-boxes {
-    margin: 5px;
-    padding: 20px;
-    background-color: rgb(224, 217, 214);
-    width: 70%;
-    height: 70%;
-    overflow: auto;
-    text-align: justify;
-    border-radius: 30px;
+  margin: 5px;
+  padding: 20px;
+  background-color: rgb(224, 217, 214);
+  width: 70%;
+  height: 70%;
+  overflow: auto;
+  text-align: justify;
+  border-radius: 30px;
 }
 
 #tags-checker {
-    width: 775px;
-    height: 280px;
-    white-space: nowrap;
-    overflow: auto;
+  width: 775px;
+  height: 280px;
+  white-space: nowrap;
+  overflow: auto;
 }
 
 .hidden {
-    position: absolute;
-    visibility: hidden;
-    opacity: 0;
+  position: absolute;
+  visibility: hidden;
+  opacity: 0;
 }
-
-/* input[type=checkbox]+label {
-    margin: 6px;
-    height: 60px;
-    padding-left: 30px;
-    padding-right: 30px;
-
-    background-color: #D1593D;
-    border-radius: 20px;
-    float: left;
-    justify-content: center;
-}
-
-input[type=checkbox]:checked+label {
-    background-color: #67AB76;
-} */
 
 .tag-style {
-    margin: 6px;
-    height: 60px;
-    padding-left: 30px;
-    padding-right: 30px;
-    border-radius: 20px;
-    float: left;
-    justify-content: center;
+  margin: 6px;
+  height: 60px;
+  padding-left: 30px;
+  padding-right: 30px;
+  border-radius: 20px;
+  float: left;
+  justify-content: center;
 }
 
 .tag-state-0 {
-    background-color: #999797;
+  background-color: #999797;
 }
 
 .tag-state-1 {
-    background-color: #67AB76;
+  background-color: #67ab76;
 }
 
 .tag label {
-    font-family: 'Roboto';
-    text-transform: uppercase;
-    font-weight: 700;
-    font-size: 21px;
+  font-family: "Roboto";
 
-    display: flex;
-    align-items: center;
-    text-align: center;
+  font-weight: 700;
+  font-size: 21px;
 
-    color: #FFFFFF;
+  display: flex;
+  align-items: center;
+  text-align: center;
+
+  color: #ffffff;
 }
 
 .tag {
-    font-family: 'Roboto';
-    text-transform: uppercase;
-    font-weight: 700;
-    font-size: 21px;
+  font-family: "Roboto";
 
-    display: flex;
-    align-items: center;
-    text-align: center;
+  font-weight: 700;
+  font-size: 21px;
 
-    color: #FFFFFF;
+  display: flex;
+  align-items: center;
+  text-align: center;
+
+  color: #ffffff;
 }
 
-input[type=checkbox]+label:hover {
-    cursor: pointer;
+input[type="checkbox"] + label:hover {
+  cursor: pointer;
 }
 
 #outputBox {
-    width: 862.2px;
-    height: 55%;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    flex-wrap: wrap;
+  width: 862.2px;
+  height: 55%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-wrap: wrap;
 }
 
 .review-box {
-    width: 500px;
-    height: 300px;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    flex-wrap: wrap;
+  width: 500px;
+  height: 300px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-wrap: wrap;
 
-    background: #E5CAAA;
-    border-radius: 30px;
+  background: #e5caaa;
+  border-radius: 30px;
 
-    padding: 42.6px 42.6px 39.6px 39.6px;
-    margin: 0 auto;
-    margin-bottom: 50px;
+  padding: 42.6px 42.6px 39.6px 39.6px;
+  margin: 0 auto;
+  margin-bottom: 50px;
 }
 
 .review-box-text {
-    margin-top: 20px;
-    font-family: 'Oleo Script';
-    font-weight: 400;
-    font-size: 40px;
+  margin-top: 20px;
+  font-family: "Roboto";
+  font-weight: 400;
+  font-size: 40px;
 
-    display: flex;
-    justify-content: center;
-    text-align: center;
+  display: flex;
+  justify-content: center;
+  text-align: center;
 
-    color: #915f54;
+  color: #915f54;
 }
 
-
-
 .output-restaurant {
-    width: 380px;
-    height: 200px;
-    padding-left: 10px;
-    padding-right: 10px;
-    margin: 5px;
-    float: left;
-    text-decoration: none;
-    justify-content: center;
-    background: #E4AF71;
-    border-radius: 10px;
-    display: flex;
+  width: 380px;
+  height: 200px;
+  padding-left: 10px;
+  padding-right: 10px;
+  margin: 5px;
+  float: left;
+  text-decoration: none;
+  justify-content: center;
+  background: #e4af71;
+  border-radius: 10px;
+  display: flex;
 
-    font-family: 'Oleo Script';
-    font-weight: 700;
-    font-size: 20px;
+  font-family: "Roboto";
+  font-weight: 700;
+  font-size: 20px;
 
-    display: flex;
-    align-items: center;
-    text-align: center;
+  display: flex;
+  align-items: center;
+  text-align: center;
 
-    color: #FFFFFF;
-    transition: background-color 0.3s ease;
-    transition: color 0.3s ease;
+  color: #ffffff;
+  transition: background-color 0.3s ease;
+  transition: color 0.3s ease;
 }
 
 .output-loc:hover {
-    cursor: pointer;
-    background-color: #D3924D;
+  cursor: pointer;
+  background-color: #d3924d;
 }
 
 .underline {
-    text-decoration: underline;
-    text-underline-offset: 2px;
-    margin-left: 5px;
+  text-decoration: underline;
+  text-underline-offset: 2px;
+  margin-left: 5px;
 }
 
 #outputBox i {
-    margin-top: -100px;
+  margin-top: -100px;
 }
 
 .feedback {
-    margin-top: -10px;
-    color: #D1593D;
-    font-size: 20px;
-    font-family: 'Roboto';
+  margin-top: -10px;
+  color: #d1593d;
+  font-size: 20px;
+  font-family: "Roboto";
 }
 
 .tooltip {
-    position: relative;
-    display: inline-block;
-    align-self: center;
+  position: relative;
+  display: inline-block;
+  align-self: center;
 }
 
 .tooltip .tooltiptext {
-    visibility: hidden;
-    width: 120px;
-    background-color: #D3924D;
-    color: #fff;
-    padding: 10px;
-    border-radius: 6px;
+  visibility: hidden;
+  width: 120px;
+  background-color: #d3924d;
+  color: #fff;
+  padding: 10px;
+  border-radius: 6px;
 
-    margin-top: -35px;
-    margin-left: 15px;
-    position: absolute;
-    z-index: 1;
+  margin-top: -35px;
+  margin-left: 15px;
+  position: absolute;
+  z-index: 1;
 
-    font-size: 12px;
-    font-family: 'Roboto';
-    line-height: normal;
+  font-size: 12px;
+  font-family: "Roboto";
+  line-height: normal;
 }
 
 .tooltip:hover .tooltiptext {
-    visibility: visible;
+  visibility: visible;
 }
 
 .tooltip .tooltiptext::after {
-    content: " ";
-    position: absolute;
-    top: 50%;
-    right: 100%;
+  content: " ";
+  position: absolute;
+  top: 50%;
+  right: 100%;
 
-    margin-top: -5px;
-    border-width: 5px;
-    border-style: solid;
-    border-color: transparent #D3924D transparent transparent;
+  margin-top: -5px;
+  border-width: 5px;
+  border-style: solid;
+  border-color: transparent #d3924d transparent transparent;
 }
 
 .tooltip2 {
-    position: relative;
-    display: inline-block;
-    align-self: center;
-    color: #C9290E;
+  position: relative;
+  display: inline-block;
+  align-self: center;
+  color: #c9290e;
 }
 
 /* Tooltip text */
 .tooltip2 .tooltiptext2 {
-    visibility: hidden;
-    width: 120px;
-    background-color: #D3924D;
-    color: #fff;
-    padding: 10px;
-    border-radius: 6px;
+  visibility: hidden;
+  width: 120px;
+  background-color: #d3924d;
+  color: #fff;
+  padding: 10px;
+  border-radius: 6px;
 
-    margin-top: -40px;
-    margin-left: 15px;
-    position: absolute;
-    z-index: 1;
+  margin-top: -40px;
+  margin-left: 15px;
+  position: absolute;
+  z-index: 1;
 
-    font-size: 12px;
-    font-family: 'Roboto';
-    line-height: normal;
+  font-size: 12px;
+  font-family: "Roboto";
+  line-height: normal;
 }
 
 .tooltip2:hover .tooltiptext2 {
-    visibility: visible;
+  visibility: visible;
 }
 
 .tooltip2 .tooltiptext2::after {
-    content: " ";
-    position: absolute;
-    top: 50%;
-    right: 100%;
+  content: " ";
+  position: absolute;
+  top: 50%;
+  right: 100%;
 
-    margin-top: -5px;
-    border-width: 5px;
-    border-style: solid;
-    border-color: transparent #D3924D transparent transparent;
+  margin-top: -5px;
+  border-width: 5px;
+  border-style: solid;
+  border-color: transparent #d3924d transparent transparent;
 }
 
 /* reference https://www.w3schools.com/howto/howto_js_rangeslider.asp */
 .slidecontainer {
-    width: 100%;
-    /* Width of the outside container */
+  width: 100%;
+  /* Width of the outside container */
 }
 
 /* The slider itself */
 .slider {
-    -webkit-appearance: none;
-    /* Override default CSS styles */
-    appearance: none;
-    width: 100%;
-    /* Full-width */
-    height: 25px;
-    /* Specified height */
-    background: white;
-    /* Grey background */
-    outline: none;
-    /* Remove outline */
-    opacity: 0.7;
-    /* Set transparency (for mouse-over effects on hover) */
-    -webkit-transition: .2s;
-    /* 0.2 seconds transition on hover */
-    transition: opacity .2s;
+  -webkit-appearance: none;
+  /* Override default CSS styles */
+  appearance: none;
+  width: 100%;
+  /* Full-width */
+  height: 25px;
+  /* Specified height */
+  background: white;
+  /* Grey background */
+  outline: none;
+  /* Remove outline */
+  opacity: 0.7;
+  /* Set transparency (for mouse-over effects on hover) */
+  -webkit-transition: 0.2s;
+  /* 0.2 seconds transition on hover */
+  transition: opacity 0.2s;
 }
 
 /* Mouse-over effects */
 .slider:hover {
-    opacity: 1;
-    /* Fully shown on mouse-over */
+  opacity: 1;
+  /* Fully shown on mouse-over */
 }
 
 /* The slider handle (use -webkit- (Chrome, Opera, Safari, Edge) and -moz- (Firefox) to override default look) */
 .slider::-webkit-slider-thumb {
-    -webkit-appearance: none;
-    /* Override default look */
-    appearance: none;
-    width: 25px;
-    /* Set a specific slider handle width */
-    height: 25px;
-    /* Slider handle height */
-    background: #915f54;
-    /* Green background */
-    cursor: pointer;
-    /* Cursor on hover */
+  -webkit-appearance: none;
+  /* Override default look */
+  appearance: none;
+  width: 25px;
+  /* Set a specific slider handle width */
+  height: 25px;
+  /* Slider handle height */
+  background: #915f54;
+  /* Green background */
+  cursor: pointer;
+  /* Cursor on hover */
 }
 
 .slider::-moz-range-thumb {
-    width: 25px;
-    /* Set a specific slider handle width */
-    height: 25px;
-    /* Slider handle height */
-    background: #04AA6D;
-    /* Green background */
-    cursor: pointer;
-    /* Cursor on hover */
+  width: 25px;
+  /* Set a specific slider handle width */
+  height: 25px;
+  /* Slider handle height */
+  background: #04aa6d;
+  /* Green background */
+  cursor: pointer;
+  /* Cursor on hover */
 }
 
 /* end https://www.w3schools.com/howto/howto_js_rangeslider.asp */
