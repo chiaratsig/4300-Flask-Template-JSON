@@ -97,6 +97,8 @@ def get_tags():
     idf = state_to_idf[Globals.state]
     doc_norms = state_to_doc_norms[Globals.state]
 
+    print(df["name"])
+
     Globals.initial_query = create_query_vector(categories, category_vectors,
                                         selected_categories, len(good_words))
 
@@ -109,22 +111,27 @@ def get_tags():
     # print(Globals.reviewer_restaurants)
     review_restaurants_info = []
     for restaurant in Globals.reviewer_restaurants:
+        print()
+        print()
+        print(restaurant)
+        print("HERE")
+        print()
         tup = []
         restaurant = restaurant.lower()
-        restaurant_row = name_row_dict[restaurant]
+        restaurant_rows = name_row_dict[restaurant]
         tup.append(string.capwords(restaurant))
-        tup.append(df["address"][restaurant_row] + df["city"][restaurant_row] + ", " + df["postal_code"][restaurant_row])
+        tup.append(df["address"][restaurant_rows[0]] + df["city"][restaurant_rows[0]] + ", " + df["postal_code"][restaurant_rows[0]])
         tup.append("restaurant tags")
 
-        ### CURRENTLY CUTTING REVIEWS TO MAX CERTAIN CHARACTER LENGTH
-        reviews = df["text"][restaurant_row]
-        if len(reviews) > 500:
-            reviews = reviews[:500] + "..."
+        reviews = []
+        i = 0
+        while i < 5 and i < len(restaurant_rows):
+            reviews.append(df["text"][i])
+            i +=1 
         print(reviews)
         tup.append(reviews)
-        # tup.append("restaurant tags")
-        # tup.append("restaurant tags")
         review_restaurants_info.append(tuple(tup))
+
 
     # print(review_restaurants_info)
     return review_restaurants_info
@@ -168,10 +175,10 @@ def get_ratings():
     for restaurant in updated_returned_restaurants:
         tup = []
         restaurant = restaurant.lower()
-        restaurant_row = name_row_dict[restaurant]
+        restaurant_rows = name_row_dict[restaurant]
         tup.append(string.capwords(restaurant))
-        tup.append(df["address"][restaurant_row])
-        tup.append(df["city"][restaurant_row] + ", " + df["postal_code"][restaurant_row])
+        tup.append(df["address"][restaurant_rows[0]])
+        tup.append(df["city"][restaurant_rows[0]] + ", " + df["postal_code"][restaurant_rows[0]])
         tup.append("restaurant tags")
         output_restaurants_info.append(tuple(tup))
 

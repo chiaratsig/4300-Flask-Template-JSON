@@ -339,24 +339,29 @@
           .then((response) => response.json())
           .then((list) => {
             box1 = document.getElementById("review-box-text-1");
-            let r1 = list[0];
-            box1.innerHTML = reviewBoxTemplate(1, r1[0], r1[1], r1[2], r1[3]);
+
+            // @VARSHA -- the reviews are stored as a list in the third slot of each part of the 2d array 
+            // r1 --> first restaurant, r2 --> second, etc
+            // r1[0] = name, r1[1] = address, r1[2] = categories but not actually
+            // r1[3] = list of 5 reviews 
+
+            box1.innerHTML = reviewBoxTemplate(1, r1[0], r1[1], r1[2], r1[3][0]);
 
             box2 = document.getElementById("review-box-text-2");
             r2 = list[1];
-            box2.innerHTML = reviewBoxTemplate(2, r2[0], r2[1], r2[2], r2[3]);
+            box2.innerHTML = reviewBoxTemplate(2, r2[0], r2[1], r2[2], r2[3][0]);
 
             box3 = document.getElementById("review-box-text-3");
             r3 = list[2];
-            box3.innerHTML = reviewBoxTemplate(3, r3[0], r3[1], r3[2], r3[3]);
+            box3.innerHTML = reviewBoxTemplate(3, r3[0], r3[1], r3[2], r3[3][0]);
 
             box4 = document.getElementById("review-box-text-4");
             r4 = list[3];
-            box4.innerHTML = reviewBoxTemplate(4, r4[0], r4[1], r4[2], r4[3]);
+            box4.innerHTML = reviewBoxTemplate(4, r4[0], r4[1], r4[2], r4[3][0]);
 
             box5 = document.getElementById("review-box-text-5");
             r5 = list[4];
-            box5.innerHTML = reviewBoxTemplate(5, r5[0], r5[1], r5[2], r5[3]);
+            box5.innerHTML = reviewBoxTemplate(5, r5[0], r5[1], r5[2], r5[3][0]);
           });
 
         var outputContainer = document.getElementById("reviewRestaurants");

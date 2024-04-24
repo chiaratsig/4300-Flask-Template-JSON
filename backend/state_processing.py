@@ -35,6 +35,7 @@ def data_processing(current_directory):
   state_to_doc_norms = {}
   state_to_review_vectors = {}
   state_to_category_vectors = {}
+  # state_to_restaurant_to_reviews = {}
 
   for state in state_to_json.keys():
     # ROOT_PATH for linking with all your files. 
@@ -58,12 +59,18 @@ def data_processing(current_directory):
     state_to_df[state] = df
 
     name_row_dict = {}
+    # restaurant_to_reviews = {}
     for index, row in df.iterrows():
-      name_row_dict[row["name"].lower()] = index
+      r_name = row["name"].lower()
+      if r_name not in name_row_dict.keys():
+        name_row_dict[r_name] = []
+      name_row_dict[row["name"].lower()].append(index)
+
       tempList = row["categories"].split(",")
       tempList = list(map(lambda x:x.lower(), tempList))
       df.at[index, "categories"] = tempList
     state_to_name_row_dict[state] = name_row_dict
+
 
     distinct = helpers.distinct_words(helpers.tokenize, df) 
     good_words = helpers.get_good_words(0.2, 0.8, df["text"], distinct)
