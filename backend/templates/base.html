@@ -70,11 +70,11 @@
         <div class="instruction2">
           <h2>2</h2>
           <h2>
-            Choose cuisine(s) you like<i
+            Choose types of places you like<i
               class="fa-solid fa-circle-info tooltip"
             >
               <span class="tooltiptext"
-                >Click a cuisine once if it interests you! Scroll for more
+                >Click a tag once if it interests you! Scroll for more
                 options.</span
               >
             </i>
@@ -95,7 +95,7 @@
         </div>
 
         <h4 id="cuisineFeedback" class="feedback2 hidden">
-          Please select at least 1 cuisine.
+          Please select at least 1.
         </h4>
         <img class="details2" src="./static/images/details.png" />
       </div>
@@ -315,26 +315,21 @@
             locationText.innerHTML = locationInput.value;
 
             tags = [
-              "American (Traditional)",
               "Sandwiches",
-              "Breakfast & Brunch",
+              "Bars",
               "Pizza",
-              "Fast Food",
+              "Nightlife",
+              "Breakfast & Brunch",
               "Mexican",
               "Italian",
-              "Seafood",
               "Coffee & Tea",
-              "Chinese",
-              "Japanese",
-              "Desserts",
-              "Mediterranean",
-              "Thai",
-              "Vegan",
-              "Vietnamese",
-              "Latin American",
-              "Indian",
-              "Middle Eastern",
-              "Korean",
+              "Fast Food",
+              "Salad",
+              "Burgers",
+              "Delis",
+              "Seafood",
+              "Cafes",
+              "Speciality Food",
             ];
 
             tags.forEach((tag) => {
