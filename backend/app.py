@@ -53,7 +53,23 @@ class Globals:
 
 state_to_df, state_to_idf, state_to_good_words, state_to_wr_inv_idx, state_to_br_inv_idx, state_to_name_row_dict, state_to_doc_norms, state_to_review_vectors, state_to_category_vectors = state_processing.data_processing(current_directory)
 print(state_to_category_vectors.keys())
-categories = ['American (Traditional)', 'Sandwiches', 'Breakfast & Brunch', 'Pizza', 'Fast Food', 'Mexican', 'Italian', 'Seafood', 'Coffee & Tea', 'Chinese', 'Japanese', 'Desserts', 'Mediterranean', 'Thai', 'Vegan', 'Vietnamese', 'Latin American', 'Indian', 'Middle Eastern', 'Korean']
+categories = [
+              "Sandwiches",
+              "Bars",
+              "Pizza",
+              "Nightlife",
+              "Breakfast & Brunch",
+              "Mexican",
+              "Italian",
+              "Coffee & Tea",
+              "Fast Food",
+              "Salad",
+              "Burgers",
+              "Delis",
+              "Seafood",
+              "Cafes",
+              "Speciality Food",
+            ]
 categories = list(map(lambda x:x.lower(), categories))
 
 @app.route("/")

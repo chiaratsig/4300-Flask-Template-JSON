@@ -23,7 +23,23 @@ def data_processing(current_directory):
       "tennessee" : "tn.json",
   }
 
-  categories = ['American (Traditional)', 'Sandwiches', 'Breakfast & Brunch', 'Pizza', 'Fast Food', 'Mexican', 'Italian', 'Seafood', 'Coffee & Tea', 'Chinese', 'Japanese', 'Desserts', 'Mediterranean', 'Thai', 'Vegan', 'Vietnamese', 'Latin American', 'Indian', 'Middle Eastern', 'Korean']
+  categories = [
+              "Sandwiches",
+              "Bars",
+              "Pizza",
+              "Nightlife",
+              "Breakfast & Brunch",
+              "Mexican",
+              "Italian",
+              "Coffee & Tea",
+              "Fast Food",
+              "Salad",
+              "Burgers",
+              "Delis",
+              "Seafood",
+              "Cafes",
+              "Speciality Food",
+            ]  
   categories = list(map(lambda x:x.lower(), categories))
 
   state_to_df = {}
