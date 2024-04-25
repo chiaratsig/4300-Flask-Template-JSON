@@ -100,11 +100,9 @@ def get_tags():
     # dummy_selected_categories = ['American', 'Gastropub', 'Cheap']
 
     # (search-specific) For each of the attributes in the user-selected-checkboxes, 
-    #ADD their vectors. This is the initial query (adding allows a restaurant with 3 of 
-    #the desired selected attributes to likely be ranked higher than a restaurant with 
-    #1 of the  desired selected attributes, for example
-    # Globals.initial_query = create_query_vector(dummy_categories, category_vectors,
-    #                                     dummy_selected_categories, len(good_words))   
+    # ADD their vectors. This is the initial query (adding allows a restaurant with 3 of 
+    # the desired selected attributes to likely be ranked higher than a restaurant with 
+    # 1 of the  desired selected attributes
     category_vectors = state_to_category_vectors[Globals.state]
     good_words = state_to_good_words[Globals.state]
     name_row_dict = state_to_name_row_dict[Globals.state]
@@ -121,8 +119,8 @@ def get_tags():
     # print("initial query")
     # print(Globals.initial_query)
     # Pass this initial query into an updated version of index_search in analysis.py 
-    #(this initial query is the new value of input_review_vector in app.py). 
-    #This will return returned_restaurants (n=5)
+    # (this initial query is the new value of input_review_vector in app.py). 
+    # This will return returned_restaurants (n=5)
     Globals.reviewer_restaurants = index_search2(good_words, Globals.initial_query, wr_inv_idx, df, idf, doc_norms)
     # print(Globals.reviewer_restaurants)
     review_restaurants_info = []
@@ -191,6 +189,12 @@ def get_ratings():
         tup.append(string.capwords(restaurant))
         tup.append(df["address"][restaurant_rows[0]])
         tup.append(df["city"][restaurant_rows[0]] + ", " + df["postal_code"][restaurant_rows[0]])
+
+        restaurant_tags = {}
+        for review_id in restaurant_rows:
+            print(df["attributes"][review_id].keys())
+        print()
+
         tup.append("restaurant tags")
         output_restaurants_info.append(tuple(tup))
 

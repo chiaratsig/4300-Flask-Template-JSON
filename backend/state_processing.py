@@ -65,26 +65,27 @@ def data_processing(current_directory):
 
     json_file_path = os.path.join(current_directory, "state_data", state_to_json[state])
     # print(json_file_path)
-    cols = ["review_id", "business_id", "stars_x", "text", "name", "address", "city", "state", "postal_code", "categories"]
+    cols = ["review_id", "business_id", "stars_x", "text", "name", "address", "city", "state", "postal_code", "categories", "attributes"]
 
     with open(json_file_path, 'r') as file:
       data = json.load(file)
 
     df = pd.DataFrame(data=data, columns=cols)
     df["categories"] = df["categories"].astype("object")
+    df["attributes"] = df["attributes"].astype("object")
     state_to_df[state] = df
 
     name_row_dict = {}
-    # restaurant_to_reviews = {}
     for index, row in df.iterrows():
       r_name = row["name"].lower()
       if r_name not in name_row_dict.keys():
         name_row_dict[r_name] = []
       name_row_dict[row["name"].lower()].append(index)
 
-      tempList = row["categories"].split(",")
-      tempList = list(map(lambda x:x.lower(), tempList))
-      df.at[index, "categories"] = tempList
+      tempCategories = row["categories"].split(",")
+      tempCategories = list(map(lambda x:x.lower(), tempCategories))
+      df.at[index, "categories"] = tempCategories
+
     state_to_name_row_dict[state] = name_row_dict
 
 
