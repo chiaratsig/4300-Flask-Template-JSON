@@ -115,6 +115,9 @@ def get_tags():
 
     Globals.initial_query = create_query_vector(categories, category_vectors,
                                         selected_categories, len(good_words))
+    
+    if(sum(Globals.initial_query) == 0):
+        return "We're sorry, but there are no restaurants pertaining to your selected tags. Please choose a different set of tags."
 
     # print("initial query")
     # print(Globals.initial_query)
@@ -167,6 +170,7 @@ def get_ratings():
     doc_norms = state_to_doc_norms[Globals.state]
     name_row_dict = state_to_name_row_dict[Globals.state]
 
+
     # Build a vector to represent each of the 5 returned restaurants - average the review vector 
     #of each review pertaining to that restaurant
     restaurant_vectors = create_restaurant_vectors(review_vectors, Globals.reviewer_restaurants, br_inv_idx, len(good_words))
@@ -200,3 +204,50 @@ def get_ratings():
 
     # restaurants_reccomended = [("Restaurant 1 Name", "Restaurant 1 Address", "Restaurant 1 Tags"), ("Restaurant 2 Name", "Restaurant 2 Address", "Restaurant 2 Tags"), ("Restaurant 3 Name", "Restaurant 3 Address", "Restaurant 3 Tags"), ("Restaurant 4 Name", "Restaurant 4 Address", "Restaurant 4 Tags"), ("Restaurant 5 Name", "Restaurant 5 Address", "Restaurant 5 Tags")]
     return output_restaurants_info
+
+# chiara testing
+
+# test_state = "idaho"
+
+# # get all needed inputs
+# test_category_vectors = state_to_category_vectors[test_state]
+# test_good_words = state_to_good_words[test_state]
+# test_name_row_dict = state_to_name_row_dict[test_state]
+# test_wr_inv_idx = state_to_wr_inv_idx[test_state]
+# test_df = state_to_df[test_state]
+# test_idf = state_to_idf[test_state]
+# test_doc_norms = state_to_doc_norms[test_state]
+
+# test_review_vectors = state_to_review_vectors[test_state]
+# test_br_inv_idx = state_to_br_inv_idx[test_state]
+
+# # make initial query
+# test_initial_query = create_query_vector(categories, test_category_vectors,
+#                                         [categories[0]], len(test_good_words))
+# print("Test initial", test_initial_query)
+
+# # get initial returned restaurants
+# test_reviewer_restaurants = index_search2(test_good_words, test_initial_query, test_wr_inv_idx, test_df, test_idf, test_doc_norms)
+# print("Test reviewer restaurants", test_reviewer_restaurants)
+
+# # get intial returne restaurant vectors to pass into rocchio
+# test_restaurant_vectors = create_restaurant_vectors(test_review_vectors, test_reviewer_restaurants, test_br_inv_idx, len(test_good_words))
+# #print("rest vecrors", test_restaurant_vectors)
+
+# # test 3 different updated results
+# test_ratings0 = [0,0,0,0,0]
+# test_ratings1 = [1,1,0,1,1]
+# test_ratings5 = [0.25, 0.5, 0.25, 0.5, 0.25]
+# test_updated_query0 = update_query_vector(test_initial_query, test_restaurant_vectors, test_ratings0)
+# test_updated_query1 = update_query_vector(test_initial_query, test_restaurant_vectors, test_ratings1)
+# test_updated_query5 = update_query_vector(test_initial_query, test_restaurant_vectors, test_ratings5)
+
+# # get new set of returned restaurants for each set of updates
+# test_updated_returned_restaurants0 = index_search2(test_good_words, test_updated_query0, test_wr_inv_idx, test_df, test_idf, test_doc_norms)
+# test_updated_returned_restaurants1 = index_search2(test_good_words, test_updated_query1, test_wr_inv_idx, test_df, test_idf, test_doc_norms)
+# test_updated_returned_restaurants5 = index_search2(test_good_words, test_updated_query5, test_wr_inv_idx, test_df, test_idf, test_doc_norms)
+
+# # print new returned restaurants
+# print("0 reviewer restaurants", test_updated_returned_restaurants0)
+# print("1 reviewer restaurants", test_updated_returned_restaurants1)
+# print("5 reviewer restaurants", test_updated_returned_restaurants5)

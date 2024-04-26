@@ -161,7 +161,8 @@ def create_review_word_occurrence_matrix(
        tokens = tokenize_method(input_df.iloc[i]['text'])
        for token in tokens:
           if token in input_good_types:
-             word_occurence_matrix[i][input_good_types.index(token)] += 1
+             word_occurence_matrix[i][input_good_types.index(token)] = 1
+             #word_occurence_matrix[i][input_good_types.index(token)] += 1
     return word_occurence_matrix
 
 
@@ -674,7 +675,7 @@ def update_query_vector(
     input_initial_query: np.ndarray,
     restaurant_vectors: np.ndarray,
     input_restaurant_scores: List[float],
-    a=1,
+    a=2,
     b=3,
     c=3) -> np.ndarray:
     """Returns a numpy array vector of length n_good_types such that the 
@@ -732,7 +733,8 @@ def update_query_vector(
     else: 
         c_irrel_avg = c / n_irrel
 
-    updated_query_vector = a*input_initial_query + (b_rel_avg)*rel - (c_irrel_avg)*rel
+    updated_query_vector = a*input_initial_query + (b_rel_avg)*rel - (c_irrel_avg)*irrel
+
     return updated_query_vector
 
           
