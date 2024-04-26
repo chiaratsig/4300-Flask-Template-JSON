@@ -107,23 +107,52 @@
         id="reviewRestaurants"
         style="margin-top: 200px"
       >
-        <h2>
-          Please rate the following restaurants using the sliding scale.<i
-            class="fa-solid fa-circle-info tooltip"
-          >
-            <span class="tooltiptext"
-              >Scroll through and rate each of the restaurants on the sliding
-              scale.</span
+        <div class="instruction3">
+          <h2>3</h2>
+          <h2>
+            Please rate the following restaurants using the sliding scale.<i
+              class="fa-solid fa-circle-info tooltip"
             >
-          </i>
-        </h2>
+              <span class="tooltiptext"
+                >Scroll through and rate each of the restaurants on the sliding
+                scale.</span
+              >
+            </i>
+          </h2>
+        </div>
 
         <form
           class="review-restaurants-form review-boxes"
           id="reviewRestaurantsForm"
         >
           <div class="review-box" id="review-box-1">
-            <div class="review-box-text" id="review-box-text-1"></div>
+            <div class="review-box-text1" id="review-box-text-1">
+              <div class="review-box-name" id="review-box-name1"></div>
+              <div class="review-box-address" id="review-box-address1"></div>
+              <div class="review-box-cats" id="review-box-cats1"></div>
+              <div class="review-box-container">
+                <div
+                  class="review-box-reviews"
+                  id="review-box-reviews1-1"
+                ></div>
+                <div
+                  class="review-box-reviews"
+                  id="review-box-reviews1-2"
+                ></div>
+                <div
+                  class="review-box-reviews"
+                  id="review-box-reviews1-3"
+                ></div>
+                <div
+                  class="review-box-reviews"
+                  id="review-box-reviews1-4"
+                ></div>
+                <div
+                  class="review-box-reviews"
+                  id="review-box-reviews1-5"
+                ></div>
+              </div>
+            </div>
             <div class="slidecontainer">
               <input
                 type="range"
@@ -138,7 +167,6 @@
 
           <div class="review-box" id="review-box-2">
             <div class="review-box-text" id="review-box-text-2"></div>
-            <div class="review-box-reviews" id="review-box-reviews-1"></div>
             <div class="slidecontainer">
               <input
                 type="range"
@@ -421,15 +449,37 @@
               // r1 --> first restaurant, r2 --> second, etc
               // r1[0] = name, r1[1] = address, r1[2] = categories but not actually
               // r1[3] = list of 5 reviews
-              box1 = document.getElementById("review-box-text-1");
+              //   <div class="review-box-text" id="review-box-text-1">
+              //   <div class="review-box-text" id="review-box-name"></div>
+              //   <div class="review-box-text" id="review-box-address"></div>
+              //   <div class="review-box-text" id="review-box-reviews"></div>
+              // </div>
+              // box1 = document.getElementById("review-box-text-1");
               r1 = list[0];
-              box1.innerHTML = reviewBoxTemplate(
-                1,
-                r1[0],
-                r1[1],
-                r1[2],
-                r1[3][0]
-              );
+              // box1.innerHTML = reviewBoxTemplate(
+              //   1,
+              //   r1[0],
+              //   r1[1],
+              //   r1[2],
+              //   r1[3][0]
+              // );
+
+              name1 = document.getElementById("review-box-name1");
+              address1 = document.getElementById("review-box-address1");
+              categories1 = document.getElementById("review-box-cats1");
+              reviews11 = document.getElementById("review-box-reviews1-1");
+              reviews12 = document.getElementById("review-box-reviews1-2");
+              reviews13 = document.getElementById("review-box-reviews1-3");
+              reviews14 = document.getElementById("review-box-reviews1-4");
+              reviews15 = document.getElementById("review-box-reviews1-5");
+              name1.innerHTML = r1[0];
+              address1.innerHTML = r1[1];
+              categories1.innerHTML = r1[2];
+              reviews11.innerHTML = "1. " + r1[3][0];
+              reviews12.innerHTML = "2. " + r1[3][1];
+              reviews13.innerHTML = "3. " + r1[3][2];
+              reviews14.innerHTML = "4. " + r1[3][3];
+              reviews15.innerHTML = "5. " + r1[3][4];
 
               box2 = document.getElementById("review-box-text-2");
               r2 = list[1];
