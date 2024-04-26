@@ -137,6 +137,7 @@ body {
   position: fixed;
   width: 1435px;
 }
+
 /* end of first window */
 
 .instruction2 {
@@ -322,40 +323,46 @@ body {
   flex-direction: column;
   justify-content: space-evenly;
   align-items: left;
+  text-align: left;
 }
 
-.review-box-name{
+.review-box-name {
   font-family: "Roboto";
   font-weight: 400;
   font-size: 24px;
   color: #FD9000;
 }
-.review-box-address{
+
+.review-box-address {
   font-family: "Roboto";
   font-weight: 100;
   font-size: 20px;
   color: #FD9000;
 }
-.review-box-cats{
+
+.review-box-cats {
   font-family: "Roboto";
   font-weight: 400;
   font-size: 20px;
   color: #FD9000;
   margin-bottom: 20px;
 }
-.review-box-container{
+
+.review-box-container {
   display: flex;
   flex-direction: column;
   justify-content: space-between;
   align-items: center;
   margin-bottom: 20px;
 }
-.review-box-reviews{
+
+.review-box-reviews {
   font-family: "Roboto";
   font-weight: 400;
   font-size: 16px;
   color: #FD9000;
   margin-bottom: 20px;
+  text-align: left;
 }
 
 .slidecontainer {
@@ -417,6 +424,7 @@ body {
   cursor: pointer;
   /* Cursor on hover */
 }
+
 /* end https://www.w3schools.com/howto/howto_js_rangeslider.asp */
 
 #submitRanges {
@@ -514,7 +522,7 @@ textarea {
   opacity: 0;
 }
 
-input[type="checkbox"] + label:hover {
+input[type="checkbox"]+label:hover {
   cursor: pointer;
 }
 
@@ -627,5 +635,3 @@ input[type="checkbox"] + label:hover {
   border-style: solid;
   border-color: transparent #d3924d transparent transparent;
 }
-
-
