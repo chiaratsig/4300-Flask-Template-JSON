@@ -516,8 +516,8 @@
     //   .addEventListener("submit", function (e) {});
     //fourth window start
 
-    function outputBoxTemplate(name, address, tags) {
-      return `<a class='output-restaurant'>${name}<br>${address}<br>${tags}</div>`;
+    function outputBoxTemplate(name, address, city, tags) {
+      return `<a class='output-restaurant'>${name}<br>${address}<br>${city}<br>${tags}</div>`;
     }
     
     document
@@ -548,9 +548,11 @@
             list.forEach((item) => {
               let name = item[0];
               let address = item[1];
-              let tags = item[2];
+              let city = item[2];
+              let tags = item[3];
+
               let tempDiv = document.createElement("div");
-              tempDiv.innerHTML = outputBoxTemplate(name, address, tags);
+              tempDiv.innerHTML = outputBoxTemplate(name, address, city, tags);
               document.getElementById("outputBox").appendChild(tempDiv);
               count += 1;
             });

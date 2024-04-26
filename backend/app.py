@@ -193,11 +193,25 @@ def get_ratings():
         tup.append(string.capwords(restaurant))
         tup.append(df["address"][restaurant_rows[0]])
         tup.append(df["city"][restaurant_rows[0]] + ", " + df["postal_code"][restaurant_rows[0]])
+        
+        attributes = df["attributes"][restaurant_rows[0]]
+        attr_str = ""
+        if attributes != None:
+            attr_keys = list(attributes.keys())
+            i = 0
+            while i < 5 and i < len(attr_keys): 
+              if type(attributes[attr_keys[i]]) != dict:
+                attr_str += attr_keys[i] + " - " + attributes[attr_keys[i]] + "<br>"
+                i += 1
 
-        restaurant_tags = {}
-        for review_id in restaurant_rows:
-            print(df["attributes"][review_id].keys())
-        print()
+        tup.append(attr_str)
+
+        # restaurant_tags = {}
+        # tags = ["WheelchairAccessible",  "WiFi", "OutdoorSeating", "BYOB"]
+        # for review_id in restaurant_rows:
+        #     if df["attributes"][review_id] != None:
+        #         print(df["attributes"][review_id].keys())
+        # print()
 
         tup.append("restaurant tags")
         output_restaurants_info.append(tuple(tup))
