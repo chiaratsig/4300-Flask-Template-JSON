@@ -160,7 +160,6 @@ def get_ratings():
     rating5 = .1 * (int(request.args.get("rating5")) + 5)
 
     ratings = [rating1, rating2, rating3, rating4, rating5]
-    # print(ratings)
     review_vectors = state_to_review_vectors[Globals.state]
     good_words = state_to_good_words[Globals.state]
     wr_inv_idx = state_to_wr_inv_idx[Globals.state]

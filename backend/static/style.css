@@ -143,7 +143,7 @@ body {
 .instruction2 {
   display: flex;
   flex-direction: row;
-  width: 505px;
+  width: 525px;
   justify-content: space-between;
 }
 
@@ -267,7 +267,7 @@ body {
   z-index: -1;
   position: absolute;
   margin-bottom: 380px;
-  width: 505px;
+  width: 525px;
   margin-right: 50px;
 }
 
@@ -276,8 +276,17 @@ body {
 .instruction3 {
   display: flex;
   flex-direction: row;
-  width: 505px;
-  justify-content: space-between;
+  width: 635px;
+  justify-content: space-evenly;
+  margin-top: 15px;
+}
+
+.details3 {
+  z-index: -1;
+  position: absolute;
+  margin-bottom: 540px;
+  width: 585px;
+  margin-right: 90px;
 }
 
 .review-boxes {
@@ -286,7 +295,10 @@ body {
   height: 70%;
   overflow-y: scroll;
   text-align: justify;
-  border-radius: 30px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  border: 2px solid #5a7c7d;
 }
 
 .review-box {
@@ -296,13 +308,13 @@ body {
   align-items: center;
   flex-wrap: wrap;
 
-  background: #FDD2A3;
+  background: #fdd2a3;
   border-radius: 30px;
-  border: 2px solid #5A7C7D;
+  border: 2px solid #5a7c7d;
 
   padding: 42.6px 42.6px 39.6px 39.6px;
   margin: 0 auto;
-  margin-bottom: 50px;
+  margin-top: 20px;
 }
 
 .review-box-text {
@@ -330,21 +342,30 @@ body {
   font-family: "Roboto";
   font-weight: 400;
   font-size: 24px;
-  color: #FD9000;
+  color: #fd9000;
 }
 
 .review-box-address {
   font-family: "Roboto";
   font-weight: 100;
   font-size: 20px;
-  color: #FD9000;
+  color: #fd9000;
 }
 
 .review-box-cats {
   font-family: "Roboto";
   font-weight: 400;
   font-size: 20px;
-  color: #FD9000;
+  color: #fd9000;
+  margin-bottom: 20px;
+}
+
+.review-title {
+  font-family: "Roboto";
+  font-weight: 400;
+  font-size: 20px;
+  color: #fd9000;
+  margin-top: 0px;
   margin-bottom: 20px;
 }
 
@@ -352,7 +373,7 @@ body {
   display: flex;
   flex-direction: column;
   justify-content: space-between;
-  align-items: center;
+  align-items: flex-start;
   margin-bottom: 20px;
 }
 
@@ -360,7 +381,7 @@ body {
   font-family: "Roboto";
   font-weight: 400;
   font-size: 16px;
-  color: #FD9000;
+  color: #fd9000;
   margin-bottom: 20px;
   text-align: left;
 }
@@ -370,8 +391,30 @@ body {
   /* Width of the outside container */
 }
 
-/* reference https://www.w3schools.com/howto/howto_js_rangeslider.asp */
+.ratingsContainer {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
+}
 
+.ratingsContainer2 {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
+  margin-top: 0px;
+}
+
+.ratingNumber {
+  font-family: "Roboto";
+  color: #fd9000;
+  font-weight: 400;
+  font-size: 16px;
+  margin-right: 10px;
+}
+
+/* reference https://www.w3schools.com/howto/howto_js_rangeslider.asp */
 
 /* The slider itself */
 .slider {
@@ -382,7 +425,8 @@ body {
   /* Full-width */
   height: 25px;
   /* Specified height */
-  background: white;
+  background: #5a7c7d;
+  border-radius: 50px;
   /* Grey background */
   outline: none;
   /* Remove outline */
@@ -408,7 +452,8 @@ body {
   /* Set a specific slider handle width */
   height: 25px;
   /* Slider handle height */
-  background: #915f54;
+  background: #fd9000;
+  border-radius: 50px;
   /* Green background */
   cursor: pointer;
   /* Cursor on hover */
@@ -428,14 +473,15 @@ body {
 /* end https://www.w3schools.com/howto/howto_js_rangeslider.asp */
 
 #submitRanges {
-  width: 259px;
-  height: 101px;
-  margin-top: 75px;
-
-  background-color: #48a369;
-  opacity: 0.8;
+  background-color: #5a7c7d;
+  border-radius: 50px;
   border: none;
-  border-radius: 20px;
+  padding: 12px 40px;
+
+  font-family: "Roboto";
+  font-weight: 700;
+  font-size: 32px;
+  color: #ffffff;
 }
 
 /*end of window 3*/
@@ -522,7 +568,7 @@ textarea {
   opacity: 0;
 }
 
-input[type="checkbox"]+label:hover {
+input[type="checkbox"] + label:hover {
   cursor: pointer;
 }
 
