@@ -93,7 +93,7 @@
           <button id="submitTags">Next</button>
         </div>
 
-        <h4 id="cuisineFeedback" class="feedback2 hidden">
+        <h4 id="cuisineFeedback" class="feedback hidden">
           Please select at least 1.
         </h4>
         <!-- chiara -->
@@ -694,11 +694,6 @@
             return `${name}<br>${address}<br>${categories}<br><br>Sample Reviews:${reviews}`;
           }
 
-          document
-            .getElementById("reviewRestaurants")
-            .classList.remove("hidden");
-          document.getElementById("chooseTags").style.marginBottom = 0;
-
           var values = [];
           var posVals = [];
           for (const input of tagsInput) {
@@ -710,10 +705,16 @@
             posVals.push(input.innerText.toLowerCase());
             input.style.pointerEvents = "none";
           }
-          console.log("posVals");
-          console.log(posVals);
-          console.log("values");
-          console.log(values);
+
+          // document
+          //   .getElementById("reviewRestaurants")
+          //   .classList.remove("hidden");
+          // document.getElementById("chooseTags").style.marginBottom = 0;
+
+          // console.log("posVals");
+          // console.log(posVals);
+          // console.log("values");
+          // console.log(values);
 
           
           fetch("/tags?" + new URLSearchParams({ pos: posVals }).toString())
@@ -723,6 +724,11 @@
               if (list.length === 0) {
                 document.getElementById("cuisineFeedback2").classList.remove("hidden");
               } else {
+                document.getElementById("cuisineFeedback2").classList.add("hidden");
+                document.getElementById("reviewRestaurants").classList.remove("hidden");
+                document.getElementById("chooseTags").style.marginBottom = 0;
+
+                
                 r1 = list[0];
                 name1 = document.getElementById("review-box-name1");
                 address1 = document.getElementById("review-box-address1");
