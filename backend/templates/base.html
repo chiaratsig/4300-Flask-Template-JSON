@@ -23,7 +23,7 @@
       <!-- <h1 onclick="loadHomePage()">Yelp Me Find a Restaurant</h1> -->
       <h1 class="title">Yelp Me Find a Restaurant!</h1>
       <!-- First Window Start -->
-      <div class="choose-location" id="chooseLocation">
+      <div class="choose-location fixed" id="chooseLocation">
         <div class="instruction">
           <h2>1</h2>
           <h2>Choose a state to dine in</h2>
@@ -584,7 +584,16 @@
 
       var locationsSubmit = document.getElementById("submitLocations");
       var newLocation = true;
+      if (newLocation) {
+        document.getElementById("chooseLocation").classList.add("hidden");
+
+      }
+      
       locationsSubmit.onclick = function () {
+
+        document.getElementById("chooseLocation").classList.add("hidden");
+
+
         state = locationInput.value.toLowerCase();
         if (tags.includes(state)) {
           if (newLocation) {
@@ -595,6 +604,9 @@
               behavior: "smooth",
               block: "start",
             });
+
+            ;
+
 
             document.getElementById("chooseTags").classList.remove("hidden");
             document.getElementById("locationEditing").remove();
