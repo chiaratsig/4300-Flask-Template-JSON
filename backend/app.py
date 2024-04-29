@@ -116,8 +116,8 @@ def get_tags():
     Globals.initial_query = create_query_vector(categories, category_vectors,
                                         selected_categories, len(good_words))
     
-    if(sum(Globals.initial_query) == 0):
-        return "We're sorry, but there are no restaurants pertaining to your selected tags. Please choose a different set of tags."
+    # if(sum(Globals.initial_query) == 0):
+    #     return "We're sorry, but there are no restaurants pertaining to your selected tags. Please choose a different set of tags."
 
     # print("initial query")
     # print(Globals.initial_query)
