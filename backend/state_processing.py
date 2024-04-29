@@ -38,7 +38,7 @@ def data_processing(current_directory):
               "Delis",
               "Seafood",
               "Cafes",
-              "Speciality Food",
+              "Specialty Food",
             ]  
   categories = list(map(lambda x:x.lower(), categories))
 
