@@ -1,454 +1,319 @@
 <!DOCTYPE html>
 <html>
-  <head>
-    <title>Yelp Me Find a Restaurant</title>
 
-    <script
-      src="https://kit.fontawesome.com/6969334fef.js"
-      crossorigin="anonymous"
-    ></script>
+<head>
+  <title>Yelp Me Find a Restaurant</title>
 
-    <link rel="preconnect" href="https://fonts.googleapis.com" />
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-    <link
-      href="https://fonts.googleapis.com/css2?family=Roboto:wght@500&display=swap"
-      rel="stylesheet"
-    />
+  <script src="https://kit.fontawesome.com/6969334fef.js" crossorigin="anonymous"></script>
 
-    <link rel="stylesheet" type="text/css" href="../static/style.css" />
-  </head>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@500&display=swap" rel="stylesheet" />
 
-  <body id="body">
-    <main>
-      <!-- <h1 onclick="loadHomePage()">Yelp Me Find a Restaurant</h1> -->
-      <h1 class="title">Yelp Me Find a Restaurant!</h1>
-      <!-- First Window Start -->
-      <div class="choose-location fixed" id="chooseLocation">
-        <div class="instruction">
-          <h2>1</h2>
-          <h2>Choose a state to dine in</h2>
+  <link rel="stylesheet" type="text/css" href="../static/style.css" />
+</head>
+
+<body id="body">
+  <main>
+    <!-- <h1 onclick="loadHomePage()">Yelp Me Find a Restaurant</h1> -->
+    <h1 class="title">Yelp Me Find a Restaurant!</h1>
+    <!-- First Window Start -->
+    <div class="choose-location fixed" id="chooseLocation">
+      <div class="instruction">
+        <h2>1</h2>
+        <h2>Choose a state to dine in</h2>
+      </div>
+
+      <div id="locationChosen">
+        <div class="location-box">
+          <h3 class="location-box-text" id="chosenLocation">State</h3>
         </div>
-
-        <div id="locationChosen">
-          <div class="location-box">
-            <h3 class="location-box-text" id="chosenLocation">State</h3>
-          </div>
-          <!-- <button id="editLocation" class="location-icon">
+        <!-- <button id="editLocation" class="location-icon">
             <h3 id="locationPen"><i class="fa-solid fa-pen fa-2x"></i></h3>
           </button> -->
-        </div>
-
-        <div id="locationEditing" class="hidden">
-          <form class="choose-form">
-            <div class="location-box">
-              <input
-                list="datalist"
-                id="location-input"
-                type="text"
-                onkeyup="add_locations_to_dropdown(this.value)"
-              />
-              <datalist id="datalist"></datalist>
-            </div>
-          </form>
-        </div>
-        <div class="buttons">
-          <button class="reset" onClick="window.location.reload();">
-            Reset
-          </button>
-          <button id="submitLocations">Next</button>
-        </div>
-        <h4 id="locationFeedback" class="feedback hidden">
-          Please select a state from the dropdown.
-        </h4>
-        <img class="details" src="../static/images/details.png" />
-        <img class="graphics" src="../static/images/graphics.png" />
       </div>
-      <!-- First Window End -->
 
-      <!-- Second Window Start -->
-      <div class="choose-tags hidden" id="chooseTags">
-        <div class="instruction2">
-          <h2>2</h2>
-          <h2>
-            Choose types of places you like<i
-              class="fa-solid fa-circle-info tooltip"
-            >
-              <span class="tooltiptext"
-                >Click a tag once if it interests you!</span
-              >
-            </i>
-          </h2>
-        </div>
-
-        <form class="tags-form" id="tagsForm">
-          <div class="tag-box" id="tagBox">
-            <div id="tags-checker"></div>
+      <div id="locationEditing" class="hidden">
+        <form class="choose-form">
+          <div class="location-box">
+            <input list="datalist" id="location-input" type="text" onkeyup="add_locations_to_dropdown(this.value)" />
+            <datalist id="datalist"></datalist>
           </div>
         </form>
-
-        <div class="buttons">
-          <button class="reset" onClick="window.location.reload();">
-            Reset
-          </button>
-          <button id="submitTags">Next</button>
-        </div>
-
-        <h4 id="cuisineFeedback" class="feedback hidden">
-          Please select at least 1.
-        </h4>
-        <!-- chiara -->
-        <h4 id="cuisineFeedback2" class="feedback2 hidden">
-          We're sorry, but there are no restaurants pertaining to your selected tags.
-          Please hit Reset and choose a different set of tags.
-        </h4>
-
-        <img class="details2" src="../static/images/details.png" />
-        <img class="graphics" src="../static/images/graphics.png" />
-
       </div>
-      <!-- Second Window End -->
+      <div class="buttons">
+        <button class="reset" onClick="window.location.reload();">
+          Reset
+        </button>
+        <button id="submitLocations">Next</button>
+      </div>
+      <h4 id="locationFeedback" class="feedback hidden">
+        Please select a state from the dropdown.
+      </h4>
+      <img class="details" src="../static/images/details.png" />
+      <img class="graphics" src="../static/images/graphics.png" />
+    </div>
+    <!-- First Window End -->
 
-      <!-- Third Window Start -->
-      <div
-        class="review-restaurants hidden"
-        id="reviewRestaurants"
-        style="margin-top: 200px"
-      >
-        <div class="instruction3">
-          <h2>3</h2>
-          <h2>
-             Please rate the following restaurants.<i
-              class="fa-solid fa-circle-info tooltip"
-            >
-              <span class="tooltiptext"
-                >Scroll through and rate each of the restaurants on the sliding
-                scale.</span
-              >
-            </i>
-          </h2>
+    <!-- Second Window Start -->
+    <div class="choose-tags hidden" id="chooseTags">
+      <div class="instruction2">
+        <h2>2</h2>
+        <h2>
+          Choose types of places you like<i class="fa-solid fa-circle-info tooltip">
+            <span class="tooltiptext">Click a tag once if it interests you!</span>
+          </i>
+        </h2>
+      </div>
+
+      <form class="tags-form" id="tagsForm">
+        <div class="tag-box" id="tagBox">
+          <div id="tags-checker"></div>
+        </div>
+      </form>
+
+      <div class="buttons">
+        <button class="reset" onClick="window.location.reload();">
+          Reset
+        </button>
+        <button id="submitTags">Next</button>
+      </div>
+
+      <h4 id="cuisineFeedback" class="feedback hidden">
+        Please select at least 1.
+      </h4>
+      <!-- chiara -->
+      <h4 id="cuisineFeedback2" class="feedback2 hidden">
+        We're sorry, but there are no restaurants pertaining to your selected tags.
+        Please hit Reset and choose a different set of tags.
+      </h4>
+
+      <!-- <img class="details2" src="../static/images/details.png" /> -->
+      <img class="graphics" src="../static/images/graphics.png" />
+
+    </div>
+    <!-- Second Window End -->
+
+    <!-- Third Window Start -->
+    <div class="review-restaurants hidden" id="reviewRestaurants" style="margin-top: 200px">
+      <div class="instruction3">
+        <h2>3</h2>
+        <h2>
+          Please rate the following restaurants.<i class="fa-solid fa-circle-info tooltip">
+            <span class="tooltiptext">Scroll through and rate each of the restaurants on the sliding
+              scale.</span>
+          </i>
+        </h2>
+      </div>
+
+      <form class="review-restaurants-form review-boxes" id="reviewRestaurantsForm">
+        <div class="review-box" id="review-box-1">
+          <div class="review-box-text1" id="review-box-text-1">
+            <div class="review-box-name" id="review-box-name1"></div>
+            <div class="review-box-address" id="review-box-address1"></div>
+            <h2 class="review-title">Some Reviews</h2>
+            <!-- <div class="review-box-cats" id="review-box-cats1"></div> -->
+            <div class="review-box-container">
+              <div class="review-box-reviews" id="review-box-reviews1-1"></div>
+              <div class="review-box-reviews" id="review-box-reviews1-2"></div>
+              <div class="review-box-reviews" id="review-box-reviews1-3"></div>
+              <div class="review-box-reviews" id="review-box-reviews1-4"></div>
+              <div class="review-box-reviews" id="review-box-reviews1-5"></div>
+            </div>
+          </div>
+          <div class="slidecontainer">
+            <input type="range" min="-5" max="5" value="0" class="slider" id="slider1" />
+            <div class="ratingsContainer">
+              <p class="ratingNumber">-5</p>
+              <p class="ratingNumber">-4</p>
+              <p class="ratingNumber">-3</p>
+              <p class="ratingNumber">-2</p>
+              <p class="ratingNumber">-1</p>
+              <p class="ratingNumber">0</p>
+              <p class="ratingNumber">1</p>
+              <p class="ratingNumber">2</p>
+              <p class="ratingNumber">3</p>
+              <p class="ratingNumber">4</p>
+              <p class="ratingNumber">5</p>
+            </div>
+            <div class="ratingsContainer2">
+              <p class="ratingNumber">Very Uninterested</p>
+              <p class="ratingNumber">Neutral</p>
+              <p class="ratingNumber">Very Interested</p>
+            </div>
+          </div>
         </div>
 
-        <form
-          class="review-restaurants-form review-boxes"
-          id="reviewRestaurantsForm"
-        >
-          <div class="review-box" id="review-box-1">
-            <div class="review-box-text1" id="review-box-text-1">
-              <div class="review-box-name" id="review-box-name1"></div>
-              <div class="review-box-address" id="review-box-address1"></div>
-              <h2 class="review-title">Some Reviews</h2>
-              <!-- <div class="review-box-cats" id="review-box-cats1"></div> -->
-              <div class="review-box-container">
-                <div
-                  class="review-box-reviews"
-                  id="review-box-reviews1-1"
-                ></div>
-                <div
-                  class="review-box-reviews"
-                  id="review-box-reviews1-2"
-                ></div>
-                <div
-                  class="review-box-reviews"
-                  id="review-box-reviews1-3"
-                ></div>
-                <div
-                  class="review-box-reviews"
-                  id="review-box-reviews1-4"
-                ></div>
-                <div
-                  class="review-box-reviews"
-                  id="review-box-reviews1-5"
-                ></div>
-              </div>
-            </div>
-            <div class="slidecontainer">
-              <input
-                type="range"
-                min="-5"
-                max="5"
-                value="0"
-                class="slider"
-                id="slider1"
-              />
-              <div class="ratingsContainer">
-                <p class="ratingNumber">-5</p>
-                <p class="ratingNumber">-4</p>
-                <p class="ratingNumber">-3</p>
-                <p class="ratingNumber">-2</p>
-                <p class="ratingNumber">-1</p>
-                <p class="ratingNumber">0</p>
-                <p class="ratingNumber">1</p>
-                <p class="ratingNumber">2</p>
-                <p class="ratingNumber">3</p>
-                <p class="ratingNumber">4</p>
-                <p class="ratingNumber">5</p>
-              </div>
-              <div class="ratingsContainer2">
-                <p class="ratingNumber">Very Uninterested</p>
-                <p class="ratingNumber">Neutral</p>
-                <p class="ratingNumber">Very Interested</p>
-              </div>
+        <div class="review-box" id="review-box-2">
+          <div class="review-box-text1" id="review-box-text-2">
+            <div class="review-box-name" id="review-box-name2"></div>
+            <div class="review-box-address" id="review-box-address2"></div>
+            <h2 class="review-title">Some Reviews</h2>
+            <!-- <div class="review-box-cats" id="review-box-cats2"></div> -->
+            <div class="review-box-container">
+              <div class="review-box-reviews" id="review-box-reviews2-1"></div>
+              <div class="review-box-reviews" id="review-box-reviews2-2"></div>
+              <div class="review-box-reviews" id="review-box-reviews2-3"></div>
+              <div class="review-box-reviews" id="review-box-reviews2-4"></div>
+              <div class="review-box-reviews" id="review-box-reviews2-5"></div>
             </div>
           </div>
-
-          <div class="review-box" id="review-box-2">
-            <div class="review-box-text1" id="review-box-text-2">
-              <div class="review-box-name" id="review-box-name2"></div>
-              <div class="review-box-address" id="review-box-address2"></div>
-              <h2 class="review-title">Some Reviews</h2>
-              <!-- <div class="review-box-cats" id="review-box-cats2"></div> -->
-              <div class="review-box-container">
-                <div
-                  class="review-box-reviews"
-                  id="review-box-reviews2-1"
-                ></div>
-                <div
-                  class="review-box-reviews"
-                  id="review-box-reviews2-2"
-                ></div>
-                <div
-                  class="review-box-reviews"
-                  id="review-box-reviews2-3"
-                ></div>
-                <div
-                  class="review-box-reviews"
-                  id="review-box-reviews2-4"
-                ></div>
-                <div
-                  class="review-box-reviews"
-                  id="review-box-reviews2-5"
-                ></div>
-              </div>
+          <div class="slidecontainer">
+            <input type="range" min="-5" max="5" value="0" class="slider" id="slider2" />
+            <div class="ratingsContainer">
+              <p class="ratingNumber">-5</p>
+              <p class="ratingNumber">-4</p>
+              <p class="ratingNumber">-3</p>
+              <p class="ratingNumber">-2</p>
+              <p class="ratingNumber">-1</p>
+              <p class="ratingNumber">0</p>
+              <p class="ratingNumber">1</p>
+              <p class="ratingNumber">2</p>
+              <p class="ratingNumber">3</p>
+              <p class="ratingNumber">4</p>
+              <p class="ratingNumber">5</p>
             </div>
-            <div class="slidecontainer">
-              <input
-                type="range"
-                min="-5"
-                max="5"
-                value="0"
-                class="slider"
-                id="slider2"
-              />
-              <div class="ratingsContainer">
-                <p class="ratingNumber">-5</p>
-                <p class="ratingNumber">-4</p>
-                <p class="ratingNumber">-3</p>
-                <p class="ratingNumber">-2</p>
-                <p class="ratingNumber">-1</p>
-                <p class="ratingNumber">0</p>
-                <p class="ratingNumber">1</p>
-                <p class="ratingNumber">2</p>
-                <p class="ratingNumber">3</p>
-                <p class="ratingNumber">4</p>
-                <p class="ratingNumber">5</p>
-              </div>
-              <div class="ratingsContainer2">
-                <p class="ratingNumber">Very Uninterested</p>
-                <p class="ratingNumber">Neutral</p>
-                <p class="ratingNumber">Very Interested</p>
-              </div>
+            <div class="ratingsContainer2">
+              <p class="ratingNumber">Very Uninterested</p>
+              <p class="ratingNumber">Neutral</p>
+              <p class="ratingNumber">Very Interested</p>
             </div>
           </div>
+        </div>
 
-          <div class="review-box" id="review-box-3">
-            <div class="review-box-text1" id="review-box-text-3">
-              <div class="review-box-name" id="review-box-name3"></div>
-              <div class="review-box-address" id="review-box-address3"></div>
-              <h2 class="review-title">Some Reviews</h2>
-              <!-- <div class="review-box-cats" id="review-box-cats3"></div> -->
-              <div class="review-box-container">
-                <div
-                  class="review-box-reviews"
-                  id="review-box-reviews3-1"
-                ></div>
-                <div
-                  class="review-box-reviews"
-                  id="review-box-reviews3-2"
-                ></div>
-                <div
-                  class="review-box-reviews"
-                  id="review-box-reviews3-3"
-                ></div>
-                <div
-                  class="review-box-reviews"
-                  id="review-box-reviews3-4"
-                ></div>
-                <div
-                  class="review-box-reviews"
-                  id="review-box-reviews3-5"
-                ></div>
-              </div>
-            </div>
-            <div class="slidecontainer">
-              <input
-                type="range"
-                min="-5"
-                max="5"
-                value="0"
-                class="slider"
-                id="slider3"
-              />
-              <div class="ratingsContainer">
-                <p class="ratingNumber">-5</p>
-                <p class="ratingNumber">-4</p>
-                <p class="ratingNumber">-3</p>
-                <p class="ratingNumber">-2</p>
-                <p class="ratingNumber">-1</p>
-                <p class="ratingNumber">0</p>
-                <p class="ratingNumber">1</p>
-                <p class="ratingNumber">2</p>
-                <p class="ratingNumber">3</p>
-                <p class="ratingNumber">4</p>
-                <p class="ratingNumber">5</p>
-              </div>
-              <div class="ratingsContainer2">
-                <p class="ratingNumber">Very Uninterested</p>
-                <p class="ratingNumber">Neutral</p>
-                <p class="ratingNumber">Very Interested</p>
-              </div>
+        <div class="review-box" id="review-box-3">
+          <div class="review-box-text1" id="review-box-text-3">
+            <div class="review-box-name" id="review-box-name3"></div>
+            <div class="review-box-address" id="review-box-address3"></div>
+            <h2 class="review-title">Some Reviews</h2>
+            <!-- <div class="review-box-cats" id="review-box-cats3"></div> -->
+            <div class="review-box-container">
+              <div class="review-box-reviews" id="review-box-reviews3-1"></div>
+              <div class="review-box-reviews" id="review-box-reviews3-2"></div>
+              <div class="review-box-reviews" id="review-box-reviews3-3"></div>
+              <div class="review-box-reviews" id="review-box-reviews3-4"></div>
+              <div class="review-box-reviews" id="review-box-reviews3-5"></div>
             </div>
           </div>
-
-          <div class="review-box" id="review-box-4">
-            <div class="review-box-text1" id="review-box-text-4">
-              <div class="review-box-name" id="review-box-name4"></div>
-              <div class="review-box-address" id="review-box-address4"></div>
-              <h2 class="review-title">Some Reviews</h2>
-              <!-- <div class="review-box-cats" id="review-box-cats4"></div> -->
-              <div class="review-box-container">
-                <div
-                  class="review-box-reviews"
-                  id="review-box-reviews4-1"
-                ></div>
-                <div
-                  class="review-box-reviews"
-                  id="review-box-reviews4-2"
-                ></div>
-                <div
-                  class="review-box-reviews"
-                  id="review-box-reviews4-3"
-                ></div>
-                <div
-                  class="review-box-reviews"
-                  id="review-box-reviews4-4"
-                ></div>
-                <div
-                  class="review-box-reviews"
-                  id="review-box-reviews4-5"
-                ></div>
-              </div>
+          <div class="slidecontainer">
+            <input type="range" min="-5" max="5" value="0" class="slider" id="slider3" />
+            <div class="ratingsContainer">
+              <p class="ratingNumber">-5</p>
+              <p class="ratingNumber">-4</p>
+              <p class="ratingNumber">-3</p>
+              <p class="ratingNumber">-2</p>
+              <p class="ratingNumber">-1</p>
+              <p class="ratingNumber">0</p>
+              <p class="ratingNumber">1</p>
+              <p class="ratingNumber">2</p>
+              <p class="ratingNumber">3</p>
+              <p class="ratingNumber">4</p>
+              <p class="ratingNumber">5</p>
             </div>
-            <div class="slidecontainer">
-              <input
-                type="range"
-                min="-5"
-                max="5"
-                value="0"
-                class="slider"
-                id="slider4"
-              />
-              <div class="ratingsContainer">
-                <p class="ratingNumber">-5</p>
-                <p class="ratingNumber">-4</p>
-                <p class="ratingNumber">-3</p>
-                <p class="ratingNumber">-2</p>
-                <p class="ratingNumber">-1</p>
-                <p class="ratingNumber">0</p>
-                <p class="ratingNumber">1</p>
-                <p class="ratingNumber">2</p>
-                <p class="ratingNumber">3</p>
-                <p class="ratingNumber">4</p>
-                <p class="ratingNumber">5</p>
-              </div>
-              <div class="ratingsContainer2">
-                <p class="ratingNumber">Very Uninterested</p>
-                <p class="ratingNumber">Neutral</p>
-                <p class="ratingNumber">Very Interested</p>
-              </div>
+            <div class="ratingsContainer2">
+              <p class="ratingNumber">Very Uninterested</p>
+              <p class="ratingNumber">Neutral</p>
+              <p class="ratingNumber">Very Interested</p>
             </div>
           </div>
+        </div>
 
-          <div class="review-box" id="review-box-5">
-            <div class="review-box-text1" id="review-box-text-5">
-              <div class="review-box-name" id="review-box-name5"></div>
-              <div class="review-box-address" id="review-box-address5"></div>
-              <h2 class="review-title">Some Reviews</h2>
-              <!-- <div class="review-box-cats" id="review-box-cats5"></div> -->
-              <div class="review-box-container">
-                <div
-                  class="review-box-reviews"
-                  id="review-box-reviews5-1"
-                ></div>
-                <div
-                  class="review-box-reviews"
-                  id="review-box-reviews5-2"
-                ></div>
-                <div
-                  class="review-box-reviews"
-                  id="review-box-reviews5-3"
-                ></div>
-                <div
-                  class="review-box-reviews"
-                  id="review-box-reviews5-4"
-                ></div>
-                <div
-                  class="review-box-reviews"
-                  id="review-box-reviews5-5"
-                ></div>
-              </div>
-            </div>
-            <div class="slidecontainer">
-              <input
-                type="range"
-                min="-5"
-                max="5"
-                value="0"
-                class="slider"
-                id="slider5"
-              />
-              <div class="ratingsContainer">
-                <p class="ratingNumber">-5</p>
-                <p class="ratingNumber">-4</p>
-                <p class="ratingNumber">-3</p>
-                <p class="ratingNumber">-2</p>
-                <p class="ratingNumber">-1</p>
-                <p class="ratingNumber">0</p>
-                <p class="ratingNumber">1</p>
-                <p class="ratingNumber">2</p>
-                <p class="ratingNumber">3</p>
-                <p class="ratingNumber">4</p>
-                <p class="ratingNumber">5</p>
-              </div>
-              <div class="ratingsContainer2">
-                <p class="ratingNumber">Very Uninterested</p>
-                <p class="ratingNumber">Neutral</p>
-                <p class="ratingNumber">Very Interested</p>
-              </div>
+        <div class="review-box" id="review-box-4">
+          <div class="review-box-text1" id="review-box-text-4">
+            <div class="review-box-name" id="review-box-name4"></div>
+            <div class="review-box-address" id="review-box-address4"></div>
+            <h2 class="review-title">Some Reviews</h2>
+            <!-- <div class="review-box-cats" id="review-box-cats4"></div> -->
+            <div class="review-box-container">
+              <div class="review-box-reviews" id="review-box-reviews4-1"></div>
+              <div class="review-box-reviews" id="review-box-reviews4-2"></div>
+              <div class="review-box-reviews" id="review-box-reviews4-3"></div>
+              <div class="review-box-reviews" id="review-box-reviews4-4"></div>
+              <div class="review-box-reviews" id="review-box-reviews4-5"></div>
             </div>
           </div>
+          <div class="slidecontainer">
+            <input type="range" min="-5" max="5" value="0" class="slider" id="slider4" />
+            <div class="ratingsContainer">
+              <p class="ratingNumber">-5</p>
+              <p class="ratingNumber">-4</p>
+              <p class="ratingNumber">-3</p>
+              <p class="ratingNumber">-2</p>
+              <p class="ratingNumber">-1</p>
+              <p class="ratingNumber">0</p>
+              <p class="ratingNumber">1</p>
+              <p class="ratingNumber">2</p>
+              <p class="ratingNumber">3</p>
+              <p class="ratingNumber">4</p>
+              <p class="ratingNumber">5</p>
+            </div>
+            <div class="ratingsContainer2">
+              <p class="ratingNumber">Very Uninterested</p>
+              <p class="ratingNumber">Neutral</p>
+              <p class="ratingNumber">Very Interested</p>
+            </div>
+          </div>
+        </div>
 
-          <!-- <button id="submitRanges" type="submit" style="margin-left: 30%">
+        <div class="review-box" id="review-box-5">
+          <div class="review-box-text1" id="review-box-text-5">
+            <div class="review-box-name" id="review-box-name5"></div>
+            <div class="review-box-address" id="review-box-address5"></div>
+            <h2 class="review-title">Some Reviews</h2>
+            <!-- <div class="review-box-cats" id="review-box-cats5"></div> -->
+            <div class="review-box-container">
+              <div class="review-box-reviews" id="review-box-reviews5-1"></div>
+              <div class="review-box-reviews" id="review-box-reviews5-2"></div>
+              <div class="review-box-reviews" id="review-box-reviews5-3"></div>
+              <div class="review-box-reviews" id="review-box-reviews5-4"></div>
+              <div class="review-box-reviews" id="review-box-reviews5-5"></div>
+            </div>
+          </div>
+          <div class="slidecontainer">
+            <input type="range" min="-5" max="5" value="0" class="slider" id="slider5" />
+            <div class="ratingsContainer">
+              <p class="ratingNumber">-5</p>
+              <p class="ratingNumber">-4</p>
+              <p class="ratingNumber">-3</p>
+              <p class="ratingNumber">-2</p>
+              <p class="ratingNumber">-1</p>
+              <p class="ratingNumber">0</p>
+              <p class="ratingNumber">1</p>
+              <p class="ratingNumber">2</p>
+              <p class="ratingNumber">3</p>
+              <p class="ratingNumber">4</p>
+              <p class="ratingNumber">5</p>
+            </div>
+            <div class="ratingsContainer2">
+              <p class="ratingNumber">Very Uninterested</p>
+              <p class="ratingNumber">Neutral</p>
+              <p class="ratingNumber">Very Interested</p>
+            </div>
+          </div>
+        </div>
+
+        <!-- <button id="submitRanges" type="submit" style="margin-left: 30%">
           <h3><i class="fa-solid fa-check fa-3x"></i></h3>
         </button> -->
-          <div class="buttons">
-            <button class="reset" onClick="window.location.reload();">
-              Reset
-            </button>
-            <button id="submitRanges" type="submit">Next</button>
-          </div>
-        </form>
-        <img class="details3" src="../static/images/details.png" />
-      </div>
-      <!-- Third Window End -->
-        </button>
+        <div class="buttons">
+          <button class="reset" onClick="window.location.reload();">
+            Reset
+          </button>
+          <button id="submitRanges" type="submit">Next</button>
+        </div>
       </form>
+      <!-- <img class="details3" src="../static/images/details.png" /> -->
+    </div>
+    <!-- Third Window End -->
+    </button>
+    </form>
     </div>
     <!-- Third Window End -->
 
     <!-- Fourth Window Start -->
     <div class="output-restaurants hidden" id="outputRestaurants" style="margin-top: 200px">
       <h2>You might like these restaurants!</h2>
-        <!-- <i class="fa-solid fa-spinner fa-spin-pulse fa-4x" style="color: #915f54"></i> -->
+      <!-- <i class="fa-solid fa-spinner fa-spin-pulse fa-4x" style="color: #915f54"></i> -->
 
       <form class="output-restaurants-form output-boxes" id="outputRestaurantsForm">
         <div class="output-box" id="output-box-1">
@@ -491,13 +356,13 @@
           </div>
         </div>
       </form>
-      
+
     </div>
     <!-- Fourth Window End -->
   </main>
 
 
-      <!-- Fourth Window Start
+  <!-- Fourth Window Start
       <div class="return-restaurants hidden" id="returnRestaurants">
         <h2>You Might Like These Restaurants</h2>
 
@@ -509,91 +374,92 @@
         </div>
       </div>
       <!-- Fourth Window End -->
-    <!-- </main> -->
+  <!-- </main> -->
 
-    <script>
-      // First Window Start
-      var editLocation = document.getElementById("locationChosen");
-      editLocation.onclick = function () {
+  <script>
+    // First Window Start
+    var editLocation = document.getElementById("locationChosen");
+    editLocation.onclick = function () {
+
+      var locationEditView = document.getElementById("locationEditing");
+      locationEditView.classList.remove("hidden");
+
+      var locationChosenView = document.getElementById("locationChosen");
+      locationChosenView.classList.add("hidden");
+
+      var textbox = document.getElementById("location-input");
+      textbox.select();
+
+      add_locations_to_dropdown("")
+    };
+
+    var locationInput = document.getElementById("location-input");
+    document
+      .querySelector("form.choose-form")
+      .addEventListener("submit", function (e) {
+        e.preventDefault();
+
         var locationEditView = document.getElementById("locationEditing");
-        locationEditView.classList.remove("hidden");
+        locationEditView.classList.add("hidden");
 
         var locationChosenView = document.getElementById("locationChosen");
-        locationChosenView.classList.add("hidden");
+        locationChosenView.classList.remove("hidden");
 
-        var textbox = document.getElementById("location-input");
-        textbox.select();
+        var newLocation = document.getElementById("chosenLocation");
+        newLocation.innerHTML = locationInput.value;
+      });
 
-        add_locations_to_dropdown("");
-      };
+    var tags = [
+      "alabama",
+      "arizona",
+      "california",
+      "delaware",
+      "florida",
+      "idaho",
+      "illinois",
+      "indiana",
+      "louisiana",
+      "missouri",
+      "nevada",
+      "new jersey",
+      "pennsylvania",
+      "tennessee",
+    ];
+    var tag_len = 14;
 
-      var locationInput = document.getElementById("location-input");
-      document
-        .querySelector("form.choose-form")
-        .addEventListener("submit", function (e) {
-          e.preventDefault();
+    function add_locations_to_dropdown(value) {
+      document.getElementById("datalist").innerHTML = "";
 
-          var locationEditView = document.getElementById("locationEditing");
-          locationEditView.classList.add("hidden");
+      l = value.length;
+      for (var i = 0; i < tag_len; i++) {
+        if (tags[i].toLowerCase().indexOf(value.toLowerCase()) > -1) {
+          var node = document.createElement("option");
+          var capitalizedTag =
+            tags[i].charAt(0).toUpperCase() + tags[i].slice(1).toLowerCase();
+          var val = document.createTextNode(capitalizedTag);
+          node.appendChild(val);
 
-          var locationChosenView = document.getElementById("locationChosen");
-          locationChosenView.classList.remove("hidden");
-
-          var newLocation = document.getElementById("chosenLocation");
-          newLocation.innerHTML = locationInput.value;
-        });
-
-      var tags = [
-        "alabama",
-        "arizona",
-        "california",
-        "delaware",
-        "florida",
-        "idaho",
-        "illinois",
-        "indiana",
-        "louisiana",
-        "missouri",
-        "nevada",
-        "new jersey",
-        "pennsylvania",
-        "tennessee",
-      ];
-      var tag_len = 14;
-
-      function add_locations_to_dropdown(value) {
-        document.getElementById("datalist").innerHTML = "";
-
-        l = value.length;
-        for (var i = 0; i < tag_len; i++) {
-          if (tags[i].toLowerCase().indexOf(value.toLowerCase()) > -1) {
-            var node = document.createElement("option");
-            var capitalizedTag =
-              tags[i].charAt(0).toUpperCase() + tags[i].slice(1).toLowerCase();
-            var val = document.createTextNode(capitalizedTag);
-            node.appendChild(val);
-
-            document.getElementById("datalist").appendChild(node);
-          }
+          document.getElementById("datalist").appendChild(node);
         }
       }
+    }
 
-      function tagBoxTemplate(tag) {
-        return `<div class="tag tags-input tag-style tag-state-0 tag-${tag}" id="tag-${tag}">                
+    function tagBoxTemplate(tag) {
+      return `<div class="tag tags-input tag-style tag-state-0 tag-${tag}" id="tag-${tag}">                
                         <span >${tag}</span>
                     </div>`;
-      }
+    }
 
-      var locationsSubmit = document.getElementById("submitLocations");
-      var newLocation = true;
-      //chiara
-      // if (newLocation) {
-      //   document.getElementById("chooseLocation").classList.add("hidden");
+    var locationsSubmit = document.getElementById("submitLocations");
+    var newLocation = true;
+    //chiara
+    // if (newLocation) {
+    //   document.getElementById("chooseLocation").classList.add("hidden");
 
-      // }
+    // }
 
-      locationsSubmit.onclick = function () {
-
+    locationsSubmit.onclick = function () {
+      if (locationInput.value != "") {
         document.getElementById("chooseLocation").classList.add("hidden");
 
 
@@ -678,361 +544,362 @@
             .getElementById("locationFeedback")
             .classList.remove("hidden");
         }
-      };
+      }
+    };
 
 
-      var initial_query = []
-      var cuisineSubmit = document.getElementById("submitTags");
-      cuisineSubmit.onclick = function (e) {
-        selectedTags = Array.from(document.querySelectorAll(".tag-state-1"));
-    
-        if (selectedTags.length === 0) {
-          document.getElementById("cuisineFeedback").classList.remove("hidden");
-          document.getElementById("cuisineFeedback2").classList.add("hidden");
+    var initial_query = []
+    var cuisineSubmit = document.getElementById("submitTags");
+    cuisineSubmit.onclick = function (e) {
+      selectedTags = Array.from(document.querySelectorAll(".tag-state-1"));
 
-        } else {
-          document.getElementById("cuisineFeedback").classList.add("hidden");
-          // document.getElementById("cuisineFeedback2").classList.add("hidden");
+      if (selectedTags.length === 0) {
+        document.getElementById("cuisineFeedback").classList.remove("hidden");
+        document.getElementById("cuisineFeedback2").classList.add("hidden");
 
-          e.preventDefault();
+      } else {
+        document.getElementById("cuisineFeedback").classList.add("hidden");
+        // document.getElementById("cuisineFeedback2").classList.add("hidden");
 
-          var tagsInput = document.getElementsByClassName("tags-input");
-          var tagsPosInput = document.getElementsByClassName("tag-state-1");
-          // Review box start
-          function reviewBoxTemplate(
-            number,
-            name,
-            address,
-            categories,
-            reviews
-          ) {
-            return `${name}<br>${address}<br>${categories}<br><br>Sample Reviews:${reviews}`;
-          }
+        e.preventDefault();
 
-          var values = [];
-          var posVals = [];
-          for (const input of tagsInput) {
-            // console.log(tagsInput)
-            values.push(input.innerText.toLowerCase());
-            input.style.pointerEvents = "none";
-          }
-          for (const input of tagsPosInput) {
-            posVals.push(input.innerText.toLowerCase());
-            input.style.pointerEvents = "none";
-          }
-
-          // document
-          //   .getElementById("reviewRestaurants")
-          //   .classList.remove("hidden");
-          // document.getElementById("chooseTags").style.marginBottom = 0;
-
-          // console.log("posVals");
-          // console.log(posVals);
-          // console.log("values");
-          // console.log(values);
-
-          
-          fetch("/tags?" + new URLSearchParams({ pos: posVals }).toString())
-            .then((response) => response.json())
-            .then((list) => {
-
-              if (list.length === 0) {
-                document.getElementById("cuisineFeedback2").classList.remove("hidden");
-              } else {
-                document.getElementById("cuisineFeedback2").classList.add("hidden");
-                document.getElementById("reviewRestaurants").classList.remove("hidden");
-                document.getElementById("chooseTags").style.marginBottom = 0;
-
-                
-                r1 = list[0];
-                name1 = document.getElementById("review-box-name1");
-                address1 = document.getElementById("review-box-address1");
-                // categories1 = document.getElementById("review-box-cats1");
-                reviews11 = document.getElementById("review-box-reviews1-1");
-                reviews12 = document.getElementById("review-box-reviews1-2");
-                reviews13 = document.getElementById("review-box-reviews1-3");
-                reviews14 = document.getElementById("review-box-reviews1-4");
-                reviews15 = document.getElementById("review-box-reviews1-5");
-                name1.innerHTML = r1[0];
-                address1.innerHTML = r1[1];
-                // categories1.innerHTML = r1[2];
-                reviews11.innerHTML = "1. " + r1[3][0];
-                reviews12.innerHTML = "2. " + r1[3][1];
-                reviews13.innerHTML = "3. " + r1[3][2];
-                reviews14.innerHTML = "4. " + r1[3][3];
-                reviews15.innerHTML = "5. " + r1[3][4];
-
-                r2 = list[1];
-                name2 = document.getElementById("review-box-name2");
-                address2 = document.getElementById("review-box-address2");
-                // categories2 = document.getElementById("review-box-cats2");
-                reviews21 = document.getElementById("review-box-reviews2-1");
-                reviews22 = document.getElementById("review-box-reviews2-2");
-                reviews23 = document.getElementById("review-box-reviews2-3");
-                reviews24 = document.getElementById("review-box-reviews2-4");
-                reviews25 = document.getElementById("review-box-reviews2-5");
-                name2.innerHTML = r2[0];
-                address2.innerHTML = r2[1];
-                // categories2.innerHTML = r2[2];
-                reviews21.innerHTML = "1. " + r2[3][0];
-                reviews22.innerHTML = "2. " + r2[3][1];
-                reviews23.innerHTML = "3. " + r2[3][2];
-                reviews24.innerHTML = "4. " + r2[3][3];
-                reviews25.innerHTML = "5. " + r2[3][4];
-
-                r3 = list[2];
-                name3 = document.getElementById("review-box-name3");
-                address3 = document.getElementById("review-box-address3");
-                // categories3 = document.getElementById("review-box-cats3");
-                reviews31 = document.getElementById("review-box-reviews3-1");
-                reviews32 = document.getElementById("review-box-reviews3-2");
-                reviews33 = document.getElementById("review-box-reviews3-3");
-                reviews34 = document.getElementById("review-box-reviews3-4");
-                reviews35 = document.getElementById("review-box-reviews3-5");
-                name3.innerHTML = r3[0];
-                address3.innerHTML = r3[1];
-                // categories3.innerHTML = r3[2];
-                reviews31.innerHTML = "1. " + r3[3][0];
-                reviews32.innerHTML = "2. " + r3[3][1];
-                reviews33.innerHTML = "3. " + r3[3][2];
-                reviews34.innerHTML = "4. " + r3[3][3];
-                reviews35.innerHTML = "5. " + r3[3][4];
-
-                r4 = list[3];
-                name4 = document.getElementById("review-box-name4");
-                address4 = document.getElementById("review-box-address4");
-                // categories4 = document.getElementById("review-box-cats4");
-                reviews41 = document.getElementById("review-box-reviews4-1");
-                reviews42 = document.getElementById("review-box-reviews4-2");
-                reviews43 = document.getElementById("review-box-reviews4-3");
-                reviews44 = document.getElementById("review-box-reviews4-4");
-                reviews45 = document.getElementById("review-box-reviews4-5");
-                name4.innerHTML = r4[0];
-                address4.innerHTML = r4[1];
-                // categories4.innerHTML = r4[2];
-                reviews41.innerHTML = "1. " + r4[3][0];
-                reviews42.innerHTML = "2. " + r4[3][1];
-                reviews43.innerHTML = "3. " + r4[3][2];
-                reviews44.innerHTML = "4. " + r4[3][3];
-                reviews45.innerHTML = "5. " + r4[3][4];
-
-                r5 = list[4];
-                name5 = document.getElementById("review-box-name5");
-                address5 = document.getElementById("review-box-address1");
-                // categories5 = document.getElementById("review-box-cats1");
-                reviews51 = document.getElementById("review-box-reviews5-1");
-                reviews52 = document.getElementById("review-box-reviews5-2");
-                reviews53 = document.getElementById("review-box-reviews5-3");
-                reviews54 = document.getElementById("review-box-reviews5-4");
-                reviews55 = document.getElementById("review-box-reviews5-5");
-                name5.innerHTML = r5[0];
-                address1.innerHTML = r5[1];
-                // categories1.innerHTML = r5[2];
-                reviews51.innerHTML = "1. " + r5[3][0];
-                reviews52.innerHTML = "2. " + r5[3][1];
-                reviews53.innerHTML = "3. " + r5[3][2];
-                reviews54.innerHTML = "4. " + r5[3][3];
-                reviews55.innerHTML = "5. " + r5[3][4];
-
-                var outputContainer = document.getElementById("reviewRestaurants");
-                outputContainer.scrollIntoView({
-                  behavior: "smooth",
-                  inline: "nearest",
-                  block: "start",
-                });
-
-
-              }
-            });
-
+        var tagsInput = document.getElementsByClassName("tags-input");
+        var tagsPosInput = document.getElementsByClassName("tag-state-1");
+        // Review box start
+        function reviewBoxTemplate(
+          number,
+          name,
+          address,
+          categories,
+          reviews
+        ) {
+          return `${name}<br>${address}<br>${categories}<br><br>Sample Reviews:${reviews}`;
         }
-      };
-      //review box window end
-      // document
-      //   .querySelector("form.tags-form")
-      //   .addEventListener("submit", function (e) {});
-      //fourth window start
 
-      // function outputBoxTemplate(name, address, city, tags) {
-      //   return `<a class='output-restaurant'>${name}<br>${address}<br>${city}<br>${tags}</div>`;
-      // }
+        var values = [];
+        var posVals = [];
+        for (const input of tagsInput) {
+          // console.log(tagsInput)
+          values.push(input.innerText.toLowerCase());
+          input.style.pointerEvents = "none";
+        }
+        for (const input of tagsPosInput) {
+          posVals.push(input.innerText.toLowerCase());
+          input.style.pointerEvents = "none";
+        }
 
-      // document
-      //   .querySelector("form.review-restaurants-form")
-      //   .addEventListener("submit", function (e) {
-      //     e.preventDefault();
-
-      //     var rating1 = document.getElementById("slider1").value;
-      //     var rating2 = document.getElementById("slider2").value;
-      //     var rating3 = document.getElementById("slider3").value;
-      //     var rating4 = document.getElementById("slider4").value;
-      //     var rating5 = document.getElementById("slider5").value;
-
-        //   fetch(
-        //     "/restaurantRatings?" +
-        //       new URLSearchParams({
-        //         rating1: rating1,
-        //         rating2: rating2,
-        //         rating3: rating3,
-        //         rating4: rating4,
-        //         rating5: rating5,
-        //       }).toString()
-        //   )
-        //     .then((response) => response.json())
-        //     .then((list) => {
-        //       count = 1;
-        //       document.getElementById("outputBox").innerHTML = "";
-        //       list.forEach((item) => {
-        //         let name = item[0];
-        //         let address = item[1];
-        //         let city = item[2];
-        //         let tags = item[3];
-
-        //         let tempDiv = document.createElement("div");
-        //         tempDiv.innerHTML = outputBoxTemplate(
-        //           name,
-        //           address,
-        //           city,
-        //           tags
-        //         );
-        //         document.getElementById("outputBox").appendChild(tempDiv);
-        //         count += 1;
-        //       });
-        //     });
-
-          // document
-          //   .getElementById("returnRestaurants")
-          //   .classList.remove("hidden");
-
-          // var outputContainer = document.getElementById("returnRestaurants");
-          // outputContainer.scrollIntoView({
-          //   behavior: "smooth",
-          //   block: "start",
-          // });
-        // });
         // document
         //   .getElementById("reviewRestaurants")
         //   .classList.remove("hidden");
         // document.getElementById("chooseTags").style.marginBottom = 0;
 
-        // var values = [];
-        // var posVals = [];
-        // for (const input of tagsInput) {
-        //   // console.log(tagsInput)
-        //   values.push(input.innerText.toLowerCase());
-        //   input.style.pointerEvents = "none";
-        // }
-        // for (const input of tagsPosInput) {
-        //   posVals.push(input.innerText.toLowerCase());
-        //   input.style.pointerEvents = "none";
-        // }
         // console.log("posVals");
         // console.log(posVals);
         // console.log("values");
         // console.log(values);
 
-        // fetch("/tags?" + new URLSearchParams({ pos: posVals }).toString())
-        //   .then((response) => response.json())
-        //   .then((list) => {
-        //     r1 = list[0];
-        //     name1 = document.getElementById("review-box-name1");
-        //     address1 = document.getElementById("review-box-address1");
-        //     categories1 = document.getElementById("review-box-cats1");
-        //     reviews11 = document.getElementById("review-box-reviews1-1");
-        //     reviews12 = document.getElementById("review-box-reviews1-2");
-        //     reviews13 = document.getElementById("review-box-reviews1-3");
-        //     reviews14 = document.getElementById("review-box-reviews1-4");
-        //     reviews15 = document.getElementById("review-box-reviews1-5");
-        //     name1.innerHTML = r1[0];
-        //     address1.innerHTML = r1[1];
-        //     categories1.innerHTML = r1[2];
-        //     reviews11.innerHTML = "1. " + r1[3][0];
-        //     reviews12.innerHTML = "2. " + r1[3][1];
-        //     reviews13.innerHTML = "3. " + r1[3][2];
-        //     reviews14.innerHTML = "4. " + r1[3][3];
-        //     reviews15.innerHTML = "5. " + r1[3][4];
 
-        //     r2 = list[1];
-        //     name2 = document.getElementById("review-box-name2");
-        //     address2 = document.getElementById("review-box-address2");
-        //     categories2 = document.getElementById("review-box-cats2");
-        //     reviews21 = document.getElementById("review-box-reviews2-1");
-        //     reviews22 = document.getElementById("review-box-reviews2-2");
-        //     reviews23 = document.getElementById("review-box-reviews2-3");
-        //     reviews24 = document.getElementById("review-box-reviews2-4");
-        //     reviews25 = document.getElementById("review-box-reviews2-5");
-        //     name2.innerHTML = r2[0];
-        //     address2.innerHTML = r2[1];
-        //     categories2.innerHTML = r2[2];
-        //     reviews21.innerHTML = "1. " + r2[3][0];
-        //     reviews22.innerHTML = "2. " + r2[3][1];
-        //     reviews23.innerHTML = "3. " + r2[3][2];
-        //     reviews24.innerHTML = "4. " + r2[3][3];
-        //     reviews25.innerHTML = "5. " + r2[3][4];
+        fetch("/tags?" + new URLSearchParams({ pos: posVals }).toString())
+          .then((response) => response.json())
+          .then((list) => {
 
-        //     r3 = list[2];
-        //     name3 = document.getElementById("review-box-name3");
-        //     address3 = document.getElementById("review-box-address3");
-        //     categories3 = document.getElementById("review-box-cats3");
-        //     reviews31 = document.getElementById("review-box-reviews3-1");
-        //     reviews32 = document.getElementById("review-box-reviews3-2");
-        //     reviews33 = document.getElementById("review-box-reviews3-3");
-        //     reviews34 = document.getElementById("review-box-reviews3-4");
-        //     reviews35 = document.getElementById("review-box-reviews3-5");
-        //     name3.innerHTML = r3[0];
-        //     address3.innerHTML = r3[1];
-        //     categories3.innerHTML = r3[2];
-        //     reviews31.innerHTML = "1. " + r3[3][0];
-        //     reviews32.innerHTML = "2. " + r3[3][1];
-        //     reviews33.innerHTML = "3. " + r3[3][2];
-        //     reviews34.innerHTML = "4. " + r3[3][3];
-        //     reviews35.innerHTML = "5. " + r3[3][4];
+            if (list.length === 0) {
+              document.getElementById("cuisineFeedback2").classList.remove("hidden");
+            } else {
+              document.getElementById("cuisineFeedback2").classList.add("hidden");
+              document.getElementById("reviewRestaurants").classList.remove("hidden");
+              document.getElementById("chooseTags").style.marginBottom = 0;
 
-        //     r4 = list[3];
-        //     name4 = document.getElementById("review-box-name4");
-        //     address4 = document.getElementById("review-box-address4");
-        //     categories4 = document.getElementById("review-box-cats4");
-        //     reviews41 = document.getElementById("review-box-reviews4-1");
-        //     reviews42 = document.getElementById("review-box-reviews4-2");
-        //     reviews43 = document.getElementById("review-box-reviews4-3");
-        //     reviews44 = document.getElementById("review-box-reviews4-4");
-        //     reviews45 = document.getElementById("review-box-reviews4-5");
-        //     name4.innerHTML = r4[0];
-        //     address4.innerHTML = r4[1];
-        //     categories4.innerHTML = r4[2];
-        //     reviews41.innerHTML = "1. " + r4[3][0];
-        //     reviews42.innerHTML = "2. " + r4[3][1];
-        //     reviews43.innerHTML = "3. " + r4[3][2];
-        //     reviews44.innerHTML = "4. " + r4[3][3];
-        //     reviews45.innerHTML = "5. " + r4[3][4];
 
-        //     r5 = list[4];
-        //     name5 = document.getElementById("review-box-name5");
-        //     address5 = document.getElementById("review-box-address1");
-        //     categories5 = document.getElementById("review-box-cats1");
-        //     reviews51 = document.getElementById("review-box-reviews5-1");
-        //     reviews52 = document.getElementById("review-box-reviews5-2");
-        //     reviews53 = document.getElementById("review-box-reviews5-3");
-        //     reviews54 = document.getElementById("review-box-reviews5-4");
-        //     reviews55 = document.getElementById("review-box-reviews5-5");
-        //     name5.innerHTML = r5[0];
-        //     address1.innerHTML = r5[1];
-        //     categories1.innerHTML = r5[2];
-        //     reviews51.innerHTML = "1. " + r5[3][0];
-        //     reviews52.innerHTML = "2. " + r5[3][1];
-        //     reviews53.innerHTML = "3. " + r5[3][2];
-        //     reviews54.innerHTML = "4. " + r5[3][3];
-        //     reviews55.innerHTML = "5. " + r5[3][4];
-        //   });
+              r1 = list[0];
+              name1 = document.getElementById("review-box-name1");
+              address1 = document.getElementById("review-box-address1");
+              // categories1 = document.getElementById("review-box-cats1");
+              reviews11 = document.getElementById("review-box-reviews1-1");
+              reviews12 = document.getElementById("review-box-reviews1-2");
+              reviews13 = document.getElementById("review-box-reviews1-3");
+              reviews14 = document.getElementById("review-box-reviews1-4");
+              reviews15 = document.getElementById("review-box-reviews1-5");
+              name1.innerHTML = r1[0];
+              address1.innerHTML = r1[1];
+              // categories1.innerHTML = r1[2];
+              reviews11.innerHTML = "1. " + r1[3][0];
+              reviews12.innerHTML = "2. " + r1[3][1];
+              reviews13.innerHTML = "3. " + r1[3][2];
+              reviews14.innerHTML = "4. " + r1[3][3];
+              reviews15.innerHTML = "5. " + r1[3][4];
 
-        // var outputContainer = document.getElementById("reviewRestaurants");
-        // outputContainer.scrollIntoView({
-        //   behavior: "smooth",
-        //   inline: "nearest",
-        //   block: "start",
-        // });
-      
-  
+              r2 = list[1];
+              name2 = document.getElementById("review-box-name2");
+              address2 = document.getElementById("review-box-address2");
+              // categories2 = document.getElementById("review-box-cats2");
+              reviews21 = document.getElementById("review-box-reviews2-1");
+              reviews22 = document.getElementById("review-box-reviews2-2");
+              reviews23 = document.getElementById("review-box-reviews2-3");
+              reviews24 = document.getElementById("review-box-reviews2-4");
+              reviews25 = document.getElementById("review-box-reviews2-5");
+              name2.innerHTML = r2[0];
+              address2.innerHTML = r2[1];
+              // categories2.innerHTML = r2[2];
+              reviews21.innerHTML = "1. " + r2[3][0];
+              reviews22.innerHTML = "2. " + r2[3][1];
+              reviews23.innerHTML = "3. " + r2[3][2];
+              reviews24.innerHTML = "4. " + r2[3][3];
+              reviews25.innerHTML = "5. " + r2[3][4];
+
+              r3 = list[2];
+              name3 = document.getElementById("review-box-name3");
+              address3 = document.getElementById("review-box-address3");
+              // categories3 = document.getElementById("review-box-cats3");
+              reviews31 = document.getElementById("review-box-reviews3-1");
+              reviews32 = document.getElementById("review-box-reviews3-2");
+              reviews33 = document.getElementById("review-box-reviews3-3");
+              reviews34 = document.getElementById("review-box-reviews3-4");
+              reviews35 = document.getElementById("review-box-reviews3-5");
+              name3.innerHTML = r3[0];
+              address3.innerHTML = r3[1];
+              // categories3.innerHTML = r3[2];
+              reviews31.innerHTML = "1. " + r3[3][0];
+              reviews32.innerHTML = "2. " + r3[3][1];
+              reviews33.innerHTML = "3. " + r3[3][2];
+              reviews34.innerHTML = "4. " + r3[3][3];
+              reviews35.innerHTML = "5. " + r3[3][4];
+
+              r4 = list[3];
+              name4 = document.getElementById("review-box-name4");
+              address4 = document.getElementById("review-box-address4");
+              // categories4 = document.getElementById("review-box-cats4");
+              reviews41 = document.getElementById("review-box-reviews4-1");
+              reviews42 = document.getElementById("review-box-reviews4-2");
+              reviews43 = document.getElementById("review-box-reviews4-3");
+              reviews44 = document.getElementById("review-box-reviews4-4");
+              reviews45 = document.getElementById("review-box-reviews4-5");
+              name4.innerHTML = r4[0];
+              address4.innerHTML = r4[1];
+              // categories4.innerHTML = r4[2];
+              reviews41.innerHTML = "1. " + r4[3][0];
+              reviews42.innerHTML = "2. " + r4[3][1];
+              reviews43.innerHTML = "3. " + r4[3][2];
+              reviews44.innerHTML = "4. " + r4[3][3];
+              reviews45.innerHTML = "5. " + r4[3][4];
+
+              r5 = list[4];
+              name5 = document.getElementById("review-box-name5");
+              address5 = document.getElementById("review-box-address1");
+              // categories5 = document.getElementById("review-box-cats1");
+              reviews51 = document.getElementById("review-box-reviews5-1");
+              reviews52 = document.getElementById("review-box-reviews5-2");
+              reviews53 = document.getElementById("review-box-reviews5-3");
+              reviews54 = document.getElementById("review-box-reviews5-4");
+              reviews55 = document.getElementById("review-box-reviews5-5");
+              name5.innerHTML = r5[0];
+              address1.innerHTML = r5[1];
+              // categories1.innerHTML = r5[2];
+              reviews51.innerHTML = "1. " + r5[3][0];
+              reviews52.innerHTML = "2. " + r5[3][1];
+              reviews53.innerHTML = "3. " + r5[3][2];
+              reviews54.innerHTML = "4. " + r5[3][3];
+              reviews55.innerHTML = "5. " + r5[3][4];
+
+              var outputContainer = document.getElementById("reviewRestaurants");
+              outputContainer.scrollIntoView({
+                behavior: "smooth",
+                inline: "nearest",
+                block: "start",
+              });
+
+
+            }
+          });
+
+      }
+    };
+    //review box window end
+    // document
+    //   .querySelector("form.tags-form")
+    //   .addEventListener("submit", function (e) {});
+    //fourth window start
+
+    // function outputBoxTemplate(name, address, city, tags) {
+    //   return `<a class='output-restaurant'>${name}<br>${address}<br>${city}<br>${tags}</div>`;
+    // }
+
+    // document
+    //   .querySelector("form.review-restaurants-form")
+    //   .addEventListener("submit", function (e) {
+    //     e.preventDefault();
+
+    //     var rating1 = document.getElementById("slider1").value;
+    //     var rating2 = document.getElementById("slider2").value;
+    //     var rating3 = document.getElementById("slider3").value;
+    //     var rating4 = document.getElementById("slider4").value;
+    //     var rating5 = document.getElementById("slider5").value;
+
+    //   fetch(
+    //     "/restaurantRatings?" +
+    //       new URLSearchParams({
+    //         rating1: rating1,
+    //         rating2: rating2,
+    //         rating3: rating3,
+    //         rating4: rating4,
+    //         rating5: rating5,
+    //       }).toString()
+    //   )
+    //     .then((response) => response.json())
+    //     .then((list) => {
+    //       count = 1;
+    //       document.getElementById("outputBox").innerHTML = "";
+    //       list.forEach((item) => {
+    //         let name = item[0];
+    //         let address = item[1];
+    //         let city = item[2];
+    //         let tags = item[3];
+
+    //         let tempDiv = document.createElement("div");
+    //         tempDiv.innerHTML = outputBoxTemplate(
+    //           name,
+    //           address,
+    //           city,
+    //           tags
+    //         );
+    //         document.getElementById("outputBox").appendChild(tempDiv);
+    //         count += 1;
+    //       });
+    //     });
+
+    // document
+    //   .getElementById("returnRestaurants")
+    //   .classList.remove("hidden");
+
+    // var outputContainer = document.getElementById("returnRestaurants");
+    // outputContainer.scrollIntoView({
+    //   behavior: "smooth",
+    //   block: "start",
+    // });
+    // });
+    // document
+    //   .getElementById("reviewRestaurants")
+    //   .classList.remove("hidden");
+    // document.getElementById("chooseTags").style.marginBottom = 0;
+
+    // var values = [];
+    // var posVals = [];
+    // for (const input of tagsInput) {
+    //   // console.log(tagsInput)
+    //   values.push(input.innerText.toLowerCase());
+    //   input.style.pointerEvents = "none";
+    // }
+    // for (const input of tagsPosInput) {
+    //   posVals.push(input.innerText.toLowerCase());
+    //   input.style.pointerEvents = "none";
+    // }
+    // console.log("posVals");
+    // console.log(posVals);
+    // console.log("values");
+    // console.log(values);
+
+    // fetch("/tags?" + new URLSearchParams({ pos: posVals }).toString())
+    //   .then((response) => response.json())
+    //   .then((list) => {
+    //     r1 = list[0];
+    //     name1 = document.getElementById("review-box-name1");
+    //     address1 = document.getElementById("review-box-address1");
+    //     categories1 = document.getElementById("review-box-cats1");
+    //     reviews11 = document.getElementById("review-box-reviews1-1");
+    //     reviews12 = document.getElementById("review-box-reviews1-2");
+    //     reviews13 = document.getElementById("review-box-reviews1-3");
+    //     reviews14 = document.getElementById("review-box-reviews1-4");
+    //     reviews15 = document.getElementById("review-box-reviews1-5");
+    //     name1.innerHTML = r1[0];
+    //     address1.innerHTML = r1[1];
+    //     categories1.innerHTML = r1[2];
+    //     reviews11.innerHTML = "1. " + r1[3][0];
+    //     reviews12.innerHTML = "2. " + r1[3][1];
+    //     reviews13.innerHTML = "3. " + r1[3][2];
+    //     reviews14.innerHTML = "4. " + r1[3][3];
+    //     reviews15.innerHTML = "5. " + r1[3][4];
+
+    //     r2 = list[1];
+    //     name2 = document.getElementById("review-box-name2");
+    //     address2 = document.getElementById("review-box-address2");
+    //     categories2 = document.getElementById("review-box-cats2");
+    //     reviews21 = document.getElementById("review-box-reviews2-1");
+    //     reviews22 = document.getElementById("review-box-reviews2-2");
+    //     reviews23 = document.getElementById("review-box-reviews2-3");
+    //     reviews24 = document.getElementById("review-box-reviews2-4");
+    //     reviews25 = document.getElementById("review-box-reviews2-5");
+    //     name2.innerHTML = r2[0];
+    //     address2.innerHTML = r2[1];
+    //     categories2.innerHTML = r2[2];
+    //     reviews21.innerHTML = "1. " + r2[3][0];
+    //     reviews22.innerHTML = "2. " + r2[3][1];
+    //     reviews23.innerHTML = "3. " + r2[3][2];
+    //     reviews24.innerHTML = "4. " + r2[3][3];
+    //     reviews25.innerHTML = "5. " + r2[3][4];
+
+    //     r3 = list[2];
+    //     name3 = document.getElementById("review-box-name3");
+    //     address3 = document.getElementById("review-box-address3");
+    //     categories3 = document.getElementById("review-box-cats3");
+    //     reviews31 = document.getElementById("review-box-reviews3-1");
+    //     reviews32 = document.getElementById("review-box-reviews3-2");
+    //     reviews33 = document.getElementById("review-box-reviews3-3");
+    //     reviews34 = document.getElementById("review-box-reviews3-4");
+    //     reviews35 = document.getElementById("review-box-reviews3-5");
+    //     name3.innerHTML = r3[0];
+    //     address3.innerHTML = r3[1];
+    //     categories3.innerHTML = r3[2];
+    //     reviews31.innerHTML = "1. " + r3[3][0];
+    //     reviews32.innerHTML = "2. " + r3[3][1];
+    //     reviews33.innerHTML = "3. " + r3[3][2];
+    //     reviews34.innerHTML = "4. " + r3[3][3];
+    //     reviews35.innerHTML = "5. " + r3[3][4];
+
+    //     r4 = list[3];
+    //     name4 = document.getElementById("review-box-name4");
+    //     address4 = document.getElementById("review-box-address4");
+    //     categories4 = document.getElementById("review-box-cats4");
+    //     reviews41 = document.getElementById("review-box-reviews4-1");
+    //     reviews42 = document.getElementById("review-box-reviews4-2");
+    //     reviews43 = document.getElementById("review-box-reviews4-3");
+    //     reviews44 = document.getElementById("review-box-reviews4-4");
+    //     reviews45 = document.getElementById("review-box-reviews4-5");
+    //     name4.innerHTML = r4[0];
+    //     address4.innerHTML = r4[1];
+    //     categories4.innerHTML = r4[2];
+    //     reviews41.innerHTML = "1. " + r4[3][0];
+    //     reviews42.innerHTML = "2. " + r4[3][1];
+    //     reviews43.innerHTML = "3. " + r4[3][2];
+    //     reviews44.innerHTML = "4. " + r4[3][3];
+    //     reviews45.innerHTML = "5. " + r4[3][4];
+
+    //     r5 = list[4];
+    //     name5 = document.getElementById("review-box-name5");
+    //     address5 = document.getElementById("review-box-address1");
+    //     categories5 = document.getElementById("review-box-cats1");
+    //     reviews51 = document.getElementById("review-box-reviews5-1");
+    //     reviews52 = document.getElementById("review-box-reviews5-2");
+    //     reviews53 = document.getElementById("review-box-reviews5-3");
+    //     reviews54 = document.getElementById("review-box-reviews5-4");
+    //     reviews55 = document.getElementById("review-box-reviews5-5");
+    //     name5.innerHTML = r5[0];
+    //     address1.innerHTML = r5[1];
+    //     categories1.innerHTML = r5[2];
+    //     reviews51.innerHTML = "1. " + r5[3][0];
+    //     reviews52.innerHTML = "2. " + r5[3][1];
+    //     reviews53.innerHTML = "3. " + r5[3][2];
+    //     reviews54.innerHTML = "4. " + r5[3][3];
+    //     reviews55.innerHTML = "5. " + r5[3][4];
+    //   });
+
+    // var outputContainer = document.getElementById("reviewRestaurants");
+    // outputContainer.scrollIntoView({
+    //   behavior: "smooth",
+    //   inline: "nearest",
+    //   block: "start",
+    // });
+
+
     //review box window end
     // document
     //   .querySelector("form.tags-form")
@@ -1043,10 +910,10 @@
       // return `${name}<br>${address}<br>${tags}<br><br>`;
       return `<a class='output-restaurants'>${name}<br>${address}<br>${tags}</div>`;
     }
-    
+
     document
       .querySelector("form.review-restaurants-form")
-      .addEventListener("submit", function (e){
+      .addEventListener("submit", function (e) {
         e.preventDefault();
 
         var rating1 = document.getElementById("slider1").value;
@@ -1075,7 +942,7 @@
             name1 = document.getElementById("output-box-name1");
             address1 = document.getElementById("output-box-address1");
             categories1 = document.getElementById("output-box-tags1");
-          
+
             name1.innerHTML = r1[0];
             address1.innerHTML = r1[1];
             categories1.innerHTML = r1[3];
@@ -1084,7 +951,7 @@
             name2 = document.getElementById("output-box-name2");
             address2 = document.getElementById("output-box-address2");
             categories2 = document.getElementById("output-box-tags2");
-          
+
             name2.innerHTML = r2[0];
             address2.innerHTML = r2[1];
             categories2.innerHTML = r2[3];
@@ -1093,7 +960,7 @@
             name3 = document.getElementById("output-box-name3");
             address3 = document.getElementById("output-box-address3");
             categories3 = document.getElementById("output-box-tags3");
-          
+
             name3.innerHTML = r3[0];
             address3.innerHTML = r3[1];
             categories3.innerHTML = r3[3];
@@ -1102,7 +969,7 @@
             name4 = document.getElementById("output-box-name4");
             address4 = document.getElementById("output-box-address4");
             categories4 = document.getElementById("output-box-tags4");
-          
+
             name4.innerHTML = r4[0];
             address4.innerHTML = r4[1];
             categories4.innerHTML = r4[3];
@@ -1111,12 +978,12 @@
             name5 = document.getElementById("output-box-name5");
             address5 = document.getElementById("output-box-address5");
             categories5 = document.getElementById("output-box-tags5");
-          
+
             name5.innerHTML = r5[0];
             address5.innerHTML = r5[1];
             categories5.innerHTML = r5[3];
 
-            
+
             // count = 1;
             // document.getElementById("outputBox").innerHTML = "";
             // list.forEach((item) => {
@@ -1144,10 +1011,11 @@
           window.location.href = "/";
         }
 
-      window.onbeforeunload = function () {
-        window.scrollTo(0, 0);
-      }
-    });
-    </script>
-  </body>
+        window.onbeforeunload = function () {
+          window.scrollTo(0, 0);
+        }
+      });
+  </script>
+</body>
+
 </html>
