@@ -826,12 +826,12 @@
               }
             });
 
-          // var outputContainer = document.getElementById("reviewRestaurants");
-          // outputContainer.scrollIntoView({
-          //   behavior: "smooth",
-          //   inline: "nearest",
-          //   block: "start",
-          // });
+          var outputContainer = document.getElementById("reviewRestaurants");
+          outputContainer.scrollIntoView({
+            behavior: "smooth",
+            inline: "nearest",
+            block: "start",
+          });
         }
       };
       //review box window end
@@ -840,184 +840,184 @@
       //   .addEventListener("submit", function (e) {});
       //fourth window start
 
-      function outputBoxTemplate(name, address, city, tags) {
-        return `<a class='output-restaurant'>${name}<br>${address}<br>${city}<br>${tags}</div>`;
-      }
+      // function outputBoxTemplate(name, address, city, tags) {
+      //   return `<a class='output-restaurant'>${name}<br>${address}<br>${city}<br>${tags}</div>`;
+      // }
 
-      document
-        .querySelector("form.review-restaurants-form")
-        .addEventListener("submit", function (e) {
-          e.preventDefault();
+      // document
+      //   .querySelector("form.review-restaurants-form")
+      //   .addEventListener("submit", function (e) {
+      //     e.preventDefault();
 
-          var rating1 = document.getElementById("slider1").value;
-          var rating2 = document.getElementById("slider2").value;
-          var rating3 = document.getElementById("slider3").value;
-          var rating4 = document.getElementById("slider4").value;
-          var rating5 = document.getElementById("slider5").value;
+      //     var rating1 = document.getElementById("slider1").value;
+      //     var rating2 = document.getElementById("slider2").value;
+      //     var rating3 = document.getElementById("slider3").value;
+      //     var rating4 = document.getElementById("slider4").value;
+      //     var rating5 = document.getElementById("slider5").value;
 
-          fetch(
-            "/restaurantRatings?" +
-              new URLSearchParams({
-                rating1: rating1,
-                rating2: rating2,
-                rating3: rating3,
-                rating4: rating4,
-                rating5: rating5,
-              }).toString()
-          )
-            .then((response) => response.json())
-            .then((list) => {
-              count = 1;
-              document.getElementById("outputBox").innerHTML = "";
-              list.forEach((item) => {
-                let name = item[0];
-                let address = item[1];
-                let city = item[2];
-                let tags = item[3];
+        //   fetch(
+        //     "/restaurantRatings?" +
+        //       new URLSearchParams({
+        //         rating1: rating1,
+        //         rating2: rating2,
+        //         rating3: rating3,
+        //         rating4: rating4,
+        //         rating5: rating5,
+        //       }).toString()
+        //   )
+        //     .then((response) => response.json())
+        //     .then((list) => {
+        //       count = 1;
+        //       document.getElementById("outputBox").innerHTML = "";
+        //       list.forEach((item) => {
+        //         let name = item[0];
+        //         let address = item[1];
+        //         let city = item[2];
+        //         let tags = item[3];
 
-                let tempDiv = document.createElement("div");
-                tempDiv.innerHTML = outputBoxTemplate(
-                  name,
-                  address,
-                  city,
-                  tags
-                );
-                document.getElementById("outputBox").appendChild(tempDiv);
-                count += 1;
-              });
-            });
+        //         let tempDiv = document.createElement("div");
+        //         tempDiv.innerHTML = outputBoxTemplate(
+        //           name,
+        //           address,
+        //           city,
+        //           tags
+        //         );
+        //         document.getElementById("outputBox").appendChild(tempDiv);
+        //         count += 1;
+        //       });
+        //     });
 
-          document
-            .getElementById("returnRestaurants")
-            .classList.remove("hidden");
+          // document
+          //   .getElementById("returnRestaurants")
+          //   .classList.remove("hidden");
 
-          var outputContainer = document.getElementById("returnRestaurants");
-          outputContainer.scrollIntoView({
-            behavior: "smooth",
-            block: "start",
-          });
-        });
-        document
-          .getElementById("reviewRestaurants")
-          .classList.remove("hidden");
-        document.getElementById("chooseTags").style.marginBottom = 0;
+          // var outputContainer = document.getElementById("returnRestaurants");
+          // outputContainer.scrollIntoView({
+          //   behavior: "smooth",
+          //   block: "start",
+          // });
+        // });
+        // document
+        //   .getElementById("reviewRestaurants")
+        //   .classList.remove("hidden");
+        // document.getElementById("chooseTags").style.marginBottom = 0;
 
-        var values = [];
-        var posVals = [];
-        for (const input of tagsInput) {
-          // console.log(tagsInput)
-          values.push(input.innerText.toLowerCase());
-          input.style.pointerEvents = "none";
-        }
-        for (const input of tagsPosInput) {
-          posVals.push(input.innerText.toLowerCase());
-          input.style.pointerEvents = "none";
-        }
-        console.log("posVals");
-        console.log(posVals);
-        console.log("values");
-        console.log(values);
+        // var values = [];
+        // var posVals = [];
+        // for (const input of tagsInput) {
+        //   // console.log(tagsInput)
+        //   values.push(input.innerText.toLowerCase());
+        //   input.style.pointerEvents = "none";
+        // }
+        // for (const input of tagsPosInput) {
+        //   posVals.push(input.innerText.toLowerCase());
+        //   input.style.pointerEvents = "none";
+        // }
+        // console.log("posVals");
+        // console.log(posVals);
+        // console.log("values");
+        // console.log(values);
 
-        fetch("/tags?" + new URLSearchParams({ pos: posVals }).toString())
-          .then((response) => response.json())
-          .then((list) => {
-            r1 = list[0];
-            name1 = document.getElementById("review-box-name1");
-            address1 = document.getElementById("review-box-address1");
-            categories1 = document.getElementById("review-box-cats1");
-            reviews11 = document.getElementById("review-box-reviews1-1");
-            reviews12 = document.getElementById("review-box-reviews1-2");
-            reviews13 = document.getElementById("review-box-reviews1-3");
-            reviews14 = document.getElementById("review-box-reviews1-4");
-            reviews15 = document.getElementById("review-box-reviews1-5");
-            name1.innerHTML = r1[0];
-            address1.innerHTML = r1[1];
-            categories1.innerHTML = r1[2];
-            reviews11.innerHTML = "1. " + r1[3][0];
-            reviews12.innerHTML = "2. " + r1[3][1];
-            reviews13.innerHTML = "3. " + r1[3][2];
-            reviews14.innerHTML = "4. " + r1[3][3];
-            reviews15.innerHTML = "5. " + r1[3][4];
+        // fetch("/tags?" + new URLSearchParams({ pos: posVals }).toString())
+        //   .then((response) => response.json())
+        //   .then((list) => {
+        //     r1 = list[0];
+        //     name1 = document.getElementById("review-box-name1");
+        //     address1 = document.getElementById("review-box-address1");
+        //     categories1 = document.getElementById("review-box-cats1");
+        //     reviews11 = document.getElementById("review-box-reviews1-1");
+        //     reviews12 = document.getElementById("review-box-reviews1-2");
+        //     reviews13 = document.getElementById("review-box-reviews1-3");
+        //     reviews14 = document.getElementById("review-box-reviews1-4");
+        //     reviews15 = document.getElementById("review-box-reviews1-5");
+        //     name1.innerHTML = r1[0];
+        //     address1.innerHTML = r1[1];
+        //     categories1.innerHTML = r1[2];
+        //     reviews11.innerHTML = "1. " + r1[3][0];
+        //     reviews12.innerHTML = "2. " + r1[3][1];
+        //     reviews13.innerHTML = "3. " + r1[3][2];
+        //     reviews14.innerHTML = "4. " + r1[3][3];
+        //     reviews15.innerHTML = "5. " + r1[3][4];
 
-            r2 = list[1];
-            name2 = document.getElementById("review-box-name2");
-            address2 = document.getElementById("review-box-address2");
-            categories2 = document.getElementById("review-box-cats2");
-            reviews21 = document.getElementById("review-box-reviews2-1");
-            reviews22 = document.getElementById("review-box-reviews2-2");
-            reviews23 = document.getElementById("review-box-reviews2-3");
-            reviews24 = document.getElementById("review-box-reviews2-4");
-            reviews25 = document.getElementById("review-box-reviews2-5");
-            name2.innerHTML = r2[0];
-            address2.innerHTML = r2[1];
-            categories2.innerHTML = r2[2];
-            reviews21.innerHTML = "1. " + r2[3][0];
-            reviews22.innerHTML = "2. " + r2[3][1];
-            reviews23.innerHTML = "3. " + r2[3][2];
-            reviews24.innerHTML = "4. " + r2[3][3];
-            reviews25.innerHTML = "5. " + r2[3][4];
+        //     r2 = list[1];
+        //     name2 = document.getElementById("review-box-name2");
+        //     address2 = document.getElementById("review-box-address2");
+        //     categories2 = document.getElementById("review-box-cats2");
+        //     reviews21 = document.getElementById("review-box-reviews2-1");
+        //     reviews22 = document.getElementById("review-box-reviews2-2");
+        //     reviews23 = document.getElementById("review-box-reviews2-3");
+        //     reviews24 = document.getElementById("review-box-reviews2-4");
+        //     reviews25 = document.getElementById("review-box-reviews2-5");
+        //     name2.innerHTML = r2[0];
+        //     address2.innerHTML = r2[1];
+        //     categories2.innerHTML = r2[2];
+        //     reviews21.innerHTML = "1. " + r2[3][0];
+        //     reviews22.innerHTML = "2. " + r2[3][1];
+        //     reviews23.innerHTML = "3. " + r2[3][2];
+        //     reviews24.innerHTML = "4. " + r2[3][3];
+        //     reviews25.innerHTML = "5. " + r2[3][4];
 
-            r3 = list[2];
-            name3 = document.getElementById("review-box-name3");
-            address3 = document.getElementById("review-box-address3");
-            categories3 = document.getElementById("review-box-cats3");
-            reviews31 = document.getElementById("review-box-reviews3-1");
-            reviews32 = document.getElementById("review-box-reviews3-2");
-            reviews33 = document.getElementById("review-box-reviews3-3");
-            reviews34 = document.getElementById("review-box-reviews3-4");
-            reviews35 = document.getElementById("review-box-reviews3-5");
-            name3.innerHTML = r3[0];
-            address3.innerHTML = r3[1];
-            categories3.innerHTML = r3[2];
-            reviews31.innerHTML = "1. " + r3[3][0];
-            reviews32.innerHTML = "2. " + r3[3][1];
-            reviews33.innerHTML = "3. " + r3[3][2];
-            reviews34.innerHTML = "4. " + r3[3][3];
-            reviews35.innerHTML = "5. " + r3[3][4];
+        //     r3 = list[2];
+        //     name3 = document.getElementById("review-box-name3");
+        //     address3 = document.getElementById("review-box-address3");
+        //     categories3 = document.getElementById("review-box-cats3");
+        //     reviews31 = document.getElementById("review-box-reviews3-1");
+        //     reviews32 = document.getElementById("review-box-reviews3-2");
+        //     reviews33 = document.getElementById("review-box-reviews3-3");
+        //     reviews34 = document.getElementById("review-box-reviews3-4");
+        //     reviews35 = document.getElementById("review-box-reviews3-5");
+        //     name3.innerHTML = r3[0];
+        //     address3.innerHTML = r3[1];
+        //     categories3.innerHTML = r3[2];
+        //     reviews31.innerHTML = "1. " + r3[3][0];
+        //     reviews32.innerHTML = "2. " + r3[3][1];
+        //     reviews33.innerHTML = "3. " + r3[3][2];
+        //     reviews34.innerHTML = "4. " + r3[3][3];
+        //     reviews35.innerHTML = "5. " + r3[3][4];
 
-            r4 = list[3];
-            name4 = document.getElementById("review-box-name4");
-            address4 = document.getElementById("review-box-address4");
-            categories4 = document.getElementById("review-box-cats4");
-            reviews41 = document.getElementById("review-box-reviews4-1");
-            reviews42 = document.getElementById("review-box-reviews4-2");
-            reviews43 = document.getElementById("review-box-reviews4-3");
-            reviews44 = document.getElementById("review-box-reviews4-4");
-            reviews45 = document.getElementById("review-box-reviews4-5");
-            name4.innerHTML = r4[0];
-            address4.innerHTML = r4[1];
-            categories4.innerHTML = r4[2];
-            reviews41.innerHTML = "1. " + r4[3][0];
-            reviews42.innerHTML = "2. " + r4[3][1];
-            reviews43.innerHTML = "3. " + r4[3][2];
-            reviews44.innerHTML = "4. " + r4[3][3];
-            reviews45.innerHTML = "5. " + r4[3][4];
+        //     r4 = list[3];
+        //     name4 = document.getElementById("review-box-name4");
+        //     address4 = document.getElementById("review-box-address4");
+        //     categories4 = document.getElementById("review-box-cats4");
+        //     reviews41 = document.getElementById("review-box-reviews4-1");
+        //     reviews42 = document.getElementById("review-box-reviews4-2");
+        //     reviews43 = document.getElementById("review-box-reviews4-3");
+        //     reviews44 = document.getElementById("review-box-reviews4-4");
+        //     reviews45 = document.getElementById("review-box-reviews4-5");
+        //     name4.innerHTML = r4[0];
+        //     address4.innerHTML = r4[1];
+        //     categories4.innerHTML = r4[2];
+        //     reviews41.innerHTML = "1. " + r4[3][0];
+        //     reviews42.innerHTML = "2. " + r4[3][1];
+        //     reviews43.innerHTML = "3. " + r4[3][2];
+        //     reviews44.innerHTML = "4. " + r4[3][3];
+        //     reviews45.innerHTML = "5. " + r4[3][4];
 
-            r5 = list[4];
-            name5 = document.getElementById("review-box-name5");
-            address5 = document.getElementById("review-box-address1");
-            categories5 = document.getElementById("review-box-cats1");
-            reviews51 = document.getElementById("review-box-reviews5-1");
-            reviews52 = document.getElementById("review-box-reviews5-2");
-            reviews53 = document.getElementById("review-box-reviews5-3");
-            reviews54 = document.getElementById("review-box-reviews5-4");
-            reviews55 = document.getElementById("review-box-reviews5-5");
-            name5.innerHTML = r5[0];
-            address1.innerHTML = r5[1];
-            categories1.innerHTML = r5[2];
-            reviews51.innerHTML = "1. " + r5[3][0];
-            reviews52.innerHTML = "2. " + r5[3][1];
-            reviews53.innerHTML = "3. " + r5[3][2];
-            reviews54.innerHTML = "4. " + r5[3][3];
-            reviews55.innerHTML = "5. " + r5[3][4];
-          });
+        //     r5 = list[4];
+        //     name5 = document.getElementById("review-box-name5");
+        //     address5 = document.getElementById("review-box-address1");
+        //     categories5 = document.getElementById("review-box-cats1");
+        //     reviews51 = document.getElementById("review-box-reviews5-1");
+        //     reviews52 = document.getElementById("review-box-reviews5-2");
+        //     reviews53 = document.getElementById("review-box-reviews5-3");
+        //     reviews54 = document.getElementById("review-box-reviews5-4");
+        //     reviews55 = document.getElementById("review-box-reviews5-5");
+        //     name5.innerHTML = r5[0];
+        //     address1.innerHTML = r5[1];
+        //     categories1.innerHTML = r5[2];
+        //     reviews51.innerHTML = "1. " + r5[3][0];
+        //     reviews52.innerHTML = "2. " + r5[3][1];
+        //     reviews53.innerHTML = "3. " + r5[3][2];
+        //     reviews54.innerHTML = "4. " + r5[3][3];
+        //     reviews55.innerHTML = "5. " + r5[3][4];
+        //   });
 
-        var outputContainer = document.getElementById("reviewRestaurants");
-        outputContainer.scrollIntoView({
-          behavior: "smooth",
-          inline: "nearest",
-          block: "start",
-        });
+        // var outputContainer = document.getElementById("reviewRestaurants");
+        // outputContainer.scrollIntoView({
+        //   behavior: "smooth",
+        //   inline: "nearest",
+        //   block: "start",
+        // });
       
   
     //review box window end
@@ -1134,7 +1134,7 @@
       window.onbeforeunload = function () {
         window.scrollTo(0, 0);
       }
- 
+    });
     </script>
   </body>
 </html>
