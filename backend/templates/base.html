@@ -116,7 +116,7 @@
         <div class="instruction3">
           <h2>3</h2>
           <h2>
-            How interested are you in the following restaurants?.<i
+            Please rate the following restaurants.<i
               class="fa-solid fa-circle-info tooltip"
             >
               <span class="tooltiptext"
@@ -1034,7 +1034,7 @@
     document
       .querySelector("form.review-restaurants-form")
       .addEventListener("submit", function (e){
-        e.preventDefault()
+        e.preventDefault();
 
         var rating1 = document.getElementById("slider1").value;
         var rating2 = document.getElementById("slider2").value;
@@ -1127,13 +1127,15 @@
           block: "start",
         });
 
-      function loadHomePage() {
-        window.location.href = "/";
-      }
+        function loadHomePage() {
+          window.location.href = "/";
+        }
 
-      window.onbeforeunload = function () {
-        window.scrollTo(0, 0);
-      }
+        window.onbeforeunload = function () {
+          window.scrollTo(0, 0);
+        }
+      });
+      
  
     </script>
   </body>
