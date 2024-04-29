@@ -428,7 +428,6 @@
 
           <!-- <button id="submitRanges" type="submit" style="margin-left: 30%">
           <h3><i class="fa-solid fa-check fa-3x"></i></h3>
-<<<<<<< Updated upstream
         </button> -->
           <div class="buttons">
             <button class="reset" onClick="window.location.reload();">
@@ -440,7 +439,6 @@
         <img class="details3" src="./static/images/details.png" />
       </div>
       <!-- Third Window End -->
-=======
         </button>
       </form>
     </div>
@@ -496,9 +494,7 @@
     </div>
     <!-- Fourth Window End -->
   </main>
-//*****************************************
 
->>>>>>> Stashed changes
 
       <!-- Fourth Window Start -->
       <div class="return-restaurants hidden" id="returnRestaurants">
@@ -879,7 +875,6 @@
                 let city = item[2];
                 let tags = item[3];
 
-<<<<<<< Updated upstream
                 let tempDiv = document.createElement("div");
                 tempDiv.innerHTML = outputBoxTemplate(
                   name,
@@ -901,7 +896,7 @@
             behavior: "smooth",
             block: "start",
           });
-=======
+        });
         document
           .getElementById("reviewRestaurants")
           .classList.remove("hidden");
@@ -1023,8 +1018,8 @@
           inline: "nearest",
           block: "start",
         });
-      }
-    };
+      
+  
     //review box window end
     // document
     //   .querySelector("form.tags-form")
@@ -1038,8 +1033,8 @@
     
     document
       .querySelector("form.review-restaurants-form")
-      .addEventListener("submit", function (e) {
-        e.preventDefault();
+      .addEventListener("submit", function (e){
+        e.preventDefault()
 
         var rating1 = document.getElementById("slider1").value;
         var rating2 = document.getElementById("slider2").value;
@@ -1130,7 +1125,6 @@
           behavior: "smooth",
           inline: "nearest",
           block: "start",
->>>>>>> Stashed changes
         });
 
       function loadHomePage() {
@@ -1139,7 +1133,8 @@
 
       window.onbeforeunload = function () {
         window.scrollTo(0, 0);
-      };
+      }
+ 
     </script>
   </body>
 </html>
