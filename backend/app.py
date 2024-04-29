@@ -190,7 +190,8 @@ def get_ratings():
         restaurant = restaurant.lower()
         restaurant_rows = name_row_dict[restaurant]
         tup.append(string.capwords(restaurant))
-        tup.append(df["address"][restaurant_rows[0]])
+        # chiara
+        tup.append(df["address"][restaurant_rows[0]] + ", " + df["city"][restaurant_rows[0]] + ", " + df["postal_code"][restaurant_rows[0]])
         tup.append(df["city"][restaurant_rows[0]] + ", " + df["postal_code"][restaurant_rows[0]])
         
         attributes = df["attributes"][restaurant_rows[0]]
