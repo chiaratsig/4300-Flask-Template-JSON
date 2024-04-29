@@ -60,8 +60,8 @@
         <h4 id="locationFeedback" class="feedback hidden">
           Please select a state from the dropdown.
         </h4>
-        <img class="details" src="./static/images/details.png" />
-        <img class="graphics" src="./static/images/graphics.png" />
+        <img class="details" src="../static/images/details.png" />
+        <img class="graphics" src="../static/images/graphics.png" />
       </div>
       <!-- First Window End -->
 
@@ -74,8 +74,7 @@
               class="fa-solid fa-circle-info tooltip"
             >
               <span class="tooltiptext"
-                >Click a tag once if it interests you! Scroll for more
-                options.</span
+                >Click a tag once if it interests you!</span
               >
             </i>
           </h2>
@@ -100,10 +99,10 @@
         <!-- chiara -->
         <h4 id="cuisineFeedback2" class="feedback2 hidden">
           We're sorry, but there are no restaurants pertaining to your selected tags.
-          Please choose a different set of tags.
+          Please hit Reset and choose a different set of tags.
         </h4>
 
-        <img class="details2" src="./static/images/details.png" />
+        <img class="details2" src="../static/images/details.png" />
       </div>
       <!-- Second Window End -->
 
@@ -116,7 +115,7 @@
         <div class="instruction3">
           <h2>3</h2>
           <h2>
-            Please rate the following restaurants.<i
+             Please rate the following restaurants.<i
               class="fa-solid fa-circle-info tooltip"
             >
               <span class="tooltiptext"
@@ -436,7 +435,7 @@
             <button id="submitRanges" type="submit">Next</button>
           </div>
         </form>
-        <img class="details3" src="./static/images/details.png" />
+        <img class="details3" src="../static/images/details.png" />
       </div>
       <!-- Third Window End -->
         </button>
@@ -446,7 +445,7 @@
 
     <!-- Fourth Window Start -->
     <div class="output-restaurants hidden" id="outputRestaurants" style="margin-top: 200px">
-      <h2>You Might Like These Restaurants</h2>
+      <h2>You might like these restaurants!</h2>
         <!-- <i class="fa-solid fa-spinner fa-spin-pulse fa-4x" style="color: #915f54"></i> -->
 
       <form class="output-restaurants-form output-boxes" id="outputRestaurantsForm">
@@ -496,7 +495,7 @@
   </main>
 
 
-      <!-- Fourth Window Start -->
+      <!-- Fourth Window Start
       <div class="return-restaurants hidden" id="returnRestaurants">
         <h2>You Might Like These Restaurants</h2>
 
@@ -508,7 +507,7 @@
         </div>
       </div>
       <!-- Fourth Window End -->
-    </main>
+    <!-- </main> -->
 
     <script>
       // First Window Start
@@ -671,7 +670,6 @@
       var cuisineSubmit = document.getElementById("submitTags");
       cuisineSubmit.onclick = function (e) {
         selectedTags = Array.from(document.querySelectorAll(".tag-state-1"));
-        // chiara
     
         if (selectedTags.length === 0) {
           document.getElementById("cuisineFeedback").classList.remove("hidden");
@@ -826,12 +824,6 @@
               }
             });
 
-          var outputContainer = document.getElementById("reviewRestaurants");
-          outputContainer.scrollIntoView({
-            behavior: "smooth",
-            inline: "nearest",
-            block: "start",
-          });
         }
       };
       //review box window end
