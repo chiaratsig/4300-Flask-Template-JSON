@@ -194,15 +194,44 @@ def get_ratings():
         tup.append(df["city"][restaurant_rows[0]] + ", " + df["postal_code"][restaurant_rows[0]])
         
         attributes = df["attributes"][restaurant_rows[0]]
+        # print("ATTRIBUTES", attributes)
         attr_str = ""
+        # old attributes
+        # if attributes != None:
+        #     attr_keys = list(attributes.keys())
+        #     i = 0
+        #     while i < 5 and i < len(attr_keys): 
+        #       if type(attributes[attr_keys[i]]) != dict:
+        #         attr_str += attr_keys[i] + " - " + attributes[attr_keys[i]] + "<br>"
+        #         i += 1
+
+        # chiara attributes sunday 4/28
         if attributes != None:
             attr_keys = list(attributes.keys())
-            i = 0
-            while i < 5 and i < len(attr_keys): 
-              if type(attributes[attr_keys[i]]) != dict:
-                attr_str += attr_keys[i] + " - " + attributes[attr_keys[i]] + "<br>"
-                i += 1
+            print("ATTR KEYS", attr_keys)
+            # atts = ['OutdoorSeating', 'DogsAllowed', 'WheelchairAccessible', 'RestaurantsDelivery']
+            
+            if 'OutdoorSeating' not in attr_keys or attributes['OutdoorSeating'] != 'True':
+                attr_str += "Outdoor Seating: No <br>"
+            else:
+                attr_str += "Outdoor Seating: Yes <br>"
 
+            if 'DogsAllowed' not in attr_keys or attributes['DogsAllowed'] != 'True':
+                attr_str += "Dog Friendly: No <br>"
+            else:
+                attr_str += "Dog Friendly: Yes <br>"
+
+            if 'WheelchairAccessible' not in attr_keys or attributes['WheelchairAccessible'] != 'True':
+                attr_str += "Wheelchair Accessible: No <br>"
+            else:
+                attr_str += "Wheelchair Accessible: Yes <br>"
+
+            if 'RestaurantsDelivery' not in attr_keys or attributes['RestaurantsDelivery'] != 'True':
+                attr_str += "Delivery Available: No <br>"
+            else:
+                attr_str += "Delivery Available: Yes <br>"
+
+    
         tup.append(attr_str)
 
         # restaurant_tags = {}
