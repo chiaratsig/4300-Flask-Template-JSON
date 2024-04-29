@@ -103,6 +103,8 @@
         </h4>
 
         <img class="details2" src="../static/images/details.png" />
+        <img class="graphics" src="../static/images/graphics.png" />
+
       </div>
       <!-- Second Window End -->
 
@@ -584,11 +586,12 @@
 
       var locationsSubmit = document.getElementById("submitLocations");
       var newLocation = true;
-      if (newLocation) {
-        document.getElementById("chooseLocation").classList.add("hidden");
+      //chiara
+      // if (newLocation) {
+      //   document.getElementById("chooseLocation").classList.add("hidden");
 
-      }
-      
+      // }
+
       locationsSubmit.onclick = function () {
 
         document.getElementById("chooseLocation").classList.add("hidden");
@@ -605,7 +608,7 @@
               block: "start",
             });
 
-            ;
+            document.getElementById("chooseLocation").classList.add("hidden");
 
 
             document.getElementById("chooseTags").classList.remove("hidden");
